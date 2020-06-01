@@ -1,0 +1,10 @@
+<vector android:height="32dp" android:viewportHeight="384"
+    android:viewportWidth="384" android:width="32dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/colorLightPoint" android:pathData="m336,0h-288c-26.473,0 -48,21.527 -48,48v288c0,26.473 21.527,48 48,48h288c26.473,0 48,-21.527 48,-48v-288c0,-26.473 -21.527,-48 -48,-48zM352,336c0,8.824 -7.176,16 -16,16h-288c-8.824,0 -16,-7.176 -16,-16v-288c0,-8.824 7.176,-16 16,-16h288c8.824,0 16,7.176 16,16zM352,336"/>
+    <path android:fillColor="@color/colorLightPoint" android:pathData="m128,288c0,17.672 -14.328,32 -32,32s-32,-14.328 -32,-32 14.328,-32 32,-32 32,14.328 32,32zM128,288"/>
+    <path android:fillColor="@color/colorLightPoint" android:pathData="m224,288c0,17.672 -14.328,32 -32,32s-32,-14.328 -32,-32 14.328,-32 32,-32 32,14.328 32,32zM224,288"/>
+    <path android:fillColor="@color/colorLightPoint" android:pathData="m320,288c0,17.672 -14.328,32 -32,32s-32,-14.328 -32,-32 14.328,-32 32,-32 32,14.328 32,32zM320,288"/>
+    <path android:fillColor="@color/colorLightPoint" android:pathData="m120,160h-8v-80c0,-8.832 -7.168,-16 -16,-16s-16,7.168 -16,16v80h-8c-8.832,0 -16,7.168 -16,16s7.168,16 16,16h8v16c0,8.832 7.168,16 16,16s16,-7.168 16,-16v-16h8c8.832,0 16,-7.168 16,-16s-7.168,-16 -16,-16zM120,160"/>
+    <path android:fillColor="@color/colorLightPoint" android:pathData="m216,96h-8v-16c0,-8.832 -7.168,-16 -16,-16s-16,7.168 -16,16v16h-8c-8.832,0 -16,7.168 -16,16s7.168,16 16,16h8v80c0,8.832 7.168,16 16,16s16,-7.168 16,-16v-80h8c8.832,0 16,-7.168 16,-16s-7.168,-16 -16,-16zM216,96"/>
+    <path android:fillColor="@color/colorLightPoint" android:pathData="m312,128h-8v-48c0,-8.832 -7.168,-16 -16,-16s-16,7.168 -16,16v48h-8c-8.832,0 -16,7.168 -16,16s7.168,16 16,16h8v48c0,8.832 7.168,16 16,16s16,-7.168 16,-16v-48h8c8.832,0 16,-7.168 16,-16s-7.168,-16 -16,-16zM312,128"/>
+</vector>
