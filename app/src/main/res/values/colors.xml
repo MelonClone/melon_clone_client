@@ -4,11 +4,12 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorMain">#00CD3C</color>
-    <color name="colorDark">#3F3F3F</color>
-    <color name="colorLight">#9E9E9E</color>
-    <color name="colorLightPoint">#FFFFFF</color>
-    <color name="colorDarkPoint">#000000</color>
-    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorDark">#FF3F3F3F</color>
+    <color name="colorLight">#FF9E9E9E</color>
+    <color name="colorLightPoint">#FFFFFFFF</color>
+    <color name="colorDarkPoint">#FF000000</color>
+    <color name="colorLightBackground">#FFFFFFFF</color>
+    <color name="colorDarkBackground">#FF3F3F3F</color>
     <color name="songTitle">#FFFFFF</color>
     <color name="pointText">#00CD3C</color>
 </resources>

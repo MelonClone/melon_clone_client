@@ -7,16 +7,7 @@
     tools:context=".MainActivity"
     android:background="@color/colorLightPoint">
 
-    <TextView
-        android:id="@+id/center_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,16 +24,27 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
-    <ImageView
+    <include layout="@layout/main_title"
+        android:id="@+id/title_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/album_img"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
+
+    <com.devgd.melonclone.view.SqureImageView
         android:id="@+id/album_img"
         android:layout_width="match_parent"
-        android:layout_height="412dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
         android:background="@color/colorPrimary"
-        android:src="@drawable/ic_launcher_foreground"
-        android:scaleType="fitCenter"
-        android:layout_margin="20dp"
+        android:src="@drawable/sample_img2"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toTopOf="@+id/status_group"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"
         />
 
     <LinearLayout
@@ -52,7 +54,9 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/controller">
+        app:layout_constraintTop_toBottomOf="@+id/album_img"
+        app:layout_constraintBottom_toTopOf="@+id/controller"
+        app:layout_constraintVertical_chainStyle="spread_inside">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -124,17 +128,21 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="70dp">
             <ImageButton
                 android:id="@+id/repeat_btn"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_height="25dp"
                 android:layout_centerVertical="true"
+                android:padding="3dp"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:src="@drawable/ic_repeat"/>
+                android:src="@drawable/ic_repeat_act"
+                android:scaleType="fitXY"
+                />
             <SeekBar
+                android:id="@+id/play_seekbar"
                 android:layout_width="wrap_content"
-                android:layout_height="70dp"
+                android:layout_height="20dp"
                 android:layout_toEndOf="@+id/repeat_btn"
                 android:layout_toStartOf="@+id/shuffle_btn"
                 android:layout_centerVertical="true"
@@ -142,20 +150,44 @@
                 android:progressTint="@color/colorMain"
                 android:progressBackgroundTint="@color/colorLight"
                 android:max="100"
-                android:progress="10"/>
+                android:progress="10"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0:00"
+                android:textSize="12sp"
+                android:textColor="@color/colorMain"
+                android:layout_alignStart="@+id/play_seekbar"
+                android:layout_below="@+id/play_seekbar"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0:00"
+                android:textSize="12sp"
+                android:textColor="@color/colorLight"
+                android:layout_alignEnd="@+id/play_seekbar"
+                android:layout_below="@+id/play_seekbar"
+                />
             <ImageButton
                 android:id="@+id/shuffle_btn"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_height="25dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:padding="3dp"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:src="@drawable/ic_random"/>
+                android:src="@drawable/ic_random"
+                android:scaleType="fitXY"
+                />
         </RelativeLayout>
     </LinearLayout>
 
     <include layout="@layout/main_controller_light"
         android:id="@+id/controller"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/status_group"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
