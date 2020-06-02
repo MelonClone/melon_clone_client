@@ -9,9 +9,12 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.devgd.melonclone.view.SqureImageView;
 
 import java.util.ArrayList;
 
@@ -19,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout halfView;
     LinearLayout lyricBox;
     ListView lyricView;
+
+    SqureImageView albumImg;
+    LinearLayout statusGroup;
+    RelativeLayout playTimeGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
 //        mainBtn = findViewById(R.id.main_btn);
         halfView = findViewById(R.id.background_half_light);
         lyricBox = findViewById(R.id.lyric_box);
-        lyricView = findViewById(R.id.lylics_group);
+        lyricView = findViewById(R.id.lyrics_group);
+
+        albumImg = findViewById(R.id.album_img);
+        statusGroup = findViewById(R.id.status_group);
+        playTimeGroup = findViewById(R.id.play_time_group);
 
         ArrayList<String> lyricsList = new ArrayList<>();
         lyricsList.add("abcd");
@@ -96,8 +107,14 @@ public class MainActivity extends AppCompatActivity {
         lyricBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (halfView.getVisibility() == View.VISIBLE)
+                if (halfView.getVisibility() == View.VISIBLE) {
                     halfView.setVisibility(View.GONE);
+
+                    albumImg.setVisibility(View.INVISIBLE);
+                    statusGroup.setVisibility(View.INVISIBLE);
+//                    playTimeGroup.setVisibility(View.GONE);
+
+                }
 
                 lyricView.setVisibility(View.VISIBLE);
             }
