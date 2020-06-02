@@ -13,15 +13,19 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <LinearLayout
+            android:id="@+id/background_half_dark"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorDark"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:orientation="horizontal"/>
         <LinearLayout
+            android:id="@+id/background_half_light"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorLightPoint"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:orientation="horizontal"/>
     </LinearLayout>
 
     <include layout="@layout/main_title"
@@ -55,7 +59,7 @@
         android:paddingEnd="20dp"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/album_img"
-        app:layout_constraintBottom_toTopOf="@+id/controller"
+        app:layout_constraintBottom_toTopOf="@+id/play_time_group"
         app:layout_constraintVertical_chainStyle="spread_inside">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -105,6 +109,7 @@
                 />
         </RelativeLayout>
         <LinearLayout
+            android:id="@+id/lyric_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -125,69 +130,27 @@
                 android:textSize="20sp"
                 android:textColor="@color/colorDarkPoint"/>
         </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp">
-            <ImageButton
-                android:id="@+id/repeat_btn"
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:layout_centerVertical="true"
-                android:padding="3dp"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:src="@drawable/ic_repeat_act"
-                android:scaleType="fitXY"
-                />
-            <SeekBar
-                android:id="@+id/play_seekbar"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_toEndOf="@+id/repeat_btn"
-                android:layout_toStartOf="@+id/shuffle_btn"
-                android:layout_centerVertical="true"
-                android:thumb="@color/colorMain"
-                android:progressTint="@color/colorMain"
-                android:progressBackgroundTint="@color/colorLight"
-                android:max="100"
-                android:progress="10"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0:00"
-                android:textSize="12sp"
-                android:textColor="@color/colorMain"
-                android:layout_alignStart="@+id/play_seekbar"
-                android:layout_below="@+id/play_seekbar"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0:00"
-                android:textSize="12sp"
-                android:textColor="@color/colorLight"
-                android:layout_alignEnd="@+id/play_seekbar"
-                android:layout_below="@+id/play_seekbar"
-                />
-            <ImageButton
-                android:id="@+id/shuffle_btn"
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:padding="3dp"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:src="@drawable/ic_random"
-                android:scaleType="fitXY"
-                />
-        </RelativeLayout>
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/lyrics_group"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintHeight_max="wrap"
+        app:layout_constraintTop_toBottomOf="@+id/title_bar"
+        app:layout_constraintBottom_toTopOf="@+id/play_time_group"
+        tools:listitem="@layout/lyrics_line"
+        />
+
+    <include layout="@layout/play_time"
+        android:id="@+id/play_time_group"
+        app:layout_constraintTop_toBottomOf="@+id/status_group"
+        app:layout_constraintBottom_toTopOf="@+id/controller"
+        />
 
     <include layout="@layout/main_controller_light"
         android:id="@+id/controller"
-        app:layout_constraintTop_toBottomOf="@+id/status_group"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_chainStyle="spread_inside"/>
+        app:layout_constraintTop_toBottomOf="@+id/play_time_group"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

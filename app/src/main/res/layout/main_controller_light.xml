@@ -23,6 +23,7 @@
         app:layout_constraintStart_toEndOf="@+id/prev_btn"
         app:layout_constraintEnd_toStartOf="@+id/next_btn"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintVertical_chainStyle="spread_inside"
         />
 
     <ImageButton
