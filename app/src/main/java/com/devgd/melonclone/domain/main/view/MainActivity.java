@@ -1,5 +1,6 @@
 package com.devgd.melonclone.domain.main.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,10 +13,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.main.viewmodel.PlayerViewModel;
-import com.devgd.melonclone.utils.store.LyricSample;
 import com.devgd.melonclone.utils.view.SqureImageView;
 
 public class MainActivity extends AppCompatActivity {
+
+    ImageButton userBtn;
     LinearLayout halfView;
     LinearLayout lyricBox;
     ListView lyricView;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_player);
 
+        userBtn = findViewById(R.id.user_btn);
         halfView = findViewById(R.id.background_half_light);
         lyricBox = findViewById(R.id.lyric_box);
         lyricView = findViewById(R.id.lyrics_group);
@@ -55,6 +58,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        userBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         lyricBox.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -23,6 +23,19 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            res.srcDirs = [
+                    'src/main/res',
+                    'src/main/res/layouts',
+                    'src/main/res/layouts/users',
+                    'src/main/res/layouts/controller',
+                    'src/main/res/layouts/player',
+                    'src/main/res/layouts/miniplayer',
+                    'src/main/res/layouts/playlist'
+            ]
+        }
+    }
 }
 
 dependencies {

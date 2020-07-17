@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MelonCloneClient</string>
+    <string name="id_login">메론아이디 로그인</string>
+    <string name="id_kakao_login">카카오계정 로그인</string>
+    <string name="register">회원가입</string>
+    <string name="copyright">ⓒ MelonClone Devgd</string>
 </resources>
