@@ -1,4 +1,4 @@
-package com.devgd.melonclone.view;
+package com.devgd.melonclone.utils.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
-public class SqureImageView extends ImageView {
+public class SqureImageView extends androidx.appcompat.widget.AppCompatImageView {
 
     public SqureImageView(Context context) {
         super(context);
@@ -18,10 +18,6 @@ public class SqureImageView extends ImageView {
 
     public SqureImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    public SqureImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override

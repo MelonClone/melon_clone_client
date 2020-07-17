@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".domain.main.view.MainActivity"
     android:background="@color/colorLightPoint">
 
 
@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toTopOf="@id/album_img"
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
-    <com.devgd.melonclone.view.SqureImageView
+    <com.devgd.melonclone.utils.view.SqureImageView
         android:id="@+id/album_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
