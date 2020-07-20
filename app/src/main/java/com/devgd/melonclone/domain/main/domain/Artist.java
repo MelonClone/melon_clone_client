@@ -1,4 +1,6 @@
 package com.devgd.melonclone.domain.main.domain;
 
-public class Artist {
+import com.devgd.melonclone.domain.model.Domain;
+
+public class Artist implements Domain {
 }

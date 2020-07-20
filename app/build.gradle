@@ -4,6 +4,11 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId "com.devgd.melonclone"
         minSdkVersion 23
@@ -51,6 +56,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // Network
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 
     // UI Libs
 //    implementation 'com.github.fornewid:neumorphism:0.1.10'
