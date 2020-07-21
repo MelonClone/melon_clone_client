@@ -1,7 +1,6 @@
-package com.devgd.melonclone.domain.main.view;
+package com.devgd.melonclone.domain.player.view.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.devgd.melonclone.R;
-import com.devgd.melonclone.domain.main.domain.Lyric;
+import com.devgd.melonclone.domain.player.domain.Lyric;
 
 import java.util.List;
 

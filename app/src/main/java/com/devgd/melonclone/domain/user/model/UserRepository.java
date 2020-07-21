@@ -1,6 +1,6 @@
 package com.devgd.melonclone.domain.user.model;
 
-import com.devgd.melonclone.domain.model.Dao;
+import com.devgd.melonclone.domain.model.Repository;
 import com.devgd.melonclone.domain.user.domain.User;
 import com.devgd.melonclone.utils.network.HttpManager;
 
@@ -11,14 +11,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.devgd.melonclone.utils.Constants.API_SERVER;
+import static com.devgd.melonclone.global.consts.Constants.API_SERVER;
 
-public class UserDao implements Dao {
-    private DaoCallback callback;
+public class UserRepository implements Repository {
+    private RepoCallback repoCallback;
 
 
 
-    public void getUser(final Dao.DaoCallback callback) {
+    public void getUser(final RepoCallback repoCallback) {
         try {
             HttpManager.createService(new URL(API_SERVER), UserService.class)
                     .getUser()
@@ -26,13 +26,13 @@ public class UserDao implements Dao {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
                             if (response.isSuccessful())
-                                callback.success(response.body());
-                            callback.fail();
+                                repoCallback.success(response.body());
+                            repoCallback.fail();
                         }
 
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
-                            callback.fail();
+                            repoCallback.fail();
                         }
                     });
 

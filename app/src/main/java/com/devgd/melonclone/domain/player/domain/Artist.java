@@ -1,4 +1,4 @@
-package com.devgd.melonclone.domain.main.domain;
+package com.devgd.melonclone.domain.player.domain;
 
 import com.devgd.melonclone.domain.model.Domain;
 

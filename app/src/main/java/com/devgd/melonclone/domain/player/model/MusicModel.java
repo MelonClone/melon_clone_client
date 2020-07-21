@@ -1,8 +1,8 @@
-package com.devgd.melonclone.domain.main.model;
+package com.devgd.melonclone.domain.player.model;
 
-import com.devgd.melonclone.domain.main.domain.Album;
-import com.devgd.melonclone.domain.main.domain.Artist;
-import com.devgd.melonclone.domain.main.domain.Music;
+import com.devgd.melonclone.domain.player.domain.Album;
+import com.devgd.melonclone.domain.player.domain.Artist;
+import com.devgd.melonclone.domain.player.domain.Music;
 
 public class MusicModel {
     Music music;

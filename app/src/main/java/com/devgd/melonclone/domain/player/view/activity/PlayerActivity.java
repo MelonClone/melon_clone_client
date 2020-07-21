@@ -1,26 +1,29 @@
-package com.devgd.melonclone.domain.main.view;
+package com.devgd.melonclone.domain.player.view.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.devgd.melonclone.R;
-import com.devgd.melonclone.domain.main.viewmodel.PlayerViewModel;
+import com.devgd.melonclone.domain.player.view.adapter.LyricAdapter;
+import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
+import com.devgd.melonclone.domain.user.view.activity.LoginActivity;
+import com.devgd.melonclone.global.BaseActivity;
 import com.devgd.melonclone.utils.view.SqureImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class PlayerActivity extends BaseActivity {
 
     ImageButton userBtn;
     LinearLayout halfView;
     LinearLayout lyricBox;
     ListView lyricView;
+    ListAdapter lyricAdapter;
     ImageButton lyricClose;
 
     SqureImageView albumImg;
@@ -30,8 +33,7 @@ public class MainActivity extends AppCompatActivity {
     PlayerViewModel playerViewModel;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void layoutInit() {
         setContentView(R.layout.main_player);
 
         userBtn = findViewById(R.id.user_btn);
@@ -43,53 +45,48 @@ public class MainActivity extends AppCompatActivity {
         albumImg = findViewById(R.id.album_img);
         statusGroup = findViewById(R.id.status_group);
         playTimeGroup = findViewById(R.id.play_time_group);
-
-        playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
-
-        lyricView.setAdapter(
-                new LyricAdapter(
-                        this,
-                        getLayoutInflater(),
-                        playerViewModel.getMusic()
-                                .getValue()
-                                .getMusicLyricList()));
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void viewModelInit() {
+        playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
+        playerViewModel.init();
+        playerViewModel.getCurrentMusic().observe(this, music -> lyricAdapter.notify());
+    }
 
-        userBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), LoginActivity.class);
-                startActivity(intent);
-            }
+    @Override
+    protected void viewInit() {
+        lyricAdapter = new LyricAdapter(
+                this,
+                getLayoutInflater(),
+                playerViewModel.getCurrentMusic().getValue().getMusicLyricList());
+        lyricView.setAdapter(lyricAdapter);
+    }
+
+    @Override
+    protected void listenerInit() {
+        userBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), LoginActivity.class);
+            startActivity(intent);
         });
 
-        lyricBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (halfView.getVisibility() == View.VISIBLE) {
-                    halfView.setVisibility(View.GONE);
+        lyricBox.setOnClickListener(v -> {
+            if (halfView.getVisibility() == View.VISIBLE) {
+                halfView.setVisibility(View.GONE);
 
-                    albumImg.setVisibility(View.INVISIBLE);
-                    statusGroup.setVisibility(View.INVISIBLE);
-                }
-                lyricView.setVisibility(View.VISIBLE);
-
+                albumImg.setVisibility(View.INVISIBLE);
+                statusGroup.setVisibility(View.INVISIBLE);
             }
+            lyricView.setVisibility(View.VISIBLE);
+
         });
 
-        lyricClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                 if (halfView.getVisibility() == View.GONE) {
-                    halfView.setVisibility(View.VISIBLE);
+        lyricClose.setOnClickListener(v -> {
+            if (halfView.getVisibility() == View.GONE) {
+                halfView.setVisibility(View.VISIBLE);
 
-                    albumImg.setVisibility(View.VISIBLE);
-                    statusGroup.setVisibility(View.VISIBLE);
-                }
+                albumImg.setVisibility(View.VISIBLE);
+                statusGroup.setVisibility(View.VISIBLE);
             }
         });
     }

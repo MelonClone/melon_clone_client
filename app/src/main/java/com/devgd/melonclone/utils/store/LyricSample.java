@@ -1,6 +1,6 @@
 package com.devgd.melonclone.utils.store;
 
-import com.devgd.melonclone.domain.main.domain.Lyric;
+import com.devgd.melonclone.domain.player.domain.Lyric;
 
 import java.util.ArrayList;
 import java.util.List;
