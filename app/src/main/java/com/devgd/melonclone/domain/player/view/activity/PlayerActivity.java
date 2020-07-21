@@ -14,22 +14,24 @@ import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.adapter.LyricAdapter;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.domain.user.view.activity.LoginActivity;
-import com.devgd.melonclone.global.BaseActivity;
-import com.devgd.melonclone.utils.view.SqureImageView;
+import com.devgd.melonclone.global.model.view.activity.BaseActivity;
+import com.devgd.melonclone.global.customview.SqureImageView;
 
 public class PlayerActivity extends BaseActivity {
 
+    // Views
     ImageButton userBtn;
     LinearLayout halfView;
     LinearLayout lyricBox;
     ListView lyricView;
-    ListAdapter lyricAdapter;
+    LyricAdapter lyricAdapter;
     ImageButton lyricClose;
 
     SqureImageView albumImg;
     LinearLayout statusGroup;
     RelativeLayout playTimeGroup;
 
+    // ViewModels
     PlayerViewModel playerViewModel;
 
     @Override
@@ -50,8 +52,7 @@ public class PlayerActivity extends BaseActivity {
     @Override
     protected void viewModelInit() {
         playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
-        playerViewModel.init();
-        playerViewModel.getCurrentMusic().observe(this, music -> lyricAdapter.notify());
+        playerViewModel.getCurrentMusic().observe(this, music -> lyricAdapter.notifyDataSetChanged());
     }
 
     @Override
@@ -59,7 +60,7 @@ public class PlayerActivity extends BaseActivity {
         lyricAdapter = new LyricAdapter(
                 this,
                 getLayoutInflater(),
-                playerViewModel.getCurrentMusic().getValue().getMusicLyricList());
+                playerViewModel.getCurrentMusic());
         lyricView.setAdapter(lyricAdapter);
     }
 

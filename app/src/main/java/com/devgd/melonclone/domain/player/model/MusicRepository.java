@@ -1,7 +1,7 @@
 package com.devgd.melonclone.domain.player.model;
 
 import com.devgd.melonclone.domain.player.domain.Music;
-import com.devgd.melonclone.domain.model.Repository;
+import com.devgd.melonclone.global.model.repository.Repository;
 import com.devgd.melonclone.utils.network.HttpManager;
 import com.devgd.melonclone.utils.network.services.MusicService;
 
@@ -28,25 +28,20 @@ public class MusicRepository implements Repository {
     }
 
     public void getMusicInfo(Music music, final RepoCallback repoCallback) {
-        try {
-            HttpManager.createService(new URL(API_SERVER), MusicService.class)
-                    .getMusic(music.getMusicId())
-                    .enqueue(new Callback<Music>() {
-                        @Override
-                        public void onResponse(Call<Music> call, Response<Music> response) {
-                            if (response.isSuccessful())
-                                repoCallback.success(response.body());
-                            repoCallback.fail();
-                        }
+        HttpManager.createService(MusicService.class)
+                .getMusic(music.getMusicId())
+                .enqueue(new Callback<Music>() {
+                    @Override
+                    public void onResponse(Call<Music> call, Response<Music> response) {
+                        if (response.isSuccessful())
+                            repoCallback.success(response.body());
+                        repoCallback.fail();
+                    }
 
-                        @Override
-                        public void onFailure(Call<Music> call, Throwable t) {
-                            repoCallback.fail();
-                        }
-                    });
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+                    @Override
+                    public void onFailure(Call<Music> call, Throwable t) {
+                        repoCallback.fail();
+                    }
+                });
     }
 }

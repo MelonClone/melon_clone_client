@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toTopOf="@id/album_img"
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
-    <com.devgd.melonclone.utils.view.SqureImageView
+    <com.devgd.melonclone.global.customview.SqureImageView
         android:id="@+id/album_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

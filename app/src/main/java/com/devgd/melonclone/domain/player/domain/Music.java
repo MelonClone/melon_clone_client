@@ -1,6 +1,6 @@
 package com.devgd.melonclone.domain.player.domain;
 
-import com.devgd.melonclone.domain.model.Domain;
+import com.devgd.melonclone.global.model.domain.Domain;
 
 import java.util.List;
 

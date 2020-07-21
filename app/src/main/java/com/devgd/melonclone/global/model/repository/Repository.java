@@ -1,4 +1,6 @@
-package com.devgd.melonclone.domain.model;
+package com.devgd.melonclone.global.model.repository;
+
+import com.devgd.melonclone.global.model.domain.Domain;
 
 import java.util.List;
 

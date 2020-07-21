@@ -4,4 +4,7 @@
     <string name="id_kakao_login">카카오계정 로그인</string>
     <string name="register">회원가입</string>
     <string name="copyright">ⓒ MelonClone Devgd</string>
+
+    <string name="password_not_match">비밀번호가 일치하지 않습니다.</string>
+    <string name="input_verify_fail">사용자 정보 형식이 다릅니다.</string>
 </resources>

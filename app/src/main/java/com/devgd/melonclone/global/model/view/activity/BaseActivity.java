@@ -1,4 +1,4 @@
-package com.devgd.melonclone.global;
+package com.devgd.melonclone.global.model.view.activity;
 
 import android.os.Bundle;
 
@@ -21,8 +21,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         listenerInit();
     }
 
-    abstract protected void layoutInit();
     abstract protected void viewModelInit();
+    abstract protected void layoutInit();
     abstract protected void viewInit();
     abstract protected void listenerInit();
 }

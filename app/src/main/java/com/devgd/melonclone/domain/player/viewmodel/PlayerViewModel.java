@@ -2,7 +2,6 @@ package com.devgd.melonclone.domain.player.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.devgd.melonclone.domain.player.domain.Lyric;
 import com.devgd.melonclone.domain.player.domain.Music;
@@ -12,11 +11,12 @@ import com.devgd.melonclone.domain.player.model.LyricRepository;
 import com.devgd.melonclone.domain.player.model.MusicModel;
 import com.devgd.melonclone.domain.player.model.MusicRepository;
 import com.devgd.melonclone.domain.player.model.PlayerModel;
-import com.devgd.melonclone.domain.model.Repository;
+import com.devgd.melonclone.global.model.repository.Repository;
+import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
 
 import java.util.List;
 
-public class PlayerViewModel extends ViewModel {
+public class PlayerViewModel extends BaseViewModel {
 
     private MutableLiveData<Player> playerList;
     private MutableLiveData<Music> currentMusic;
@@ -30,6 +30,7 @@ public class PlayerViewModel extends ViewModel {
 
     // private MutableLiveData<List<Playlist>> playlistList;
 
+    @Override
     public void init() {
         musicRepository = MusicRepository.getInstance();
         lyricRepository = LyricRepository.getInstance();
@@ -47,27 +48,20 @@ public class PlayerViewModel extends ViewModel {
 
     public LiveData<Music> getCurrentMusic() {
 
-        if (playerModel.getLastPlayedMusic() == null) {
-            return currentMusic;
-        } else if (currentMusic == null) {
-            currentMusic = new MutableLiveData<>();
-            loadMusic(playerModel.getLastPlayedMusic());
-        }
-
-        return currentMusic;
-    }
-
-    public LiveData<Music> getMusic(String musicId) {
         if (currentMusic == null) {
             currentMusic = new MutableLiveData<>();
-            loadMusic(new Music(musicId,"", null, null));
+            if (playerModel.getLastPlayedMusic() != null)
+                currentMusic.postValue(playerModel.getLastPlayedMusic());
         }
 
         return currentMusic;
     }
 
     private void loadPlayer() {
-        playerList = new MutableLiveData<>(playerModel.getPlayer());
+        playerList = new MutableLiveData<>();
+        if (playerModel.getPlayer() != null) {
+            playerList.postValue(playerModel.getPlayer());
+        }
     }
 
     private void loadMusic(Music music) {

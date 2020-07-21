@@ -7,9 +7,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.lifecycle.LiveData;
+
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.domain.Lyric;
+import com.devgd.melonclone.domain.player.domain.Music;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LyricAdapter extends BaseAdapter {
@@ -25,6 +29,14 @@ public class LyricAdapter extends BaseAdapter {
         this.context = context;
         this.inflater = inflater;
         this.lyricsList = lyricsList;
+    }
+
+    public LyricAdapter(Context context, LayoutInflater inflater, LiveData<Music> music) {
+        this.context = context;
+        this.inflater = inflater;
+        if (music.getValue() != null)
+            this.lyricsList = music.getValue().getMusicLyricList();
+        else this.lyricsList = new ArrayList<>();
     }
 
     @Override

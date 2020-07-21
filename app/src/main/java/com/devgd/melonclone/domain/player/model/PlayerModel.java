@@ -9,11 +9,13 @@ public class PlayerModel {
     private Player player;
     private Music lastPlayedMusic;
 
-    private static PlayerModel instance = new PlayerModel();
+    private static PlayerModel instance;
 
     public static PlayerModel getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new PlayerModel();
+            instance.init();
+        }
         return instance;
     }
 

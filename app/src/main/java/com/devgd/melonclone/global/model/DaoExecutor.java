@@ -1,4 +1,4 @@
-package com.devgd.melonclone.domain.model;
+package com.devgd.melonclone.global.model;
 
 public class DaoExecutor {
 
