@@ -2,6 +2,7 @@ package com.devgd.melonclone.domain.player.model;
 
 import com.devgd.melonclone.domain.player.domain.Lyric;
 import com.devgd.melonclone.domain.player.domain.Music;
+import com.devgd.melonclone.global.model.repository.NetworkState;
 import com.devgd.melonclone.global.model.repository.Repository;
 import com.devgd.melonclone.utils.network.HttpManager;
 import com.devgd.melonclone.utils.network.services.MusicService;
@@ -38,12 +39,12 @@ public class LyricRepository implements Repository {
                     public void onResponse(Call<List<Lyric>> call, Response<List<Lyric>> response) {
                         if (response.isSuccessful())
                             repoCallback.success(response.body());
-                        repoCallback.fail();
+                        repoCallback.fail(new NetworkState(response.code(), response.message()));
                     }
 
                     @Override
                     public void onFailure(Call<List<Lyric>> call, Throwable t) {
-                        repoCallback.fail();
+                        repoCallback.fail(new NetworkState(0, t.toString()));
                     }
                 });
     }

@@ -1,6 +1,7 @@
 package com.devgd.melonclone.domain.player.model;
 
 import com.devgd.melonclone.domain.player.domain.Music;
+import com.devgd.melonclone.global.model.repository.NetworkState;
 import com.devgd.melonclone.global.model.repository.Repository;
 import com.devgd.melonclone.utils.network.HttpManager;
 import com.devgd.melonclone.utils.network.services.MusicService;
@@ -35,12 +36,12 @@ public class MusicRepository implements Repository {
                     public void onResponse(Call<Music> call, Response<Music> response) {
                         if (response.isSuccessful())
                             repoCallback.success(response.body());
-                        repoCallback.fail();
+                        repoCallback.fail(new NetworkState(response.code(), response.message()));
                     }
 
                     @Override
                     public void onFailure(Call<Music> call, Throwable t) {
-                        repoCallback.fail();
+                        repoCallback.fail(new NetworkState(0, t.toString()));
                     }
                 });
     }

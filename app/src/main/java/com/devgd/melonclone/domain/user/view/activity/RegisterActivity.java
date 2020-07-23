@@ -1,22 +1,22 @@
 package com.devgd.melonclone.domain.user.view.activity;
 
-import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.devgd.melonclone.R;
-import com.devgd.melonclone.domain.user.viewmodel.UserViewModel;
+import com.devgd.melonclone.domain.user.domain.AuthState;
+import com.devgd.melonclone.domain.user.domain.User;
+import com.devgd.melonclone.domain.user.viewmodel.LoginViewModel;
+import com.devgd.melonclone.domain.user.viewmodel.RegisterViewModel;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
-
-import static com.devgd.melonclone.global.consts.ErrorCode.PASSWORD_NOT_MATCH;
-import static com.devgd.melonclone.global.consts.ErrorCode.USER_INPUT_WRONG;
-import static com.devgd.melonclone.global.consts.StateCode.ACTIVITY_CHANGE;
 
 public class RegisterActivity extends BaseActivity {
 
@@ -29,40 +29,8 @@ public class RegisterActivity extends BaseActivity {
     LinearLayout registerBtn;
 
     // ViewModels
-    UserViewModel userViewModel;
-
-    @Override
-    protected void viewModelInit() {
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-
-        userViewModel.getViewState().observe(this, (viewState) -> {
-            switch (viewState.getStateCode()) {
-                case ACTIVITY_CHANGE:
-                    Class nextClass = (Class) viewState.getMsg();
-                    Intent intent = new Intent(this, nextClass);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    intent.setFlags(Intent.Clea)
-                    startActivity(intent);
-                    break;
-
-            }
-        });
-
-        userViewModel.getRegisterInfo().observe(this, (errorCode) -> {
-            switch (errorCode) {
-                case PASSWORD_NOT_MATCH:
-                    registerInfo.setText(this.getResources().getString(R.string.password_not_match));
-                    registerInfo.setVisibility(View.VISIBLE);
-                    break;
-                case USER_INPUT_WRONG:
-                    registerInfo.setText(this.getResources().getString(R.string.input_verify_fail));
-                    registerInfo.setVisibility(View.VISIBLE);
-                    break;
-                default:
-                    registerInfo.setVisibility(View.INVISIBLE);
-            }
-        });
-    }
+    RegisterViewModel registerViewModel;
+    LoginViewModel loginViewModel;
 
     @Override
     protected void layoutInit() {
@@ -74,6 +42,15 @@ public class RegisterActivity extends BaseActivity {
         userPasswordRetype = findViewById(R.id.user_password_retype);
         registerInfo = findViewById(R.id.register_info);
         registerBtn = findViewById(R.id.register_btn);
+    }
+
+    @Override
+    protected void viewModelInit() {
+        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+        registerViewModel.getViewState().observe(this, getStateObserver(this));
+        registerViewModel.getRegisterInfo().observe(this, getErrorObserver());
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        loginViewModel.getLoginInfo().observe(this, getErrorObserver());
     }
 
     @Override
@@ -96,13 +73,39 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                userViewModel.checkRegistryInfo(userPassword.getText().toString(), userPasswordRetype.getText().toString());
+                registerViewModel.checkRegistryInfo(userPassword.getText().toString(), userPasswordRetype.getText().toString());
             }
         });
 
-        registerBtn.setOnClickListener(v -> userViewModel.registerUser(
+        registerBtn.setOnClickListener(v -> registerViewModel.registerUser(
                         userEmail.getText().toString(),
                         userNickname.getText().toString(),
                         userPassword.getText().toString()));
+    }
+
+    @Override
+    protected void autoLogin(User user) {
+        loginViewModel.loginUser(user);
+    }
+
+    private Observer<AuthState> getErrorObserver() {
+        return (authState) -> {
+            switch (authState.getAuthErrorCode()) {
+                case PASSWORD_NOT_MATCH:
+                    registerInfo.setText(this.getResources().getString(R.string.password_not_match));
+                    registerInfo.setVisibility(View.VISIBLE);
+                    break;
+                case USER_INPUT_WRONG:
+                    registerInfo.setText(this.getResources().getString(R.string.input_verify_fail));
+                    registerInfo.setVisibility(View.VISIBLE);
+                    break;
+                case UNEXPECTED_ERROR:
+                    Toast.makeText(this, "문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                    registerInfo.setVisibility(View.INVISIBLE);
+                case NO_ERROR:
+                default:
+                    registerInfo.setVisibility(View.INVISIBLE);
+            }
+        };
     }
 }

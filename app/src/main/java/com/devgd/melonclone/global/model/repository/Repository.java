@@ -9,13 +9,13 @@ public interface Repository {
 
         void success(D domain);
 
-        void fail();
+        void fail(NetworkState e);
     }
 
     interface RepoListCallback<L extends List> {
 
         void success(L domain);
 
-        void fail();
+        void fail(NetworkState e);
     }
 }

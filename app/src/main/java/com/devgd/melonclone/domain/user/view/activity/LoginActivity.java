@@ -4,34 +4,45 @@ import android.content.Intent;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.devgd.melonclone.R;
-import com.devgd.melonclone.domain.user.viewmodel.UserViewModel;
+import com.devgd.melonclone.domain.user.view.fragment.LoginListFragment;
+import com.devgd.melonclone.domain.user.view.fragment.LocalLoginFragment;
+import com.devgd.melonclone.domain.user.viewmodel.LoginViewModel;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
+import com.devgd.melonclone.global.model.view.activity.ChangeableFragmentActivity;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements ChangeableFragmentActivity {
 
     // Views
-    LinearLayout loginKBtn;
-    LinearLayout loginMBtn;
     LinearLayout registerBtn;
+    LoginListFragment loginListFragment;
+    LocalLoginFragment localLoginFragment = new LocalLoginFragment();
 
     // ViewModels
-    UserViewModel userViewModel;
+    LoginViewModel loginViewModel;
 
     @Override
     protected void layoutInit() {
         setContentView(R.layout.user_login);
 
-        loginKBtn = findViewById(R.id.kakao_id_login_btn);
-        loginMBtn = findViewById(R.id.melon_id_login_btn);
+        loginListFragment = new LoginListFragment();
+        localLoginFragment = new LocalLoginFragment();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.login_frg_container, loginListFragment);
+        fragmentTransaction.commit();
+
         registerBtn = findViewById(R.id.melon_id_register_btn);
     }
 
     @Override
     protected void viewModelInit() {
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
     }
 
     @Override
@@ -41,15 +52,18 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void listenerInit() {
-
-        loginKBtn.setOnClickListener(v -> Toast.makeText(LoginActivity.this, "K login", Toast.LENGTH_SHORT).show());
-
-        loginMBtn.setOnClickListener(v -> Toast.makeText(LoginActivity.this, "M login", Toast.LENGTH_SHORT).show());
-
         registerBtn.setOnClickListener(v -> {
             Toast.makeText(LoginActivity.this, "Regist", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
         });
+    }
+
+    public void onFragmentChange(int index) {
+        if (index == 0)
+            getSupportFragmentManager().beginTransaction().replace(R.id.login_frg_container, loginListFragment).commit();
+        else if (index == 1)
+            getSupportFragmentManager().beginTransaction().replace(R.id.login_frg_container, localLoginFragment).commit();
+
     }
 }

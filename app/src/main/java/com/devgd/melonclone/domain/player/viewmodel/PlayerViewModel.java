@@ -11,6 +11,9 @@ import com.devgd.melonclone.domain.player.model.LyricRepository;
 import com.devgd.melonclone.domain.player.model.MusicModel;
 import com.devgd.melonclone.domain.player.model.MusicRepository;
 import com.devgd.melonclone.domain.player.model.PlayerModel;
+import com.devgd.melonclone.domain.user.model.UserDataSource;
+import com.devgd.melonclone.domain.user.model.UserRepository;
+import com.devgd.melonclone.global.model.repository.NetworkState;
 import com.devgd.melonclone.global.model.repository.Repository;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
 
@@ -20,18 +23,18 @@ public class PlayerViewModel extends BaseViewModel {
 
     private MutableLiveData<Player> playerList;
     private MutableLiveData<Music> currentMusic;
-    private PlayerModel playerModel;
     private MusicModel musicModel = new MusicModel();
     private LyricModel lyricModel = new LyricModel();
 
     // TODO DI or repository to singleton
     private MusicRepository musicRepository;
     private LyricRepository lyricRepository;
+    private PlayerModel playerModel;
 
     // private MutableLiveData<List<Playlist>> playlistList;
 
     @Override
-    public void init() {
+    protected void init() {
         musicRepository = MusicRepository.getInstance();
         lyricRepository = LyricRepository.getInstance();
         playerModel = PlayerModel.getInstance();
@@ -73,7 +76,7 @@ public class PlayerViewModel extends BaseViewModel {
             }
 
             @Override
-            public void fail() {
+            public void fail(NetworkState networkState) {
 
             }
         });
@@ -89,7 +92,7 @@ public class PlayerViewModel extends BaseViewModel {
                 }
 
                 @Override
-                public void fail() {
+                public void fail(NetworkState networkState) {
 
                 }
             });

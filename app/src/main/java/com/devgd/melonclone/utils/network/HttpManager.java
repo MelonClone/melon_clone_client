@@ -8,6 +8,7 @@ import java.net.URL;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static com.devgd.melonclone.global.consts.Constants.API_PROTOCOL;
 import static com.devgd.melonclone.global.consts.Constants.API_SERVER;
@@ -16,7 +17,7 @@ public class HttpManager {
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
-    public static Retrofit.Builder getRetrofit(String url) {
+    private static Retrofit.Builder getRetrofit(String url) {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(url);

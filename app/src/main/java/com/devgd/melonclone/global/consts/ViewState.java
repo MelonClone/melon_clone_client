@@ -1,5 +1,9 @@
 package com.devgd.melonclone.global.consts;
 
+import android.app.Activity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +12,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ViewState {
-    private int stateCode;
-    private Object msg;
+    private StateCode stateCode;
+    private Class<? extends AppCompatActivity> msg;
+    private Object arg;
+
 }

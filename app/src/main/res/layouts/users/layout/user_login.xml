@@ -7,81 +7,31 @@
     tools:context=".domain.player.view.activity.PlayerActivity"
     android:background="@color/colorLightPoint">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/login_frg_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-        <LinearLayout
-            android:id="@+id/kakao_id_login_btn"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:padding="10dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/login_kakao_border_box">
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="5dp"
-                android:layout_marginEnd="20dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/kakaologo"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/id_kakao_login"
-                android:textColor="@color/colorDarkPoint"
-                android:textSize="20sp"/>
-        </LinearLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
-        <LinearLayout
-            android:id="@+id/melon_id_login_btn"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:padding="10dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/login_border_box">
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="5dp"
-                android:layout_marginEnd="20dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/melon"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/id_login"
-                android:textColor="@color/colorDarkPoint"
-                android:textSize="20sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/melon_id_register_btn"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:padding="10dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/register"
-                android:textColor="@color/colorDark"
-                android:textSize="15sp"/>
-        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/melon_id_register_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/login_frg_container">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register"
+            android:textColor="@color/colorDark"
+            android:textSize="15sp"/>
     </LinearLayout>
 
     <LinearLayout

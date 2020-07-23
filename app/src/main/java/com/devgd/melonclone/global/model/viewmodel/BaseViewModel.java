@@ -20,6 +20,7 @@ public abstract class BaseViewModel extends ViewModel {
 
     abstract protected void init();
 
+    // Binding with view (views state managing)
     public LiveData<ViewState> getViewState() {
         return state;
     }
