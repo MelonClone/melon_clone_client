@@ -54,7 +54,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/detail_btn"
+        app:layout_constraintStart_toEndOf="@+id/controller_sub_btn"
         app:layout_constraintEnd_toStartOf="@+id/play_btn"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         />
@@ -75,20 +75,58 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         />
-    <ImageButton
-        android:id="@+id/detail_btn"
+    <RelativeLayout
+        android:id="@+id/controller_sub_btn"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:src="@drawable/ic_playlist_white"
-        android:padding="16dp"
-        android:scaleType="fitCenter"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/prev_btn"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        />
+        >
+        <ImageButton
+            android:id="@+id/playlist_btn"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:src="@drawable/ic_playlist_white"
+            android:padding="16dp"
+            android:scaleType="fitCenter"
+            />
+        <RelativeLayout
+            android:id="@+id/music_detail_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true">
+            <com.devgd.melonclone.global.customview.RoundImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:src="@drawable/r8_small"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                />
+            <com.github.guilhe.views.CircularProgressView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                app:progress="30"
+                app:progressBarThickness="3dp"
+                app:progressThumb="true"
+                app:progressBarRounded="true"
+                app:shadow="false"
+                app:backgroundColor="@color/colorLight"
+                app:progressBarColor="@color/colorMain"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
