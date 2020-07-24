@@ -1,5 +1,7 @@
 package com.devgd.melonclone.domain.player.viewmodel;
 
+import android.content.Intent;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -11,13 +13,16 @@ import com.devgd.melonclone.domain.player.model.LyricRepository;
 import com.devgd.melonclone.domain.player.model.MusicModel;
 import com.devgd.melonclone.domain.player.model.MusicRepository;
 import com.devgd.melonclone.domain.player.model.PlayerModel;
-import com.devgd.melonclone.domain.user.model.UserDataSource;
-import com.devgd.melonclone.domain.user.model.UserRepository;
-import com.devgd.melonclone.global.model.repository.NetworkState;
+import com.devgd.melonclone.domain.user.view.activity.LoginActivity;
+import com.devgd.melonclone.domain.user.view.activity.ProfileActivity;
+import com.devgd.melonclone.global.model.view.states.NetworkState;
 import com.devgd.melonclone.global.model.repository.Repository;
+import com.devgd.melonclone.global.model.view.states.ViewState;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
 
 import java.util.List;
+
+import static com.devgd.melonclone.global.model.view.states.StateCode.ACTIVITY_CHANGE;
 
 public class PlayerViewModel extends BaseViewModel {
 
@@ -96,6 +101,14 @@ public class PlayerViewModel extends BaseViewModel {
 
                 }
             });
+        }
+    }
+
+    public void changeUserPage() {
+        if (loginState.getValue() != null && loginState.getValue().isLogin()) {
+            state.postValue(new ViewState(ACTIVITY_CHANGE, ProfileActivity.class, null));
+        } else {
+            state.postValue(new ViewState(ACTIVITY_CHANGE, LoginActivity.class, null));
         }
     }
 }

@@ -1,9 +1,5 @@
 package com.devgd.melonclone.domain.user.viewmodel;
 
-import android.os.Handler;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -13,21 +9,26 @@ import com.devgd.melonclone.domain.user.domain.User;
 import com.devgd.melonclone.domain.user.model.LocalUserDataSource;
 import com.devgd.melonclone.domain.user.model.UserDataSource;
 import com.devgd.melonclone.domain.user.model.UserRepository;
-import com.devgd.melonclone.global.consts.ViewState;
+import com.devgd.melonclone.domain.user.view.activity.ProfileActivity;
+import com.devgd.melonclone.global.db.DatabaseCallback;
 import com.devgd.melonclone.global.model.domain.Message;
-import com.devgd.melonclone.global.model.repository.NetworkState;
 import com.devgd.melonclone.global.model.repository.Repository;
+import com.devgd.melonclone.global.model.view.states.NetworkState;
+import com.devgd.melonclone.global.model.view.states.ViewState;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
-import com.devgd.melonclone.utils.jwt.Jwt;
-import com.devgd.melonclone.utils.jwt.JwtParser;
 import com.devgd.melonclone.utils.Verifier;
 import com.devgd.melonclone.utils.db.DBHelper;
+import com.devgd.melonclone.utils.jwt.Jwt;
+import com.devgd.melonclone.utils.jwt.JwtParser;
 
-import io.jsonwebtoken.Jwts;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Objects;
 
 import static com.devgd.melonclone.domain.user.domain.AuthErrorCode.UNEXPECTED_ERROR;
 import static com.devgd.melonclone.domain.user.domain.AuthErrorCode.USER_INPUT_WRONG;
-import static com.devgd.melonclone.global.consts.StateCode.ACTIVITY_CHANGE;
+import static com.devgd.melonclone.global.model.view.states.StateCode.ACTIVITY_CHANGE;
 
 public class LoginViewModel extends BaseViewModel {
 
@@ -37,14 +38,23 @@ public class LoginViewModel extends BaseViewModel {
     private UserRepository userRepository;
     private UserDataSource userDataSource;
 
+    private DatabaseCallback userDataSourceCallback = msg -> {
+        if (msg.arg1 == UserDataSource.INSERT_USER)
+            state.postValue(new ViewState(ACTIVITY_CHANGE, PlayerActivity.class, null));
+    };
+
     @Override
     protected void init() {
         loginInfoText = new MutableLiveData<>();
         userRepository = UserRepository.getInstance();
-        userDataSource = new LocalUserDataSource(DBHelper.getInstance().getDB().userDao());
+        userDataSource = new LocalUserDataSource(DBHelper.getInstance().getDB().userDao(), userDataSourceCallback);
     }
 
-    // 로그인 = login request, user db insert, view state change
+    public void loggedIn() {
+        state.postValue(new ViewState(ACTIVITY_CHANGE, ProfileActivity.class, null));
+    }
+
+    // 로그인 = raw String email & password
     public void loginUser(String userEmail, String userPassword) {
         if (Verifier.emailVerify(userEmail)) {
             loginUser(new User(userEmail, userPassword));
@@ -53,6 +63,7 @@ public class LoginViewModel extends BaseViewModel {
         }
     }
 
+    // 로그인 = login request, user db insert, view state change
     public void loginUser(User user) {
         userRepository.loginUser(user, new Repository.RepoCallback<Message>() {
 
@@ -60,14 +71,19 @@ public class LoginViewModel extends BaseViewModel {
             public void success(Message msg) {
                 user.setJwtToken(msg.getMsg());
                 Jwt jwt = JwtParser.decoded(user.getJwtToken());
-                user.setNickname(jwt.getPublicClaim().getClaim().get("info"));
-
-                userDataSource.insertOrUpdateUser(user, new Handler() {
-                    @Override
-                    public void handleMessage(@NonNull android.os.Message msg) {
-                        state.postValue(new ViewState(ACTIVITY_CHANGE, PlayerActivity.class, null));
+                if (jwt.getPublicClaim() != null) {
+                    try {
+                        JSONObject userInfo = Objects.requireNonNull(jwt.getPublicClaim()
+                                .getClaim()
+                                .getJSONObject("info"));
+                        user.setNickname(userInfo.getString("user_name"));
+                        user.setUserId(userInfo.getInt("user_id"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                });
+                }
+
+                userDataSource.insertOrUpdateUser(user);
 
             }
 

@@ -1,6 +1,4 @@
-package com.devgd.melonclone.global.consts;
-
-import android.app.Activity;
+package com.devgd.melonclone.global.model.view.states;
 
 import androidx.appcompat.app.AppCompatActivity;
 

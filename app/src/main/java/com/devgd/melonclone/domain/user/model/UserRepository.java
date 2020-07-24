@@ -1,13 +1,10 @@
 package com.devgd.melonclone.domain.user.model;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.devgd.melonclone.domain.user.domain.User;
-import com.devgd.melonclone.global.model.domain.Domain;
 import com.devgd.melonclone.global.model.domain.Message;
-import com.devgd.melonclone.global.model.repository.NetworkState;
+import com.devgd.melonclone.global.model.view.states.NetworkState;
 import com.devgd.melonclone.global.model.repository.Repository;
 import com.devgd.melonclone.utils.network.HttpManager;
 import com.devgd.melonclone.utils.network.services.UserService;

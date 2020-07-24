@@ -1,4 +1,4 @@
-package com.devgd.melonclone.global.model.repository;
+package com.devgd.melonclone.global.model.view.states;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

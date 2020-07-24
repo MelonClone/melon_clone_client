@@ -34,7 +34,7 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void layoutInit() {
-        setContentView(R.layout.user_regist);
+        setContentView(R.layout.user_regist_layout);
 
         userEmail = findViewById(R.id.user_email);
         userNickname = findViewById(R.id.user_nickname);

@@ -7,14 +7,17 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.adapter.LyricAdapter;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.domain.user.view.activity.LoginActivity;
+import com.devgd.melonclone.domain.user.view.activity.ProfileActivity;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
 import com.devgd.melonclone.global.customview.SqureImageView;
+import com.devgd.melonclone.global.model.view.states.LoginState;
 
 public class PlayerActivity extends BaseActivity {
 
@@ -32,6 +35,9 @@ public class PlayerActivity extends BaseActivity {
 
     // ViewModels
     PlayerViewModel playerViewModel;
+
+    // LiveDatas
+    LiveData<LoginState> loginState;
 
     @Override
     protected void layoutInit() {
@@ -52,6 +58,9 @@ public class PlayerActivity extends BaseActivity {
     protected void viewModelInit() {
         playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
         playerViewModel.getCurrentMusic().observe(this, music -> lyricAdapter.notifyDataSetChanged());
+        playerViewModel.getViewState().observe(this, getStateObserver(this));
+        loginState = playerViewModel.getLoginState();
+        playerViewModel.checkLogin();
     }
 
     @Override
@@ -66,8 +75,7 @@ public class PlayerActivity extends BaseActivity {
     @Override
     protected void listenerInit() {
         userBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), LoginActivity.class);
-            startActivity(intent);
+            playerViewModel.changeUserPage();
         });
 
         lyricBox.setOnClickListener(v -> {
@@ -91,26 +99,3 @@ public class PlayerActivity extends BaseActivity {
         });
     }
 }
-
-        /*mainBtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.d("TEST", event.getActionMasked()+"");
-                switch (event.getActionMasked()) {
-                    case ACTION_UP:
-                        mainBtn.setShapeType(ShapeType.FLAT);
-                        mainBtn.setShadowColorDark(getColor(R.color.colorDark));
-                        mainBtn.setShadowColorLight(getColor(R.color.colorLight));
-                        v.performClick();
-                        break;
-                    case ACTION_DOWN:
-                    default:
-                        mainBtn.setShapeType(ShapeType.PRESSED);
-                        mainBtn.setTranslationZ(0);
-                        mainBtn.setShadowColorDark(getColor(R.color.colorMain));
-                        mainBtn.setShadowColorLight(getColor(R.color.colorMain));
-                        break;
-                }
-                return true;
-            }
-        });*/

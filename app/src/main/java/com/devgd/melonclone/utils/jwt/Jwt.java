@@ -1,12 +1,13 @@
 package com.devgd.melonclone.utils.jwt;
 
-import java.util.HashMap;
-import java.util.List;
+import org.json.JSONObject;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class Jwt {
     Header header;
     RegisteredClaim registeredClaim;
@@ -25,7 +26,8 @@ public class Jwt {
     }
 
     @Getter
-    public class RegisteredClaim implements Claim {
+    @Setter
+    public static class RegisteredClaim implements Claim {
         String iss;
         String sub;
         String aud;
@@ -36,12 +38,15 @@ public class Jwt {
     }
 
     @Getter
+    @AllArgsConstructor
     public static class PublicClaim implements Claim {
-        HashMap<String, Object> claim;
+        JSONObject claim;
     }
 
     @Getter
-    public class PrivateClaim implements Claim {
-        HashMap<String, Object> claim;
+    @Setter
+    @AllArgsConstructor
+    public static class PrivateClaim implements Claim {
+        JSONObject claim;
     }
 }

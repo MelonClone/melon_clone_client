@@ -1,31 +1,30 @@
 package com.devgd.melonclone.domain.user.viewmodel;
 
-import android.os.Handler;
+import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.devgd.melonclone.domain.player.view.activity.PlayerActivity;
 import com.devgd.melonclone.domain.user.domain.AuthState;
 import com.devgd.melonclone.domain.user.domain.User;
 import com.devgd.melonclone.domain.user.model.LocalUserDataSource;
 import com.devgd.melonclone.domain.user.model.UserDataSource;
 import com.devgd.melonclone.domain.user.model.UserRepository;
-import com.devgd.melonclone.global.consts.ViewState;
+import com.devgd.melonclone.global.db.DatabaseCallback;
+import com.devgd.melonclone.global.model.view.states.LoginState;
+import com.devgd.melonclone.global.model.view.states.ViewState;
 import com.devgd.melonclone.global.model.domain.Message;
-import com.devgd.melonclone.global.model.repository.NetworkState;
+import com.devgd.melonclone.global.model.view.states.NetworkState;
 import com.devgd.melonclone.global.model.repository.Repository;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
 import com.devgd.melonclone.utils.Verifier;
 import com.devgd.melonclone.utils.db.DBHelper;
+import com.devgd.melonclone.utils.jwt.JwtParser;
 
 import static com.devgd.melonclone.domain.user.domain.AuthErrorCode.NO_ERROR;
 import static com.devgd.melonclone.domain.user.domain.AuthErrorCode.PASSWORD_NOT_MATCH;
-import static com.devgd.melonclone.domain.user.domain.AuthErrorCode.UNEXPECTED_ERROR;
 import static com.devgd.melonclone.domain.user.domain.AuthErrorCode.USER_INPUT_WRONG;
-import static com.devgd.melonclone.global.consts.StateCode.ACTIVITY_CHANGE;
-import static com.devgd.melonclone.global.consts.StateCode.AUTO_LOGIN;
+import static com.devgd.melonclone.global.model.view.states.StateCode.AUTO_LOGIN;
 
 public class RegisterViewModel extends BaseViewModel {
 
@@ -33,13 +32,11 @@ public class RegisterViewModel extends BaseViewModel {
 
     // TODO DI
     private UserRepository userRepository;
-    private UserDataSource userDataSource;
 
     @Override
     protected void init() {
         registerInfoText = new MutableLiveData<>();
         userRepository = UserRepository.getInstance();
-        userDataSource = new LocalUserDataSource(DBHelper.getInstance().getDB().userDao());
     }
 
     // 회원 등록 - verify, register request, login start

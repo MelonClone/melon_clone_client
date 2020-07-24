@@ -8,17 +8,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
 import com.devgd.melonclone.domain.user.domain.User;
-import com.devgd.melonclone.global.consts.ViewState;
-
-import static com.devgd.melonclone.global.consts.StateCode.ACTIVITY_CHANGE;
+import com.devgd.melonclone.global.model.view.states.ViewState;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        layoutInit();
         viewModelInit();
+        layoutInit();
         viewInit();
     }
 

@@ -6,9 +6,10 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.devgd.melonclone.domain.user.domain.User;
+import com.devgd.melonclone.global.model.dao.BaseDao;
 
 @Dao
-public interface UserDao {
+public interface UserDao extends BaseDao {
 
     /**
      * Get the user from the table. Since for simplicity we only have one user in the database,

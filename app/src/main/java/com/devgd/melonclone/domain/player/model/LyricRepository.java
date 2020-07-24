@@ -2,20 +2,16 @@ package com.devgd.melonclone.domain.player.model;
 
 import com.devgd.melonclone.domain.player.domain.Lyric;
 import com.devgd.melonclone.domain.player.domain.Music;
-import com.devgd.melonclone.global.model.repository.NetworkState;
+import com.devgd.melonclone.global.model.view.states.NetworkState;
 import com.devgd.melonclone.global.model.repository.Repository;
 import com.devgd.melonclone.utils.network.HttpManager;
 import com.devgd.melonclone.utils.network.services.MusicService;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.devgd.melonclone.global.consts.Constants.API_SERVER;
 
 public class LyricRepository implements Repository {
 

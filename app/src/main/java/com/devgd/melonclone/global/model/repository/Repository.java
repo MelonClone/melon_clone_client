@@ -1,6 +1,7 @@
 package com.devgd.melonclone.global.model.repository;
 
 import com.devgd.melonclone.global.model.domain.Domain;
+import com.devgd.melonclone.global.model.view.states.NetworkState;
 
 import java.util.List;
 
