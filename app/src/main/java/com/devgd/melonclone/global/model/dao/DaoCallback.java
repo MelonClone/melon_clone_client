@@ -1,4 +1,4 @@
-package com.devgd.melonclone.global.model;
+package com.devgd.melonclone.global.model.dao;
 
 import android.os.AsyncTask;
 

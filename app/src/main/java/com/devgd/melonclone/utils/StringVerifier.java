@@ -4,7 +4,7 @@ import android.util.Patterns;
 
 import java.util.regex.Pattern;
 
-public class Verifier {
+public class StringVerifier {
 
     public static boolean passwordVerify(String a, String b) {
         return a.trim().equals(b.trim());
@@ -16,7 +16,7 @@ public class Verifier {
     }
 
     public static boolean textVerify(String a) {
-        String regex = "^[a-zA-Z가-힣]*$";
+        String regex = "^[a-zA-Z가-힣ㄱ-ㅎㅏ-ㅢ]*$";
         return a.matches(regex);
     }
 }

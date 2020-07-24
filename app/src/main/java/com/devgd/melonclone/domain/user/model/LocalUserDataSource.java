@@ -1,12 +1,11 @@
 package com.devgd.melonclone.domain.user.model;
 
 import android.os.Message;
-import android.util.Log;
 
 import com.devgd.melonclone.domain.user.dao.UserDao;
 import com.devgd.melonclone.domain.user.domain.User;
 import com.devgd.melonclone.global.db.DatabaseCallback;
-import com.devgd.melonclone.global.model.DaoCallback;
+import com.devgd.melonclone.global.model.dao.DaoCallback;
 import com.devgd.melonclone.global.model.domain.Domain;
 
 public class LocalUserDataSource implements UserDataSource {

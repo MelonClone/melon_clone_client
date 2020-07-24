@@ -16,7 +16,7 @@ import com.devgd.melonclone.global.model.repository.Repository;
 import com.devgd.melonclone.global.model.view.states.NetworkState;
 import com.devgd.melonclone.global.model.view.states.ViewState;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
-import com.devgd.melonclone.utils.Verifier;
+import com.devgd.melonclone.utils.StringVerifier;
 import com.devgd.melonclone.utils.db.DBHelper;
 import com.devgd.melonclone.utils.jwt.Jwt;
 import com.devgd.melonclone.utils.jwt.JwtParser;
@@ -56,7 +56,7 @@ public class LoginViewModel extends BaseViewModel {
 
     // 로그인 = raw String email & password
     public void loginUser(String userEmail, String userPassword) {
-        if (Verifier.emailVerify(userEmail)) {
+        if (StringVerifier.emailVerify(userEmail)) {
             loginUser(new User(userEmail, userPassword));
         } else {
             loginInfoText.postValue(new AuthState(USER_INPUT_WRONG));

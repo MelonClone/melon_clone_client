@@ -1,25 +1,17 @@
 package com.devgd.melonclone.domain.user.viewmodel;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.devgd.melonclone.domain.user.domain.AuthState;
 import com.devgd.melonclone.domain.user.domain.User;
-import com.devgd.melonclone.domain.user.model.LocalUserDataSource;
-import com.devgd.melonclone.domain.user.model.UserDataSource;
 import com.devgd.melonclone.domain.user.model.UserRepository;
-import com.devgd.melonclone.global.db.DatabaseCallback;
-import com.devgd.melonclone.global.model.view.states.LoginState;
 import com.devgd.melonclone.global.model.view.states.ViewState;
 import com.devgd.melonclone.global.model.domain.Message;
 import com.devgd.melonclone.global.model.view.states.NetworkState;
 import com.devgd.melonclone.global.model.repository.Repository;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
-import com.devgd.melonclone.utils.Verifier;
-import com.devgd.melonclone.utils.db.DBHelper;
-import com.devgd.melonclone.utils.jwt.JwtParser;
+import com.devgd.melonclone.utils.StringVerifier;
 
 import static com.devgd.melonclone.domain.user.domain.AuthErrorCode.NO_ERROR;
 import static com.devgd.melonclone.domain.user.domain.AuthErrorCode.PASSWORD_NOT_MATCH;
@@ -41,7 +33,7 @@ public class RegisterViewModel extends BaseViewModel {
 
     // 회원 등록 - verify, register request, login start
     public void registerUser(String userEmail, String userNickname, String userPassword) {
-        if (Verifier.emailVerify(userEmail) && Verifier.textVerify(userNickname)) {
+        if (StringVerifier.emailVerify(userEmail) && StringVerifier.textVerify(userNickname)) {
             registerInfoText.postValue(new AuthState(NO_ERROR));
             User user = new User(userEmail, userNickname, userPassword);
             userRepository.registerUser(user, new Repository.RepoCallback<Message>() {
@@ -62,7 +54,7 @@ public class RegisterViewModel extends BaseViewModel {
 
     // Password match
     public void checkRegistryInfo(String userPassword, String userPasswordRetype) {
-        if (!Verifier.passwordVerify(userPassword, userPasswordRetype)) {
+        if (!StringVerifier.passwordVerify(userPassword, userPasswordRetype)) {
             registerInfoText.postValue(new AuthState(PASSWORD_NOT_MATCH));
         } else {
             registerInfoText.postValue(new AuthState(NO_ERROR));
