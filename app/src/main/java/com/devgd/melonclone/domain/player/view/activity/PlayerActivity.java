@@ -1,6 +1,5 @@
 package com.devgd.melonclone.domain.player.view.activity;
 
-import android.content.Intent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -13,10 +12,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.adapter.LyricAdapter;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
-import com.devgd.melonclone.domain.user.view.activity.LoginActivity;
-import com.devgd.melonclone.domain.user.view.activity.ProfileActivity;
-import com.devgd.melonclone.global.model.view.activity.BaseActivity;
 import com.devgd.melonclone.global.customview.SqureImageView;
+import com.devgd.melonclone.global.model.view.activity.BaseActivity;
 import com.devgd.melonclone.global.model.view.states.LoginState;
 
 public class PlayerActivity extends BaseActivity {

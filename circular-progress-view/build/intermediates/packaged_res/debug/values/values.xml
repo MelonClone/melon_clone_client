@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr format="boolean" name="backgroundAlphaEnabled"/>
+    <attr format="color" name="backgroundColor"/>
+    <attr format="boolean" name="duplicateFirstColorInArray"/>
+    <attr format="integer" name="max"/>
+    <attr format="integer" name="progress"/>
+    <attr format="color" name="progressBarColor"/>
+    <attr format="reference" name="progressBarColorArray"/>
+    <attr format="reference" name="progressBarColorArrayPositions"/>
+    <attr format="boolean" name="progressBarRounded"/>
+    <attr format="dimension" name="progressBarThickness"/>
+    <attr format="boolean" name="progressThumb"/>
+    <attr format="enum" name="progressThumbScaleType">
+        <enum name="auto" value="0"/>
+        <enum name="point" value="1"/>
+        <enum name="rate" value="2"/>
+    </attr>
+    <attr format="dimension" name="progressThumbSize"/>
+    <attr format="float" name="progressThumbSizeMaxRate"/>
+    <attr format="float" name="progressThumbSizeRate"/>
+    <attr format="boolean" name="reverse"/>
+    <attr format="boolean" name="shadow"/>
+    <attr format="integer" name="startingAngle"/>
+    <declare-styleable name="CircularProgressView">
+        <attr name="max"/>
+        <attr name="shadow"/>
+        <attr name="progressThumb"/>
+        <attr name="progressThumbSize"/>
+        <attr name="progressThumbSizeRate"/>
+        <attr name="progressThumbSizeMaxRate"/>
+        <attr name="progressThumbScaleType"/>
+        <attr name="startingAngle"/>
+        <attr name="progress"/>
+        <attr name="progressBarThickness"/>
+        <attr name="progressBarColor"/>
+        <attr name="progressBarColorArray"/>
+        <attr name="progressBarColorArrayPositions"/>
+        <attr name="duplicateFirstColorInArray"/>
+        <attr name="progressBarRounded"/>
+        <attr name="backgroundColor"/>
+        <attr name="backgroundAlphaEnabled"/>
+        <attr name="reverse"/>
+    </declare-styleable>
+</resources>

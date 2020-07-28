@@ -1,0 +1,23 @@
+com.github.guilhe.views.circularprogress
+attr backgroundAlphaEnabled
+attr backgroundColor
+attr duplicateFirstColorInArray
+attr max
+attr progress
+attr progressBarColor
+attr progressBarColorArray
+attr progressBarColorArrayPositions
+attr progressBarRounded
+attr progressBarThickness
+attr progressThumb
+attr progressThumbScaleType
+attr progressThumbSize
+attr progressThumbSizeMaxRate
+attr progressThumbSizeRate
+attr reverse
+attr shadow
+attr startingAngle
+id auto
+id point
+id rate
+styleable CircularProgressView backgroundAlphaEnabled backgroundColor duplicateFirstColorInArray max progress progressBarColor progressBarColorArray progressBarColorArrayPositions progressBarRounded progressBarThickness progressThumb progressThumbScaleType progressThumbSize progressThumbSizeMaxRate progressThumbSizeRate reverse shadow startingAngle

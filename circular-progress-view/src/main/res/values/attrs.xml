@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="max" format="integer" />
+    <attr name="shadow" format="boolean" />
+    <attr name="progressThumb" format="boolean" />
+    <attr name="progressThumbSize" format="dimension" />
+    <attr name="progressThumbSizeRate" format="float" />
+    <attr name="progressThumbSizeMaxRate" format="float" />
+    <attr name="startingAngle" format="integer" />
+    <attr name="progress" format="integer" />
+    <attr name="progressBarThickness" format="dimension" />
+    <attr name="progressBarColor" format="color" />
+    <attr name="progressBarColorArray" format="reference" />
+    <attr name="progressBarColorArrayPositions" format="reference" />
+    <attr name="duplicateFirstColorInArray" format="boolean" />
+    <attr name="progressBarRounded" format="boolean" />
+    <attr name="backgroundColor" format="color" />
+    <attr name="backgroundAlphaEnabled" format="boolean" />
+    <attr name="reverse" format="boolean" />
+    <attr format="enum" name="progressThumbScaleType">
+        <enum name="auto" value="0"/>
+        <enum name="point" value="1"/>
+        <enum name="rate" value="2"/>
+    </attr>
+
+    <declare-styleable name="CircularProgressView">
+        <attr name="max" />
+        <attr name="shadow" />
+        <attr name="progressThumb" />
+        <attr name="progressThumbSize" />
+        <attr name="progressThumbSizeRate" />
+        <attr name="progressThumbSizeMaxRate" />
+        <attr name="progressThumbScaleType" />
+        <attr name="startingAngle" />
+        <attr name="progress" />
+        <attr name="progressBarThickness" />
+        <attr name="progressBarColor" />
+        <attr name="progressBarColorArray" />
+        <attr name="progressBarColorArrayPositions" />
+        <attr name="duplicateFirstColorInArray" />
+        <attr name="progressBarRounded" />
+        <attr name="backgroundColor" />
+        <attr name="backgroundAlphaEnabled" />
+        <attr name="reverse" />
+    </declare-styleable>
+</resources>

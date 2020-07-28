@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Projects\Android\MelonCloneClient\circular-progress-view\src\main\res"/><source path="C:\Projects\Android\MelonCloneClient\circular-progress-view\build\generated\res\rs\debug"/><source path="C:\Projects\Android\MelonCloneClient\circular-progress-view\build\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Projects\Android\MelonCloneClient\circular-progress-view\src\main\res"><file path="C:\Projects\Android\MelonCloneClient\circular-progress-view\src\main\res\values\attrs.xml" qualifiers=""><attr format="integer" name="max"/><attr format="boolean" name="shadow"/><attr format="boolean" name="progressThumb"/><attr format="dimension" name="progressThumbSize"/><attr format="float" name="progressThumbSizeRate"/><attr format="float" name="progressThumbSizeMaxRate"/><attr format="integer" name="startingAngle"/><attr format="integer" name="progress"/><attr format="dimension" name="progressBarThickness"/><attr format="color" name="progressBarColor"/><attr format="reference" name="progressBarColorArray"/><attr format="reference" name="progressBarColorArrayPositions"/><attr format="boolean" name="duplicateFirstColorInArray"/><attr format="boolean" name="progressBarRounded"/><attr format="color" name="backgroundColor"/><attr format="boolean" name="backgroundAlphaEnabled"/><attr format="boolean" name="reverse"/><attr format="enum" name="progressThumbScaleType">
+        <enum name="auto" value="0"/>
+        <enum name="point" value="1"/>
+        <enum name="rate" value="2"/>
+    </attr><declare-styleable name="CircularProgressView">
+        <attr name="max"/>
+        <attr name="shadow"/>
+        <attr name="progressThumb"/>
+        <attr name="progressThumbSize"/>
+        <attr name="progressThumbSizeRate"/>
+        <attr name="progressThumbSizeMaxRate"/>
+        <attr name="progressThumbScaleType"/>
+        <attr name="startingAngle"/>
+        <attr name="progress"/>
+        <attr name="progressBarThickness"/>
+        <attr name="progressBarColor"/>
+        <attr name="progressBarColorArray"/>
+        <attr name="progressBarColorArrayPositions"/>
+        <attr name="duplicateFirstColorInArray"/>
+        <attr name="progressBarRounded"/>
+        <attr name="backgroundColor"/>
+        <attr name="backgroundAlphaEnabled"/>
+        <attr name="reverse"/>
+    </declare-styleable></file></source><source path="C:\Projects\Android\MelonCloneClient\circular-progress-view\build\generated\res\rs\debug"/><source path="C:\Projects\Android\MelonCloneClient\circular-progress-view\build\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Projects\Android\MelonCloneClient\circular-progress-view\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Projects\Android\MelonCloneClient\circular-progress-view\src\debug\res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="CircularProgressView">
+        <attr name="max"/>
+        <attr name="shadow"/>
+        <attr name="progressThumb"/>
+        <attr name="progressThumbSize"/>
+        <attr name="progressThumbSizeRate"/>
+        <attr name="progressThumbSizeMaxRate"/>
+        <attr name="progressThumbScaleType"/>
+        <attr name="startingAngle"/>
+        <attr name="progress"/>
+        <attr name="progressBarThickness"/>
+        <attr name="progressBarColor"/>
+        <attr name="progressBarColorArray"/>
+        <attr name="progressBarColorArrayPositions"/>
+        <attr name="duplicateFirstColorInArray"/>
+        <attr name="progressBarRounded"/>
+        <attr name="backgroundColor"/>
+        <attr name="backgroundAlphaEnabled"/>
+        <attr name="reverse"/>
+    </declare-styleable></configuration></mergedItems></merger>

@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -11,12 +11,12 @@ android {
 
     defaultConfig {
         applicationId "com.devgd.melonclone"
-        minSdkVersion 23
-        targetSdkVersion 29
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        renderscriptTargetApi 19
-        renderscriptSupportModeEnabled true
+//        renderscriptTargetApi 19
+//        renderscriptSupportModeEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -76,5 +76,6 @@ dependencies {
 
     // UI Libs
 //    implementation 'com.github.fornewid:neumorphism:0.1.10'
-    implementation 'com.github.guilhe:circular-progress-view:1.4.2'
+    implementation project(':circular-progress-view')
+//    implementation 'com.github.guilhe:circular-progress-view:1.4.2'
 }
