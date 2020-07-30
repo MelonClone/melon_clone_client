@@ -45,6 +45,11 @@ public class RegisterActivity extends BaseActivity {
     }
 
     @Override
+    protected void viewInit() {
+
+    }
+
+    @Override
     protected void viewModelInit() {
         // ViewModel init
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
@@ -53,11 +58,6 @@ public class RegisterActivity extends BaseActivity {
         registerViewModel.getViewState().observe(this, getStateObserver(this));
         registerViewModel.getRegisterInfo().observe(this, getErrorObserver());
         loginViewModel.getLoginInfo().observe(this, getErrorObserver());
-    }
-
-    @Override
-    protected void viewInit() {
-
     }
 
     @Override

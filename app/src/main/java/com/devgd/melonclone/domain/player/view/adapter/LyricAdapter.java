@@ -69,6 +69,10 @@ public class LyricAdapter extends BaseAdapter {
         return setViewRes(position, (TextView) convertView, textColor);
     }
 
+    public void setLyrics(List<Lyric> lyrics) {
+        this.lyricsList = lyrics;
+    }
+
     private View setViewRes(int position, TextView convertView, int textColor) {
 
         Lyric lyric = lyricsList.get(position);

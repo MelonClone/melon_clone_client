@@ -1,5 +1,6 @@
 package com.devgd.melonclone.domain.player.view.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -16,6 +17,8 @@ import com.devgd.melonclone.global.customview.SqureImageView;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
 import com.devgd.melonclone.global.model.view.states.LoginState;
 
+import java.util.ArrayList;
+
 public class PlayerActivity extends BaseActivity {
 
     // Views
@@ -24,7 +27,8 @@ public class PlayerActivity extends BaseActivity {
     LinearLayout lyricBox;
     ListView lyricView;
     LyricAdapter lyricAdapter;
-    ImageButton lyricClose;
+    ImageButton minimizeBtn;
+    ImageButton playlistBtn;
 
     SqureImageView albumImg;
     LinearLayout statusGroup;
@@ -44,11 +48,21 @@ public class PlayerActivity extends BaseActivity {
         halfView = findViewById(R.id.background_half_light);
         lyricBox = findViewById(R.id.lyric_box);
         lyricView = findViewById(R.id.lyrics_group);
-        lyricClose = findViewById(R.id.minimize_btn);
+        minimizeBtn = findViewById(R.id.minimize_btn);
+        playlistBtn = findViewById(R.id.playlist_btn);
 
         albumImg = findViewById(R.id.album_img);
         statusGroup = findViewById(R.id.status_group);
         playTimeGroup = findViewById(R.id.play_time_group);
+    }
+
+    @Override
+    protected void viewInit() {
+        lyricAdapter = new LyricAdapter(
+                this,
+                getLayoutInflater(),
+                new ArrayList<>());
+        lyricView.setAdapter(lyricAdapter);
     }
 
     @Override
@@ -62,17 +76,10 @@ public class PlayerActivity extends BaseActivity {
         playerViewModel.getViewState().observe(this, getStateObserver(this));
         loginState = playerViewModel.getLoginState();
         playerViewModel.checkLogin();
+        playerViewModel.getCurrentMusic().observe(this, music -> {
+            lyricAdapter.setLyrics(music.getMusicLyricList());
+        });
     }
-
-    @Override
-    protected void viewInit() {
-        lyricAdapter = new LyricAdapter(
-                this,
-                getLayoutInflater(),
-                playerViewModel.getCurrentMusic());
-        lyricView.setAdapter(lyricAdapter);
-    }
-
     @Override
     protected void listenerInit() {
         userBtn.setOnClickListener(v -> {
@@ -90,13 +97,20 @@ public class PlayerActivity extends BaseActivity {
 
         });
 
-        lyricClose.setOnClickListener(v -> {
+        minimizeBtn.setOnClickListener(v -> {
             if (halfView.getVisibility() == View.GONE) {
                 halfView.setVisibility(View.VISIBLE);
 
                 albumImg.setVisibility(View.VISIBLE);
                 statusGroup.setVisibility(View.VISIBLE);
             }
+        });
+
+        playlistBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PlaylistActivity.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
         });
     }
 }

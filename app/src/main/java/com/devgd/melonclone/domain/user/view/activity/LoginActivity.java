@@ -43,6 +43,11 @@ public class LoginActivity extends BaseActivity implements ChangeableFragmentAct
     }
 
     @Override
+    protected void viewInit() {
+
+    }
+
+    @Override
     protected void viewModelInit() {
         // ViewModel init
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
@@ -54,11 +59,6 @@ public class LoginActivity extends BaseActivity implements ChangeableFragmentAct
                 loginViewModel.loggedIn();
         });
         loginViewModel.checkLogin();
-    }
-
-    @Override
-    protected void viewInit() {
-
     }
 
     @Override

@@ -15,9 +15,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModelInit();
         layoutInit();
         viewInit();
+        viewModelInit();
     }
 
     @Override

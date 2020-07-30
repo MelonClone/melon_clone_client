@@ -24,7 +24,7 @@ public class PlayerModel {
 
     public void init() {
         // TODO get Music from SharedPreference
-        lastPlayedMusic = new Music("", "퇴근버스", new Album(), new Artist());
+        lastPlayedMusic = new Music("", "퇴근버스", new Album("앨범 이름"), new Artist("아티스트 이름"));
     }
 
     public Player getPlayer() {

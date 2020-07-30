@@ -8,4 +8,7 @@
     <string name="password_not_match">비밀번호가 일치하지 않습니다.</string>
     <string name="input_verify_fail">사용자 정보 형식이 다릅니다.</string>
     <string name="error_occurred">문제가 발생했습니다.</string>
+
+    <string name="playlist">재생목록</string>
+
 </resources>

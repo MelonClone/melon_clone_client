@@ -3,7 +3,7 @@
 3    package="com.github.guilhe.views.circularprogress" >
 4
 5    <uses-sdk
-6        android:minSdkVersion="19"
+6        android:minSdkVersion="23"
 6-->C:\Projects\Android\MelonCloneClient\circular-progress-view\src\main\AndroidManifest.xml
 7        android:targetSdkVersion="29" />
 7-->C:\Projects\Android\MelonCloneClient\circular-progress-view\src\main\AndroidManifest.xml
