@@ -3,6 +3,7 @@ package com.devgd.melonclone.domain.player.view.activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -16,6 +17,8 @@ import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.global.customview.SqureImageView;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
 import com.devgd.melonclone.global.model.view.states.LoginState;
+import com.devgd.melonclone.utils.image.GlideImgManager;
+import com.devgd.melonclone.utils.image.ImageSource;
 
 import java.util.ArrayList;
 
@@ -70,15 +73,18 @@ public class PlayerActivity extends BaseActivity {
         // ViewModel init
         playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
 
-        playerViewModel.getCurrentMusic().observe(this, music -> lyricAdapter.notifyDataSetChanged());
+        playerViewModel.getCurrentMusic().observe(this, music -> {
+            // TODO get image source
+            GlideImgManager.getInstance().setImages(this, albumImg,
+                    new ImageSource(getResources().getDrawable(R.drawable.sample_img2, getTheme()), ImageView.ScaleType.CENTER_CROP));
+            lyricAdapter.notifyDataSetChanged();
+            lyricAdapter.setLyrics(music.getMusicLyricList());
+        });
 
         // Check User
         playerViewModel.getViewState().observe(this, getStateObserver(this));
         loginState = playerViewModel.getLoginState();
         playerViewModel.checkLogin();
-        playerViewModel.getCurrentMusic().observe(this, music -> {
-            lyricAdapter.setLyrics(music.getMusicLyricList());
-        });
     }
     @Override
     protected void listenerInit() {

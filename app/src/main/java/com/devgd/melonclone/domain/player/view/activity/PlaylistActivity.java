@@ -2,6 +2,7 @@ package com.devgd.melonclone.domain.player.view.activity;
 
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.lifecycle.LiveData;
@@ -16,6 +17,8 @@ import com.devgd.melonclone.domain.player.viewmodel.PlaylistViewModel;
 import com.devgd.melonclone.global.customview.RoundImageView;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
 import com.devgd.melonclone.global.model.view.states.LoginState;
+import com.devgd.melonclone.utils.image.GlideImgManager;
+import com.devgd.melonclone.utils.image.ImageSource;
 
 import java.util.ArrayList;
 
@@ -69,7 +72,8 @@ public class PlaylistActivity extends BaseActivity {
 
         playerViewModel.getCurrentMusic().observe(this, music -> {
             // TODO mini player change
-//            albumImg;
+            GlideImgManager.getInstance().setImages(this, albumImg,
+                    new ImageSource(getResources().getDrawable(R.drawable.r8_small, getTheme()), ImageView.ScaleType.CENTER_CROP));
         });
 
         // Check User

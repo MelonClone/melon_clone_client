@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.domain.Playlist;
 import com.devgd.melonclone.global.customview.SqureImageView;
+import com.devgd.melonclone.utils.image.GlideImgManager;
+import com.devgd.melonclone.utils.image.ImageSource;
 
 import java.util.List;
 
@@ -71,6 +74,10 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
         int textColor = (curPlay == position) ? context.getColor(R.color.colorMain) : context.getColor(R.color.colorLight);
         holder.musicName.setTextColor(textColor);
         holder.artistName.setTextColor(textColor);
+
+        // TODO get image source
+        GlideImgManager.getInstance().setImages(context, holder.albumImg,
+                new ImageSource(context.getResources().getDrawable(R.drawable.r8_small, context.getTheme()), ImageView.ScaleType.CENTER_CROP));
     }
 
     @Override
