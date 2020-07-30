@@ -44,7 +44,10 @@ public class LoginActivity extends BaseActivity implements ChangeableFragmentAct
 
     @Override
     protected void viewModelInit() {
+        // ViewModel init
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+
+        // Check User
         loginViewModel.getViewState().observe(this, getStateObserver(this));
         loginViewModel.getLoginState().observe(this, loginState -> {
             if (loginState.isLogin())

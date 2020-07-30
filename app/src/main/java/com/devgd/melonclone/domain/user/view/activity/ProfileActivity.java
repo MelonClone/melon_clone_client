@@ -35,7 +35,10 @@ public class ProfileActivity extends BaseActivity {
 
     @Override
     protected void viewModelInit() {
+        // ViewModel init
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+
+        // Check User
         loginViewModel.getLoginState().observe(this, this::getUserState);
         loginViewModel.checkLogin();
     }

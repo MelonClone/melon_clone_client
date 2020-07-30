@@ -53,8 +53,12 @@ public class PlayerActivity extends BaseActivity {
 
     @Override
     protected void viewModelInit() {
+        // ViewModel init
         playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
+
         playerViewModel.getCurrentMusic().observe(this, music -> lyricAdapter.notifyDataSetChanged());
+
+        // Check User
         playerViewModel.getViewState().observe(this, getStateObserver(this));
         loginState = playerViewModel.getLoginState();
         playerViewModel.checkLogin();
