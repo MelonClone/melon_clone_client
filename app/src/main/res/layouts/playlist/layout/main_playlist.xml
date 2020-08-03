@@ -21,9 +21,7 @@
 
     <include
         layout="@layout/playlist_temp"
-        android:id="@+id/playlist_list"
-        app:layout_constraintTop_toBottomOf="@+id/playlist_menu"
-        app:layout_constraintBottom_toTopOf="@+id/controller" />
+        android:id="@+id/playlist_list" />
 
     <include layout="@layout/main_controller"
         android:id="@+id/controller"

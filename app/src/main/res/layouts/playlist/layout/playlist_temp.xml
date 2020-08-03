@@ -11,8 +11,54 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="40dp"
         >
+
+        <ImageButton
+            android:id="@+id/playlist_repeat_btn"
+            android:layout_width="55dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_repeat2_darkwhite"
+            android:scaleType="fitCenter"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            style="@style/Widget.AppCompat.Button.Borderless" />
+
+        <ImageButton
+            android:layout_width="28dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_search_darkwhite"
+            android:scaleType="fitCenter"
+            android:paddingTop="13dp"
+            android:paddingBottom="13dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:layout_toEndOf="@+id/playlist_repeat_btn"
+            style="@style/Widget.AppCompat.Button.Borderless" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내설정순"
+            android:textSize="14sp"
+            android:textColor="@color/colorDarkWhite"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="편집"
+            android:textSize="10sp"
+            android:textColor="@color/colorDarkWhite"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingStart="9dp"
+            android:paddingEnd="9dp"
+            android:background="@drawable/border_circle_box"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
 
     </RelativeLayout>
 

@@ -71,9 +71,10 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
             Toast.makeText(context, "MORE!", Toast.LENGTH_SHORT).show();
         });
 
-        int textColor = (curPlay == position) ? context.getColor(R.color.colorMain) : context.getColor(R.color.colorLight);
-        holder.musicName.setTextColor(textColor);
-        holder.artistName.setTextColor(textColor);
+        int musicNameColor = (curPlay == position) ? context.getColor(R.color.colorMain) : context.getColor(R.color.colorLight);
+        holder.musicName.setTextColor(musicNameColor);
+        int artistColor = (curPlay == position) ? context.getColor(R.color.colorMain) : context.getColor(R.color.colorDarkWhite);
+        holder.artistName.setTextColor(artistColor);
 
         // TODO get image source
         GlideImgManager.getInstance().setImages(context, holder.albumImg,
