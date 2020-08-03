@@ -13,6 +13,7 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.devgd.melonclone.utils.network.Request;
 
 import static com.bumptech.glide.load.engine.DiskCacheStrategy.ALL;
 
@@ -43,17 +44,14 @@ public class GlideImgBuilder {
     public void build(Context context, ImageView imageView, ImageSource imageSource, ImageSource refreshSource) {
 
         RequestBuilder thumbnailBuilder = getRequestBuilder(Glide.with(context), imageSource);
-        setLoad(thumbnailBuilder, imageSource);
         setOption(thumbnailBuilder, imageSource);
 
         RequestBuilder requestBuilder = getRequestBuilder(Glide.with(context), imageSource);
-        setLoad(requestBuilder, imageSource);
         setThumbnail(requestBuilder, thumbnailBuilder);
         setOption(requestBuilder, imageSource);
 
         if (refreshSource != null) {
             RequestBuilder refreshBuilder = getRequestBuilder(Glide.with(context), refreshSource);
-            setLoad(refreshBuilder, refreshSource);
             setOption(refreshBuilder, refreshSource);
             setError(requestBuilder, refreshBuilder);
         }
@@ -63,16 +61,13 @@ public class GlideImgBuilder {
     public void buildWithPlaceHolder(Context context, ImageView imageView, ImageSource imageSource, ImageSource refreshSource, ImageSource placeholderSource) {
 
         RequestBuilder thumbnailBuilder = getRequestBuilder(Glide.with(context), placeholderSource);
-        setLoad(thumbnailBuilder, placeholderSource);
         setOption(thumbnailBuilder, placeholderSource);
 
         RequestBuilder refreshBuilder = getRequestBuilder(Glide.with(context), refreshSource);
-        setLoad(refreshBuilder, refreshSource);
         setOption(refreshBuilder, refreshSource);
 
 
         RequestBuilder requestBuilder = getRequestBuilder(Glide.with(context), imageSource);
-        setLoad(requestBuilder, imageSource);
         setThumbnail(requestBuilder, thumbnailBuilder);
         setOption(requestBuilder, imageSource);
         if (refreshSource != null)
@@ -82,20 +77,52 @@ public class GlideImgBuilder {
 
 
     private RequestBuilder getRequestBuilder(RequestManager rm, ImageSource imageSource) {
-        if (imageSource.isUrl() && imageSource.isGif()) {
-            return rm.asGif();
+        if (imageSource.getSourceType() != null) {
+            return setLoad(setSourceType(rm, imageSource.getSourceType()), imageSource);
         } else {
-            return rm.asBitmap();
+            return setLoad(rm, imageSource);
         }
     }
 
-    private void setLoad(RequestBuilder rb, ImageSource imageSource) {
+    private RequestBuilder setSourceType(RequestManager rm, ImageSource.SourceType sourceType) {
+        RequestBuilder rb;
+        switch (sourceType) {
+            case BITMAP:
+                rb = rm.asBitmap();
+                break;
+            case GIF:
+                rb = rm.asGif();
+                break;
+            case FILE:
+                rb = rm.asFile();
+                break;
+            case DRAWABLE:
+            default:
+                rb = rm.asDrawable();
+                break;
+
+        }
+        return rb;
+    }
+
+    private RequestBuilder setLoad(RequestBuilder rb, ImageSource imageSource) {
         if (imageSource.isUrl()) {
-            rb.load(imageSource.getUrl());
+            return rb.load(imageSource.getUrl());
         } else {
-            rb.load(imageSource.getDrawable());
+            return rb.load(imageSource.getDrawable());
         }
     }
+
+    private RequestBuilder setLoad(RequestManager rm, ImageSource imageSource) {
+        if (imageSource.isUrl()) {
+            return rm.load(imageSource.getUrl());
+        } else {
+            return rm.load(imageSource.getDrawable());
+        }
+    }
+
+
+
 
     private void setThumbnail(RequestBuilder requestBuilder, RequestBuilder thumbnailBuilder) {
         requestBuilder.thumbnail(thumbnailBuilder);
@@ -143,9 +170,9 @@ public class GlideImgBuilder {
         }
     }
 
-    private void setTargetImage(Resources resources, ImageView imageView, ImageSource imageSource, RequestBuilder rb) {
+    private void setTargetImage(Resources resources, ImageView imageView, ImageSource imageSource, RequestBuilder requestBuilder) {
         if (imageSource.isRounded()) {
-            rb.into(new BitmapImageViewTarget(imageView) {
+            requestBuilder.into(new BitmapImageViewTarget(imageView) {
                 @Override
                 protected void setResource(Bitmap resource) {
                     RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, resource);
@@ -155,7 +182,7 @@ public class GlideImgBuilder {
                 }
             });
         } else {
-            rb.into(imageView);
+            requestBuilder.into(imageView);
         }
     }
 }

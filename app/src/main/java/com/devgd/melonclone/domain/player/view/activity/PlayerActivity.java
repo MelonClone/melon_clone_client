@@ -11,6 +11,8 @@ import android.widget.RelativeLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.adapter.LyricAdapter;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
@@ -75,8 +77,9 @@ public class PlayerActivity extends BaseActivity {
 
         playerViewModel.getCurrentMusic().observe(this, music -> {
             // TODO get image source
+//            Glide.with(this).asFile().load(getResources().getDrawable(R.drawable.sample_img2, getTheme())).apply(new RequestOptions().centerCrop()).into(albumImg);
             GlideImgManager.getInstance().setImages(this, albumImg,
-                    new ImageSource(getResources().getDrawable(R.drawable.sample_img2, getTheme()), ImageView.ScaleType.CENTER_CROP));
+                    new ImageSource(getResources().getDrawable(R.drawable.sample_img2, getTheme()), ImageView.ScaleType.CENTER_CROP, ImageSource.SourceType.DRAWABLE));
             lyricAdapter.notifyDataSetChanged();
             lyricAdapter.setLyrics(music.getMusicLyricList());
         });
