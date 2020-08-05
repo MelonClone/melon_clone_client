@@ -20,6 +20,7 @@ import com.devgd.melonclone.global.model.repository.Repository;
 import com.devgd.melonclone.global.model.view.states.NetworkState;
 import com.devgd.melonclone.global.model.view.states.ViewState;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
+import com.devgd.melonclone.utils.store.PlaylistSample;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,39 +48,7 @@ public class PlaylistViewModel extends BaseViewModel {
     }
 
     private void loadPlaylist() {
-        ArrayList<Playlist> playlist = new ArrayList<>();
-        playlist.add(new Playlist(new Music("abc1", "노래제목 테스트",
-                new Album("앨범제목 테스트"),
-                new Artist("아티스트 이름"))));
-        playlist.add(new Playlist(new Music("abc2", "노래제목 테스트",
-                new Album("앨범제목 테스트"),
-                new Artist("아티스트 이름"))));
-        playlist.add(new Playlist(new Music("abc3", "노래제목 테스트",
-                new Album("앨범제목 테스트"),
-                new Artist("아티스트 이름"))));
-        playlist.add(new Playlist(new Music("abc4", "노래제목 테스트",
-                new Album("앨범제목 테스트"),
-                new Artist("아티스트 이름"))));
-        playlist.add(new Playlist(new Music("abc5", "노래제목 테스트",
-                new Album("앨범제목 테스트"),
-                new Artist("아티스트 이름"))));
-        playlist.add(new Playlist(new Music("abc6", "노래제목 테스트",
-                new Album("앨범제목 테스트"),
-                new Artist("아티스트 이름"))));
-        playlist.add(new Playlist(new Music("abc7", "노래제목 테스트",
-                new Album("앨범제목 테스트"),
-                new Artist("아티스트 이름"))));
-        playlist.add(new Playlist(new Music("abc8", "노래제목 테스트",
-                new Album("앨범제목 테스트"),
-                new Artist("아티스트 이름"))));
-        playlist.add(new Playlist(new Music("abc9", "노래제목 테스트",
-                new Album("앨범제목 테스트"),
-                new Artist("아티스트 이름"))));playlist.add(new Playlist(new Music("abc1", "노래제목 테스트",
-                new Album("앨범제목 테스트"),
-                new Artist("아티스트 이름"))));
-
-
-        mPlaylistList.postValue(playlist);
+        mPlaylistList.postValue(PlaylistSample.getSample());
         /*playlistRepository.getAllPlaylist(new Repository.RepoListCallback<List<Playlist>>() {
             @Override
             public void success(List<Playlist> playlistList) {
