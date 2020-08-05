@@ -1,6 +1,7 @@
 package com.devgd.melonclone.domain.player.viewmodel;
 
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -19,8 +20,10 @@ import com.devgd.melonclone.global.model.view.states.NetworkState;
 import com.devgd.melonclone.global.model.repository.Repository;
 import com.devgd.melonclone.global.model.view.states.ViewState;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
+import com.devgd.melonclone.utils.db.SPHelper;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.devgd.melonclone.global.model.view.states.StateCode.ACTIVITY_CHANGE;
 

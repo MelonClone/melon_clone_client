@@ -8,17 +8,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.adapter.LyricAdapter;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.global.customview.SqureImageView;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
-import com.devgd.melonclone.global.model.view.states.LoginState;
 import com.devgd.melonclone.utils.image.GlideImgManager;
 import com.devgd.melonclone.utils.image.ImageSource;
 
@@ -41,9 +37,6 @@ public class PlayerActivity extends BaseActivity {
 
     // ViewModels
     PlayerViewModel playerViewModel;
-
-    // LiveDatas
-    LiveData<LoginState> loginState;
 
     @Override
     protected void layoutInit() {
@@ -86,7 +79,6 @@ public class PlayerActivity extends BaseActivity {
 
         // Check User
         playerViewModel.getViewState().observe(this, getStateObserver(this));
-        loginState = playerViewModel.getLoginState();
         playerViewModel.checkLogin();
     }
     @Override
