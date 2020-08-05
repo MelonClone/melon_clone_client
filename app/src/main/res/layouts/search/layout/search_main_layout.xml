@@ -14,7 +14,7 @@
             <com.tmall.ultraviewpager.UltraViewPager
                 android:id="@+id/ads_view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="165dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
                 android:layout_marginStart="10dp"
@@ -96,11 +96,13 @@
                         android:src="@drawable/ic_down_arrow_white"
                         android:scaleType="fitCenter"/>
                 </LinearLayout>
+
                 <com.tmall.ultraviewpager.UltraViewPager
                     android:id="@+id/ranking_view_pager"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
-                    android:layout_marginBottom="30dp" />
+                    android:layout_marginBottom="30dp"
+                    android:layout_below="@+id/ranking_group_title" />
             </RelativeLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
