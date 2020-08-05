@@ -26,6 +26,7 @@
         <activity android:name=".domain.user.view.activity.RegisterActivity" />
         <activity android:name=".domain.user.view.activity.ProfileActivity" />
         <activity android:name=".domain.player.view.activity.PlaylistActivity" />
+        <activity android:name=".domain.search.view.activity.SearchActivity" />
     </application>
 
 </manifest>

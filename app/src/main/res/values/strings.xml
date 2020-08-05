@@ -11,4 +11,7 @@
 
     <string name="playlist">재생목록</string>
 
+    <string name="newest_music_title">최신음악</string>
+    <string name="chart_title">메론차트</string>
+
 </resources>

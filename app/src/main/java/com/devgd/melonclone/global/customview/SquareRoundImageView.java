@@ -8,20 +8,20 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
-public class RoundImageView extends AppCompatImageView {
+public class SquareRoundImageView extends AppCompatImageView {
 
     // 라운드처리 강도 값을 크게하면 라운드 범위가 커짐
-    public static float radius = 70.0f;
+    public static float radius = 20.0f;
 
-    public RoundImageView(Context context) {
+    public SquareRoundImageView(Context context) {
         super(context);
     }
 
-    public RoundImageView(Context context, AttributeSet attrs) {
+    public SquareRoundImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public RoundImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SquareRoundImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

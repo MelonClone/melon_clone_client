@@ -9,4 +9,5 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Album implements Domain {
     private final String albumName;
+    private final String albumJacketUrl;
 }

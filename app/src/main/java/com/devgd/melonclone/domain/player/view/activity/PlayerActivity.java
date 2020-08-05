@@ -13,7 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.adapter.LyricAdapter;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
-import com.devgd.melonclone.global.customview.SqureImageView;
+import com.devgd.melonclone.domain.search.view.activity.SearchActivity;
+import com.devgd.melonclone.global.customview.SquareImageView;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
 import com.devgd.melonclone.utils.image.GlideImgManager;
 import com.devgd.melonclone.utils.image.ImageSource;
@@ -31,7 +32,7 @@ public class PlayerActivity extends BaseActivity {
     ImageButton minimizeBtn;
     ImageButton playlistBtn;
 
-    SqureImageView albumImg;
+    SquareImageView albumImg;
     LinearLayout statusGroup;
     RelativeLayout playTimeGroup;
 
@@ -72,9 +73,9 @@ public class PlayerActivity extends BaseActivity {
             // TODO get image source
 //            Glide.with(this).asFile().load(getResources().getDrawable(R.drawable.sample_img2, getTheme())).apply(new RequestOptions().centerCrop()).into(albumImg);
             GlideImgManager.getInstance().setImages(this, albumImg,
-                    new ImageSource(getResources().getDrawable(R.drawable.sample_img2, getTheme()), ImageView.ScaleType.CENTER_CROP, ImageSource.SourceType.DRAWABLE));
-            lyricAdapter.notifyDataSetChanged();
+                    new ImageSource(music.getAlbum().getAlbumJacketUrl(), ImageView.ScaleType.CENTER_CROP, ImageSource.SourceType.DRAWABLE));
             lyricAdapter.setLyrics(music.getMusicLyricList());
+            lyricAdapter.notifyDataSetChanged();
         });
 
         // Check User
@@ -104,6 +105,10 @@ public class PlayerActivity extends BaseActivity {
 
                 albumImg.setVisibility(View.VISIBLE);
                 statusGroup.setVisibility(View.VISIBLE);
+            } else {
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
             }
         });
 

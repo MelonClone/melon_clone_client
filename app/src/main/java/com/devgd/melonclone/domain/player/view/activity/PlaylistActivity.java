@@ -73,7 +73,7 @@ public class PlaylistActivity extends BaseActivity {
         playerViewModel.getCurrentMusic().observe(this, music -> {
             // TODO mini player change
             GlideImgManager.getInstance().setImages(this, albumImg,
-                    new ImageSource(getResources().getDrawable(R.drawable.r8_small, getTheme()), ImageView.ScaleType.CENTER_CROP));
+                    new ImageSource(music.getAlbum().getAlbumJacketUrl(), ImageView.ScaleType.CENTER_CROP));
         });
 
         // Check User

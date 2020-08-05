@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.tmall.ultraviewpager.UltraViewPager
+                android:id="@+id/ads_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:paddingBottom="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/newest_music_group" />
+
+            <RelativeLayout
+                android:id="@+id/newest_music_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintHeight_max="wrap"
+                app:layout_constraintTop_toBottomOf="@+id/ads_view_pager"
+                app:layout_constraintBottom_toTopOf="@+id/ranking_group" >
+                <LinearLayout
+                    android:id="@+id/newest_group_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center_vertical" >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/newest_music_title"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorDarkPoint"/>
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="5dp"
+                        android:padding="0dp"
+                        android:rotation="270"
+                        android:src="@drawable/ic_down_arrow_white"
+                        android:scaleType="fitCenter"/>
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/newest_music_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_below="@+id/newest_group_title"
+                    tools:listitem="@layout/newest_music_item" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ranking_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintHeight_max="wrap"
+                app:layout_constraintTop_toBottomOf="@+id/newest_music_group"
+                app:layout_constraintBottom_toBottomOf="parent" >
+                <LinearLayout
+                    android:id="@+id/ranking_group_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center_vertical" >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/chart_title"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorDarkPoint"/>
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="5dp"
+                        android:padding="0dp"
+                        android:rotation="270"
+                        android:src="@drawable/ic_down_arrow_white"
+                        android:scaleType="fitCenter"/>
+                </LinearLayout>
+                <com.tmall.ultraviewpager.UltraViewPager
+                    android:id="@+id/ranking_view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginBottom="30dp" />
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

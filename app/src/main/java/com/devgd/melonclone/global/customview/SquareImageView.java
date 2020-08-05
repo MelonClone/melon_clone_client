@@ -6,17 +6,17 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
-public class SqureImageView extends androidx.appcompat.widget.AppCompatImageView {
+public class SquareImageView extends androidx.appcompat.widget.AppCompatImageView {
 
-    public SqureImageView(Context context) {
+    public SquareImageView(Context context) {
         super(context);
     }
 
-    public SqureImageView(Context context, @Nullable AttributeSet attrs) {
+    public SquareImageView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public SqureImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public SquareImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

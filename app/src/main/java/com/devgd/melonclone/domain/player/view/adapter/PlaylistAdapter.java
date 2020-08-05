@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.domain.Playlist;
-import com.devgd.melonclone.global.customview.SqureImageView;
+import com.devgd.melonclone.global.customview.SquareImageView;
 import com.devgd.melonclone.utils.image.GlideImgManager;
 import com.devgd.melonclone.utils.image.ImageSource;
 
@@ -37,7 +37,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        SqureImageView albumImg;
+        SquareImageView albumImg;
         TextView musicName;
         TextView artistName;
         ImageButton moreBtn;
