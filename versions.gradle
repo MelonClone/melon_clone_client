@@ -40,6 +40,7 @@ versions.room = "2.2.5"
 versions.glide = "4.11.0"
 versions.circular_progress = "1.4.2"
 versions.ultra_viewpager = "1.0.7.7"
+versions.appbar = "1.2.0"
 
 ext.versions = versions
 

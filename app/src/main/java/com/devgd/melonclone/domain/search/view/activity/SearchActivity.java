@@ -3,6 +3,8 @@ package com.devgd.melonclone.domain.search.view.activity;
 import android.util.TypedValue;
 import android.view.Gravity;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,8 +19,6 @@ import com.devgd.melonclone.domain.search.viewmodel.NewestMusicViewModel;
 import com.devgd.melonclone.domain.search.viewmodel.RankingViewModel;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
 import com.tmall.ultraviewpager.UltraViewPager;
-import com.tmall.ultraviewpager.transformer.UltraDepthScaleTransformer;
-import com.tmall.ultraviewpager.transformer.UltraScaleTransformer;
 
 import java.util.ArrayList;
 
@@ -49,6 +49,14 @@ public class SearchActivity extends BaseActivity {
         rankingViewPager = findViewById(R.id.ranking_view_pager);
         rankingViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
     }
+
+    @Override
+    protected void toolbarInit() {
+        Toolbar searchAppbar = (Toolbar) findViewById(R.id.search_appbar);
+        setSupportActionBar(searchAppbar);
+        getCleanActionBar();
+    }
+
 
     @Override
     protected void viewInit() {

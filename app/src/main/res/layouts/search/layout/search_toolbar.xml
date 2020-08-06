@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/appbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:theme="@style/AppTheme.ActionBar">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/search_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/appbar_height"
+        android:theme="@style/AppTheme.ActionBar"
+        android:contentInsetStart="0dp"
+        app:contentInsetStart="0dp"
+        android:contentInsetEnd="0dp"
+        app:contentInsetEnd="0dp"
+        app:layout_scrollFlags="scroll|enterAlways" >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/melon"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+</com.google.android.material.appbar.AppBarLayout>

@@ -86,4 +86,5 @@ dependencies {
     implementation("com.alibaba.android:ultraviewpager:${versions.ultra_viewpager}@aar") {
         transitive = true
     }
+    implementation "com.google.android.material:material:$versions.appbar"
 }

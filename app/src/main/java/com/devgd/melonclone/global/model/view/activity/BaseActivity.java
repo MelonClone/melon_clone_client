@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
@@ -16,6 +17,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         layoutInit();
+        toolbarInit();
         viewInit();
         viewModelInit();
     }
@@ -27,10 +29,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         listenerInit();
     }
 
-    abstract protected void viewModelInit();
     abstract protected void layoutInit();
+    protected void toolbarInit() {
+
+    }
     abstract protected void viewInit();
+    abstract protected void viewModelInit();
     abstract protected void listenerInit();
+
+    // -- View methods
+    protected void getCleanActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+    }
+
+    // -- Functional methods
 
     protected void autoLogin(User user) {
 

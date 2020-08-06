@@ -28,7 +28,7 @@
             android:orientation="horizontal"/>
     </LinearLayout>
 
-    <include layout="@layout/main_title"
+    <include layout="@layout/main_title_bar"
         android:id="@+id/title_bar"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/album_img"

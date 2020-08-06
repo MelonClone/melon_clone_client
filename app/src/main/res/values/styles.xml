@@ -10,4 +10,14 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="AppTheme.ActionBar" parent="AppTheme">
+        <!-- Customize font -->
+        <item name="android:typeface">serif</item>
+
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorLightBackground</item>
+        <item name="colorPrimaryDark">@color/colorLight</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
 </resources>
