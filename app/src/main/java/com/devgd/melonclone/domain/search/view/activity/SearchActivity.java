@@ -3,7 +3,6 @@ package com.devgd.melonclone.domain.search.view.activity;
 import android.util.TypedValue;
 import android.view.Gravity;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;

@@ -2,12 +2,10 @@ package com.devgd.melonclone.domain.search.view.adapter;
 
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.devgd.melonclone.R;
-import com.devgd.melonclone.domain.player.domain.Music;
 import com.devgd.melonclone.domain.search.domain.Ads;
 import com.devgd.melonclone.global.model.view.adapter.BaseListPagerAdapter;
 import com.devgd.melonclone.utils.image.GlideImgManager;
