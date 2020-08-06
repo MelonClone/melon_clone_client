@@ -1,16 +1,13 @@
 package com.devgd.melonclone.domain.search.view.activity;
 
-import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.widget.ListView;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.devgd.melonclone.R;
-import com.devgd.melonclone.domain.player.view.adapter.LyricAdapter;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.domain.search.view.adapter.AdsPagerAdapter;
 import com.devgd.melonclone.domain.search.view.adapter.NewestMusicAdapter;
@@ -20,6 +17,8 @@ import com.devgd.melonclone.domain.search.viewmodel.NewestMusicViewModel;
 import com.devgd.melonclone.domain.search.viewmodel.RankingViewModel;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
 import com.tmall.ultraviewpager.UltraViewPager;
+import com.tmall.ultraviewpager.transformer.UltraDepthScaleTransformer;
+import com.tmall.ultraviewpager.transformer.UltraScaleTransformer;
 
 import java.util.ArrayList;
 
@@ -76,7 +75,7 @@ public class SearchActivity extends BaseActivity {
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         newestMusicView.setLayoutManager(layoutManager);
 
-        rankingPagerAdapter = new RankingPagerAdapter(this, R.layout.a_pager);
+        rankingPagerAdapter = new RankingPagerAdapter(this, R.layout.ranking_pager);
         rankingViewPager.setAdapter(rankingPagerAdapter);
         rankingViewPager.initIndicator();
         rankingViewPager.getIndicator()
@@ -87,7 +86,7 @@ public class SearchActivity extends BaseActivity {
                 .setRadius((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, getResources().getDisplayMetrics()));
         rankingViewPager.getIndicator().setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
         rankingViewPager.getIndicator().build();
-        rankingViewPager.setMultiScreen(1f);
+        rankingViewPager.setMultiScreen(0.88f);
     }
 
     @Override

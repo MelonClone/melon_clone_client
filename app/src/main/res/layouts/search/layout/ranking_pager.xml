@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="300dp"
+        android:layout_height="130dp"
+        android:padding="15dp"
+        android:layout_margin="10dp"
+        android:background="@color/colorLightBackgroundTrans"
+        android:elevation="4dp"
+        android:layout_centerInParent="true">
+        <com.devgd.melonclone.global.customview.SquareImageView
+            android:id="@+id/ranking_album_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/raking_album_group"
+            android:scaleType="centerCrop"/>
+
+        <RelativeLayout
+            android:id="@+id/raking_album_group"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ranking_album_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/ranking_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/colorDark"
+                tools:text="노래 제목" />
+
+            <TextView
+                android:id="@+id/ranking_artist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/ranking_title"
+                android:textSize="12sp"
+                android:textColor="@color/colorDark"
+                tools:text="아티스트 이름" />
+
+        </RelativeLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

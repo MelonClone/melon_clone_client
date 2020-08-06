@@ -10,7 +10,9 @@
     <color name="colorLightPoint">#FFFFFFFF</color>
     <color name="colorDarkPoint">#FF000000</color>
     <color name="colorLightBackground">#FFFFFFFF</color>
+    <color name="colorLightBackgroundTrans">#EEFFFFFF</color>
     <color name="colorDarkBackground">#FF3F3F3F</color>
+    <color name="colorDarkBackgroundTrans">#EE3F3F3F</color>
     <color name="songTitle">#FFFFFF</color>
     <color name="pointText">#00CD3C</color>
 </resources>

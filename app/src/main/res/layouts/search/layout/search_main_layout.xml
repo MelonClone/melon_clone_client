@@ -40,7 +40,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/newest_music_title"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorDarkPoint"/>
                     <ImageView
                         android:layout_width="12dp"
@@ -68,8 +68,6 @@
                 android:id="@+id/ranking_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 app:layout_constraintHeight_max="wrap"
                 app:layout_constraintTop_toBottomOf="@+id/newest_music_group"
                 app:layout_constraintBottom_toBottomOf="parent" >
@@ -78,12 +76,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:gravity="center_vertical" >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/chart_title"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorDarkPoint"/>
                     <ImageView
                         android:layout_width="12dp"
@@ -95,12 +95,22 @@
                         android:scaleType="fitCenter"/>
                 </LinearLayout>
 
-                <com.tmall.ultraviewpager.UltraViewPager
-                    android:id="@+id/ranking_view_pager"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="150dp"
                     android:layout_marginBottom="30dp"
-                    android:layout_below="@+id/ranking_group_title" />
+                    android:layout_below="@+id/ranking_group_title" >
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/music_wave4"
+                        android:scaleType="centerCrop" />
+
+                    <com.tmall.ultraviewpager.UltraViewPager
+                        android:id="@+id/ranking_view_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </RelativeLayout>
             </RelativeLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
