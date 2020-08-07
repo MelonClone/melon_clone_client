@@ -27,4 +27,8 @@
                 />
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/search_tab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/appbar_height"/>
 </com.google.android.material.appbar.AppBarLayout>

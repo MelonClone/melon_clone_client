@@ -15,6 +15,7 @@ public class Music implements Domain {
     final String musicTitleName;
     final Album album;
     final Artist artist;
+    final boolean isMV;
     @Setter
     List<Lyric> musicLyricList;
 
