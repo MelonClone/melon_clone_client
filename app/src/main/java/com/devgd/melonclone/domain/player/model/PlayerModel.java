@@ -1,10 +1,9 @@
 package com.devgd.melonclone.domain.player.model;
 
-import com.devgd.melonclone.domain.player.domain.Album;
-import com.devgd.melonclone.domain.player.domain.Artist;
 import com.devgd.melonclone.domain.player.domain.Music;
 import com.devgd.melonclone.domain.player.domain.Player;
 import com.devgd.melonclone.utils.store.MusicSample;
+import com.devgd.melonclone.utils.store.PlayerSample;
 
 public class PlayerModel {
     private Player player;
@@ -21,6 +20,7 @@ public class PlayerModel {
     }
 
     private PlayerModel() {
+        init();
     }
 
     public void init() {
@@ -29,13 +29,14 @@ public class PlayerModel {
     }
 
     public Player getPlayer() {
-        // TODO getting player from server
-        return player;
+        // TODO getting player from DB
+        return PlayerSample.getSample();
     }
 
     public Music getLastPlayedMusic() {
         if (lastPlayedMusic == null) {
-            return null;
+            // TODO getting last played music
+            return MusicSample.getSample();
         }
         return lastPlayedMusic;
     }

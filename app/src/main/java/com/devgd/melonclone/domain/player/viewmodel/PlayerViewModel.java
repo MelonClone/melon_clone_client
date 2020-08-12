@@ -1,8 +1,5 @@
 package com.devgd.melonclone.domain.player.viewmodel;
 
-import android.content.Intent;
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -16,20 +13,20 @@ import com.devgd.melonclone.domain.player.model.MusicRepository;
 import com.devgd.melonclone.domain.player.model.PlayerModel;
 import com.devgd.melonclone.domain.user.view.activity.LoginActivity;
 import com.devgd.melonclone.domain.user.view.activity.ProfileActivity;
+import com.devgd.melonclone.global.media.PlayManager;
+import com.devgd.melonclone.global.media.MelonMediaPlayer;
 import com.devgd.melonclone.global.model.view.states.NetworkState;
 import com.devgd.melonclone.global.model.repository.Repository;
 import com.devgd.melonclone.global.model.view.states.ViewState;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
-import com.devgd.melonclone.utils.db.SPHelper;
 
 import java.util.List;
-import java.util.Map;
 
 import static com.devgd.melonclone.global.model.view.states.StateCode.ACTIVITY_CHANGE;
 
 public class PlayerViewModel extends BaseViewModel {
 
-    private MutableLiveData<Player> playerList;
+    private MutableLiveData<Player> playerInfo;
     private MutableLiveData<Music> currentMusic;
     private MusicModel musicModel = new MusicModel();
     private LyricModel lyricModel = new LyricModel();
@@ -41,6 +38,8 @@ public class PlayerViewModel extends BaseViewModel {
 
     // private MutableLiveData<List<Playlist>> playlistList;
 
+    MelonMediaPlayer mediaPlayer;
+
     @Override
     protected void init() {
         musicRepository = MusicRepository.getInstance();
@@ -49,12 +48,12 @@ public class PlayerViewModel extends BaseViewModel {
     }
 
     public LiveData<Player> getPlayer() {
-        if (playerList == null) {
-            playerList = new MutableLiveData<>();
+        if (playerInfo == null) {
+            playerInfo = new MutableLiveData<>();
             loadPlayer();
         }
 
-        return playerList;
+        return playerInfo;
     }
 
     public LiveData<Music> getCurrentMusic() {
@@ -69,9 +68,9 @@ public class PlayerViewModel extends BaseViewModel {
     }
 
     private void loadPlayer() {
-        playerList = new MutableLiveData<>();
+        playerInfo = new MutableLiveData<>();
         if (playerModel.getPlayer() != null) {
-            playerList.postValue(playerModel.getPlayer());
+            playerInfo.postValue(playerModel.getPlayer());
         }
     }
 
@@ -112,6 +111,34 @@ public class PlayerViewModel extends BaseViewModel {
             state.postValue(new ViewState(ACTIVITY_CHANGE, ProfileActivity.class, null));
         } else {
             state.postValue(new ViewState(ACTIVITY_CHANGE, LoginActivity.class, null));
+        }
+    }
+
+    public void musicPlay() {
+        if (playerInfo.getValue() != null) {
+            if (playerInfo.getValue().isPlay()) {
+                PlayManager.getInstance().pausePlayer();
+                playerInfo.getValue().setPlay(false);
+            } else if (playerInfo.getValue().isPlayed()) {
+                PlayManager.getInstance().startPlayer();
+                playerInfo.getValue().setPlay(true);
+            } else {
+                if (currentMusic.getValue() != null) {
+                    mediaPlayer = new MelonMediaPlayer(currentMusic.getValue().getMusicUrl());
+                    PlayManager.getInstance().setPlayer(mediaPlayer);
+                    PlayManager.getInstance().startPlayer();
+                }
+                playerInfo.getValue().setPlay(true);
+            }
+            playerInfo.postValue(getPlayer().getValue());
+        }
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        if (!PlayManager.getInstance().isDestroyed()) {
+            PlayManager.getInstance().destroyPlayer();
         }
     }
 }

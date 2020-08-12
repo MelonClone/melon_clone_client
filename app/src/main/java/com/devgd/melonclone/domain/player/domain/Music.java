@@ -13,8 +13,10 @@ import lombok.Setter;
 public class Music implements Domain {
     final String musicId;
     final String musicTitleName;
+    final String musicUrl;
     final Album album;
     final Artist artist;
+    final boolean isLike;
     final boolean isMV;
     @Setter
     List<Lyric> musicLyricList;

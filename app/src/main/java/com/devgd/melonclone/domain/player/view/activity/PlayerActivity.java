@@ -32,6 +32,8 @@ public class PlayerActivity extends BaseActivity {
     ImageButton minimizeBtn;
     ImageButton playlistBtn;
 
+    ImageButton playBtn;
+
     SquareImageView albumImg;
     LinearLayout statusGroup;
     RelativeLayout playTimeGroup;
@@ -49,6 +51,8 @@ public class PlayerActivity extends BaseActivity {
         lyricView = findViewById(R.id.lyrics_group);
         minimizeBtn = findViewById(R.id.minimize_btn);
         playlistBtn = findViewById(R.id.playlist_btn);
+
+        playBtn = findViewById(R.id.play_btn);
 
         albumImg = findViewById(R.id.album_img);
         statusGroup = findViewById(R.id.status_group);
@@ -78,10 +82,19 @@ public class PlayerActivity extends BaseActivity {
             lyricAdapter.notifyDataSetChanged();
         });
 
+        playerViewModel.getPlayer().observe(this, observe -> {
+            if (observe.isPlay()) {
+                playBtn.setImageDrawable(getDrawable(R.drawable.ic_pause));
+            } else {
+                playBtn.setImageDrawable(getDrawable(R.drawable.ic_play_button));
+            }
+        });
+
         // Check User
         playerViewModel.getViewState().observe(this, getStateObserver(this));
         playerViewModel.checkLogin();
     }
+
     @Override
     protected void listenerInit() {
         userBtn.setOnClickListener(v -> {
@@ -117,6 +130,10 @@ public class PlayerActivity extends BaseActivity {
 //            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             overridePendingTransition(0, 0);
+        });
+
+        playBtn.setOnClickListener(v -> {
+            playerViewModel.musicPlay();
         });
     }
 }
