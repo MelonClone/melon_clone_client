@@ -30,5 +30,11 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/search_tab"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/appbar_height"/>
+        android:layout_height="@dimen/appbar_height"
+        app:tabMode="scrollable"
+        app:tabGravity="center"
+        app:tabIndicatorColor="@color/trans"
+        app:tabIndicatorHeight="0dp"
+        app:tabUnboundedRipple="true"
+        />
 </com.google.android.material.appbar.AppBarLayout>

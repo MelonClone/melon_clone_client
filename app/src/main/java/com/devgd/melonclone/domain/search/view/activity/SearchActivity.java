@@ -3,6 +3,9 @@ package com.devgd.melonclone.domain.search.view.activity;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.TextureView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,7 +21,10 @@ import com.devgd.melonclone.domain.search.view.adapter.RankingPagerAdapter;
 import com.devgd.melonclone.domain.search.viewmodel.AdsViewModel;
 import com.devgd.melonclone.domain.search.viewmodel.NewestMusicViewModel;
 import com.devgd.melonclone.domain.search.viewmodel.RankingViewModel;
+import com.devgd.melonclone.domain.search.viewmodel.SearchTabViewModel;
+import com.devgd.melonclone.global.model.handler.TabMenu;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
+import com.google.android.material.tabs.TabLayout;
 import com.tmall.ultraviewpager.UltraViewPager;
 
 import java.util.ArrayList;
@@ -26,6 +32,7 @@ import java.util.ArrayList;
 public class SearchActivity extends BaseActivity {
 
     // Views
+    TabLayout searchMenuTab;
     AdsPagerAdapter adsPagerAdapter;
     UltraViewPager adsViewPager;
     RecyclerView newestMusicView;
@@ -34,6 +41,7 @@ public class SearchActivity extends BaseActivity {
     UltraViewPager rankingViewPager;
 
     // ViewModels
+    SearchTabViewModel searchViewModel;
     PlayerViewModel playerViewModel;
     AdsViewModel adsViewModel;
     NewestMusicViewModel newestMusicViewModel;
@@ -42,6 +50,8 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void layoutInit() {
         setContentView(R.layout.search_main_layout);
+        searchMenuTab = findViewById(R.id.search_tab);
+
         adsViewPager = findViewById(R.id.ads_view_pager);
         adsViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
 
@@ -61,6 +71,8 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void viewInit() {
+        searchMenuTab.setTabRippleColor(null);
+
         adsPagerAdapter = new AdsPagerAdapter(this, R.layout.ads_pager);
         adsViewPager.setAdapter(adsPagerAdapter);
         adsViewPager.initIndicator();
@@ -112,6 +124,7 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void viewModelInit() {
         // ViewModel init
+        searchViewModel = new ViewModelProvider(this).get(SearchTabViewModel.class);
         playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
         adsViewModel = new ViewModelProvider(this).get(AdsViewModel.class);
         newestMusicViewModel = new ViewModelProvider(this).get(NewestMusicViewModel.class);
@@ -120,6 +133,12 @@ public class SearchActivity extends BaseActivity {
         // Check User
         playerViewModel.getViewState().observe(this, getStateObserver(this));
         playerViewModel.checkLogin();
+
+        searchViewModel.getList().observe(this, tabs -> {
+            for (int i=0; i<tabs.size(); i++) {
+                setupCustomTab(tabs.get(i));
+            }
+        });
 
         adsViewModel.getList().observe(this, list -> {
             adsPagerAdapter.setList(list);
@@ -138,5 +157,54 @@ public class SearchActivity extends BaseActivity {
     }
     @Override
     protected void listenerInit() {
+        searchMenuTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                View tabView = tab.getCustomView();
+                TextView tabNameView = tabView.findViewById(R.id.tab_name);
+                tabNameView.setTextColor(getColor(R.color.colorPrimary));
+                ImageView selectedIconView = tabView.findViewById(R.id.tab_selected_icon);
+                selectedIconView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+                View tabView = tab.getCustomView();
+                TextView tabNameView = tabView.findViewById(R.id.tab_name);
+                tabNameView.setTextColor(getColor(R.color.colorDarkPoint));
+                ImageView selectedIconView = tabView.findViewById(R.id.tab_selected_icon);
+                selectedIconView.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+    }
+
+    private void setupCustomTab(TabMenu tabMenu) {
+        View tabView = getLayoutInflater().inflate(R.layout.search_menu_tab, null);
+        TextView tabNameView = tabView.findViewById(R.id.tab_name);
+        TextView tabCountView = tabView.findViewById(R.id.tab_count);
+        ImageView selectedIconView = tabView.findViewById(R.id.tab_selected_icon);
+        tabNameView.setText(tabMenu.getTabName());
+        if (tabMenu.tabItemCount > 0) {
+            tabCountView.setText(String.valueOf(tabMenu.getTabItemCount()));
+            tabCountView.setVisibility(View.VISIBLE);
+        } else {
+            tabCountView.setVisibility(View.GONE);
+        }
+
+        if (tabMenu.getTabPointImage() != null) {
+            selectedIconView.setImageDrawable(tabMenu.getTabPointImage());
+        }
+
+        if (tabMenu.isSelected()) {
+            selectedIconView.setVisibility(View.VISIBLE);
+        } else {
+            selectedIconView.setVisibility(View.INVISIBLE);
+        }
+        searchMenuTab.addTab(searchMenuTab.newTab().setCustomView(tabView));
     }
 }

@@ -7,17 +7,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.devgd.melonclone.domain.player.domain.Music;
-import com.devgd.melonclone.domain.player.domain.Player;
-import com.devgd.melonclone.domain.player.model.PlayerModel;
 import com.devgd.melonclone.global.media.MelonMediaPlayer;
 import com.devgd.melonclone.global.media.PlayManager;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
-import com.devgd.melonclone.global.model.viewmodel.ListPagerAdapterViewModel;
+import com.devgd.melonclone.global.model.viewmodel.ListViewModel;
 import com.devgd.melonclone.utils.store.MusicSample;
 
 import java.util.List;
 
-public class NewestMusicViewModel extends BaseViewModel implements ListPagerAdapterViewModel<Music> {
+public class NewestMusicViewModel extends BaseViewModel implements ListViewModel<Music> {
 
     private MutableLiveData<List<Music>> mMusicList;
 

@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.devgd.melonclone.domain.search.domain.Ads;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
-import com.devgd.melonclone.global.model.viewmodel.ListPagerAdapterViewModel;
+import com.devgd.melonclone.global.model.viewmodel.ListViewModel;
 import com.devgd.melonclone.utils.store.AdsSample;
 
 import java.util.List;
 
-public class AdsViewModel extends BaseViewModel implements ListPagerAdapterViewModel<Ads> {
+public class AdsViewModel extends BaseViewModel implements ListViewModel<Ads> {
 
     private MutableLiveData<List<Ads>> mAdsList;
 

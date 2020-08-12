@@ -28,6 +28,20 @@
                 android:textColor="@color/colorLight"
                 android:textSize="16sp"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:layout_marginStart="2dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/border_circle_box_point"
+                android:gravity="center"
+                tools:text="50"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"/>
         </LinearLayout>
         <ImageView
             android:id="@+id/playing_img1"

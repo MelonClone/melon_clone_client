@@ -3,13 +3,9 @@ package com.devgd.melonclone.global.model.view.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.PagerAdapter;
-
-import com.devgd.melonclone.global.model.viewmodel.ListPagerAdapterViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

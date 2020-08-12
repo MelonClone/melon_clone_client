@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.devgd.melonclone.domain.player.domain.Music;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
-import com.devgd.melonclone.global.model.viewmodel.ListPagerAdapterViewModel;
+import com.devgd.melonclone.global.model.viewmodel.ListViewModel;
 import com.devgd.melonclone.utils.store.MusicSample;
 
 import java.util.List;
 
-public class RankingViewModel extends BaseViewModel implements ListPagerAdapterViewModel<Music> {
+public class RankingViewModel extends BaseViewModel implements ListViewModel<Music> {
 
     private MutableLiveData<List<Music>> mRankingList;
 

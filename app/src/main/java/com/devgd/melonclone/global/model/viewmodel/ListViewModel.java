@@ -4,6 +4,6 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-public interface ListPagerAdapterViewModel<T> {
+public interface ListViewModel<T> {
     LiveData<List<T>> getList();
 }
