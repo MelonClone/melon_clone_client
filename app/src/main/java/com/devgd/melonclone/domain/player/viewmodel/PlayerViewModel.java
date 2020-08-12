@@ -38,7 +38,6 @@ public class PlayerViewModel extends BaseViewModel {
 
     // private MutableLiveData<List<Playlist>> playlistList;
 
-    MelonMediaPlayer mediaPlayer;
 
     @Override
     protected void init() {
@@ -124,7 +123,7 @@ public class PlayerViewModel extends BaseViewModel {
                 playerInfo.getValue().setPlay(true);
             } else {
                 if (currentMusic.getValue() != null) {
-                    mediaPlayer = new MelonMediaPlayer(currentMusic.getValue().getMusicUrl());
+                    MelonMediaPlayer mediaPlayer = new MelonMediaPlayer(currentMusic.getValue().getMusicUrl());
                     PlayManager.getInstance().setPlayer(mediaPlayer);
                     PlayManager.getInstance().startPlayer();
                 }

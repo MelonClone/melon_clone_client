@@ -4,6 +4,7 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
+import android.view.Surface;
 
 import java.io.IOException;
 
@@ -14,7 +15,7 @@ import lombok.Getter;
 // 실제 플레이어 동작
 public class PlayerController extends Thread implements MediaPlayer.OnPreparedListener,
         MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener, MediaPlayer.OnBufferingUpdateListener,
-        MusicPlayerControl {
+        MusicPlayerControl, VideoPlayerControl {
 
     @Getter
     private MelonMediaPlayer mediaPlayer;
@@ -208,4 +209,10 @@ public class PlayerController extends Thread implements MediaPlayer.OnPreparedLi
         mediaPlayer.onVolumeChange();
     }
     // End MediaBasePlayerControl
+
+    // Start VideoPlayerControl
+    public void setDisplay(Surface surface) {
+        mediaPlayer.setSurface(surface);
+    }
+    // End VideoPlayerControl
 }

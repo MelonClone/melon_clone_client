@@ -2,6 +2,7 @@ package com.devgd.melonclone.domain.search.view.activity;
 
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.TextureView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.devgd.melonclone.R;
+import com.devgd.melonclone.domain.player.domain.Music;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.domain.search.view.adapter.AdsPagerAdapter;
 import com.devgd.melonclone.domain.search.view.adapter.NewestMusicAdapter;
@@ -51,7 +53,7 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void toolbarInit() {
-        Toolbar searchAppbar = (Toolbar) findViewById(R.id.search_appbar);
+        Toolbar searchAppbar = findViewById(R.id.search_appbar);
         setSupportActionBar(searchAppbar);
         getCleanActionBar();
     }
@@ -75,6 +77,17 @@ public class SearchActivity extends BaseActivity {
 
         newestMusicAdapter = new NewestMusicAdapter(
                 this,
+                new NewestMusicAdapter.NewestMusicEventCallback() {
+                    @Override
+                    public void onClick(TextureView view, Music music) {
+                        newestMusicViewModel.musicPlay(view, music);
+                    }
+
+                    @Override
+                    public void onStop() {
+                        newestMusicViewModel.musicStop();
+                    }
+                },
                 getLayoutInflater(),
                 new ArrayList<>());
         newestMusicView.setAdapter(newestMusicAdapter);

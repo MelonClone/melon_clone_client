@@ -3,6 +3,7 @@ package com.devgd.melonclone.global.media;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 
 import java.io.IOException;
@@ -11,11 +12,11 @@ import java.util.ArrayList;
 import lombok.Setter;
 
 // 컨트롤러 동작에 따른 플레이어 조작
-public class PlayManager implements MixPlayerControl {
+public class PlayManager implements MixPlayerControl, VideoPlayerControl {
 
     private static PlayManager playManager = new PlayManager();
 
-    private MusicPlayerControl mainPlayer; // 메인 플레이쓰레드
+    private VideoPlayerControl mainPlayer; // 메인 플레이쓰레드
     ArrayList<MusicPlayerControl> mixPlayerList = new ArrayList<>(); // 동시 플레이쓰레드
 //    private MelonMediaController controller; // 전체 컨트롤
 //    private Handler controllerHandler; // 플레이 결과 콜백
@@ -41,6 +42,10 @@ public class PlayManager implements MixPlayerControl {
             mainPlayer.destroyPlayer();
         }
         mainPlayer = new PlayerController(mediaPlayer);
+    }
+
+    public void setDisplay(Surface surface) {
+        mainPlayer.setDisplay(surface);
     }
 /*
     public void setSourceUrl(String sourceUrl) {
