@@ -4,28 +4,35 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Surface;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import lombok.Getter;
+import lombok.Setter;
 
 
 // 플레이 관련된 정보 할당
 // 실제 플레이어 동작
-public class PlayerController extends Thread implements MediaPlayer.OnPreparedListener,
+public class PlayerController extends Thread implements
         MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener, MediaPlayer.OnBufferingUpdateListener,
         MusicPlayerControl, VideoPlayerControl {
 
     @Getter
     private MelonMediaPlayer mediaPlayer;
     private boolean initiate = false;
+    @Getter
     private boolean prepared = false;
     private boolean completion = false;
     private int percent = 0;
+    private MediaPlayer.OnPreparedListener preparedListener;
 
-    public PlayerController(MelonMediaPlayer player) {
+    public PlayerController(MelonMediaPlayer player, MediaPlayer.OnPreparedListener preparedListener) {
         this.mediaPlayer = player;
+        this.preparedListener = preparedListener;
     }
 
     @Override
@@ -58,7 +65,7 @@ public class PlayerController extends Thread implements MediaPlayer.OnPreparedLi
             }
 
             mediaPlayer.setOnBufferingUpdateListener(this);
-            mediaPlayer.setOnPreparedListener(this);
+            mediaPlayer.setOnPreparedListener(preparedListener);
             mediaPlayer.setOnCompletionListener(this);
             mediaPlayer.setOnErrorListener(this);
         } catch (IllegalArgumentException | SecurityException | IllegalStateException | IOException e) {
@@ -71,17 +78,11 @@ public class PlayerController extends Thread implements MediaPlayer.OnPreparedLi
             mediaPlayer.prepare();
             mediaPlayer.setLooping(true);
             mediaPlayer.seekTo(0);
+            prepared = true;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    // Implement MediaPlayer.OnPreparedListener
-    @Override
-    public void onPrepared(MediaPlayer mp) {
-        prepared = true;
-    }
-    // End MediaPlayer.OnPreparedListener
 
     // Implement MediaPlayer.OnCompletionListener
     @Override
@@ -117,7 +118,7 @@ public class PlayerController extends Thread implements MediaPlayer.OnPreparedLi
     @Override
     public int getCurrentPosition() {
         int position = 0;
-        if (mediaPlayer.getCurrentPosition() > 0) {
+        if (mediaPlayer != null && mediaPlayer.getCurrentPosition() > 0) {
             position = mediaPlayer.getCurrentPosition();
         }
 

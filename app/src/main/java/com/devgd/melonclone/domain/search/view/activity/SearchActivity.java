@@ -4,6 +4,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.TextureView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.domain.search.view.adapter.AdsPagerAdapter;
 import com.devgd.melonclone.domain.search.view.adapter.NewestMusicAdapter;
 import com.devgd.melonclone.domain.search.view.adapter.RankingPagerAdapter;
+import com.devgd.melonclone.domain.search.view.fragment.MiniPlayerView;
 import com.devgd.melonclone.domain.search.viewmodel.AdsViewModel;
 import com.devgd.melonclone.domain.search.viewmodel.NewestMusicViewModel;
 import com.devgd.melonclone.domain.search.viewmodel.RankingViewModel;
@@ -39,6 +41,8 @@ public class SearchActivity extends BaseActivity {
     NewestMusicAdapter newestMusicAdapter;
     RankingPagerAdapter rankingPagerAdapter;
     UltraViewPager rankingViewPager;
+    ViewGroup musicPlayerGroup;
+    MiniPlayerView miniPlayerView;
 
     // ViewModels
     SearchTabViewModel searchViewModel;
@@ -46,6 +50,7 @@ public class SearchActivity extends BaseActivity {
     AdsViewModel adsViewModel;
     NewestMusicViewModel newestMusicViewModel;
     RankingViewModel rankingViewModel;
+
 
     @Override
     protected void layoutInit() {
@@ -59,6 +64,10 @@ public class SearchActivity extends BaseActivity {
 
         rankingViewPager = findViewById(R.id.ranking_view_pager);
         rankingViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
+
+        musicPlayerGroup = findViewById(R.id.mini_player);
+        miniPlayerView = new MiniPlayerView();
+        miniPlayerView.layoutInit(musicPlayerGroup);
     }
 
     @Override
@@ -119,6 +128,8 @@ public class SearchActivity extends BaseActivity {
         rankingViewPager.getIndicator().setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
         rankingViewPager.getIndicator().build();
         rankingViewPager.setMultiScreen(0.88f);
+
+        miniPlayerView.viewInit(musicPlayerGroup);
     }
 
     @Override
@@ -154,6 +165,13 @@ public class SearchActivity extends BaseActivity {
             rankingPagerAdapter.setList(list);
             rankingViewPager.refresh();
         });
+
+        playerViewModel.getPlayer().observe(this, player -> {
+
+            player.getCurrentPlaytime();
+        });
+
+        miniPlayerView.viewModelInit(this, playerViewModel);
     }
     @Override
     protected void listenerInit() {
@@ -181,6 +199,8 @@ public class SearchActivity extends BaseActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+
+        miniPlayerView.listenerInit();
     }
 
     private void setupCustomTab(TabMenu tabMenu) {

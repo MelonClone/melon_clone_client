@@ -3,11 +3,13 @@ package com.devgd.melonclone.global.media;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Surface;
-import android.view.SurfaceHolder;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Setter;
 
@@ -21,12 +23,15 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
 //    private MelonMediaController controller; // 전체 컨트롤
 //    private Handler controllerHandler; // 플레이 결과 콜백
 
+    ProgressTimerHandler mProgressHandler = new ProgressTimerHandler();
+    private List<PlaytimeListener> playtimeListenerList = new ArrayList<>();
+
     @Setter
     private Context mContext;
     private boolean isMixPlay = false;
 
     private PlayManager() {
-        mainPlayer = new PlayerController(new MelonMediaPlayer());
+        mainPlayer = new PlayerController(new MelonMediaPlayer(), null);
     }
 
     public static PlayManager getInstance() {
@@ -41,7 +46,7 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
         if (!mainPlayer.isDestroyed()) {
             mainPlayer.destroyPlayer();
         }
-        mainPlayer = new PlayerController(mediaPlayer);
+        mainPlayer = new PlayerController(mediaPlayer, mp -> mProgressHandler.sendEmptyMessage(SHOW_PROGRESS));
     }
 
     public void setDisplay(Surface surface) {
@@ -139,6 +144,7 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
             mixPlayer.startPlayer();
         }
 
+        mProgressHandler.sendEmptyMessage(SHOW_PROGRESS);
 //        if (controllerHandler != null)
 //            controllerHandler.sendMessage(new Message());
     }
@@ -202,6 +208,12 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
     public void setVolume(float volume) {
         mainPlayer.setVolume(volume);
     }
+
+    @Override
+    public boolean isPrepared() {
+        return mainPlayer.isPrepared();
+    }
+
     // End MediaBasePlayerControl
 
     // Start MediaMixPlayerControl
@@ -270,4 +282,34 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
         return mixPlayerList.get(index).getMediaPlayer();
     }
 
+
+    private static final int SHOW_PROGRESS = 1;
+    private static class ProgressTimerHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case SHOW_PROGRESS:
+                    if (PlayManager.getInstance().playtimeListenerList.size() > 0 && PlayManager.getInstance().getDuration() > 0) {
+                        int progress = (int) (((float) PlayManager.getInstance().getCurrentPosition() / (float) PlayManager.getInstance().getDuration()) * 100);
+                        for (PlaytimeListener listener : PlayManager.getInstance().playtimeListenerList) {
+                            listener.onPlaytimeListen(progress);
+                        }
+                    }
+                    if (PlayManager.getInstance().isPrepared()) {
+                        msg = obtainMessage(SHOW_PROGRESS);
+                        sendMessageDelayed(msg, 500);
+                    }
+                    break;
+            }
+        }
+    }
+
+    public void addPlaytimeListener(PlaytimeListener listener) {
+        playtimeListenerList.add(listener);
+    }
+
+    public void removePlaytimeListener(PlaytimeListener listener) {
+        playtimeListenerList.remove(listener);
+    }
 }

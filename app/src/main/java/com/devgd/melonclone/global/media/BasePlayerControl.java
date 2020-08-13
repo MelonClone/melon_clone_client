@@ -13,4 +13,6 @@ public interface BasePlayerControl {
     boolean isDestroyed();
 
     void setVolume(float volume);
+
+    boolean isPrepared();
 }

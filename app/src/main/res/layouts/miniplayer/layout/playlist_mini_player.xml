@@ -22,6 +22,7 @@
             android:layout_alignParentBottom="true"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:padding="16dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_playlist_white"
             android:background="@color/colorDarkBackground"
             />
@@ -81,12 +82,13 @@
             android:layout_centerVertical="true">
 
             <RelativeLayout
-                android:id="@+id/play_btn"
+                android:id="@+id/play_btn_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true">
                 <com.github.guilhe.views.CircularProgressView
+                    android:id="@+id/player_progress"
                     android:layout_width="52dp"
                     android:layout_height="52dp"
                     android:layout_centerVertical="true"
@@ -103,6 +105,7 @@
                     app:progressThumbSize="4dp"/>
 
                 <ImageButton
+                    android:id="@+id/play_btn"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_centerVertical="true"
@@ -116,22 +119,38 @@
                     android:scaleType="centerCrop"
                     />
 
+                <ImageButton
+                    android:id="@+id/pause_btn"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:src="@drawable/ic_pause"
+                    android:padding="6dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="invisible"
+                    />
+
+
             </RelativeLayout>
             <ImageButton
+                android:id="@+id/next_btn"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/play_btn"
+                android:layout_toEndOf="@+id/play_btn_group"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:src="@drawable/ic_next_white"
                 android:padding="5dp"
                 android:scaleType="fitCenter"
                 />
             <ImageButton
+                android:id="@+id/prev_btn"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerVertical="true"
-                android:layout_toStartOf="@+id/play_btn"
+                android:layout_toStartOf="@+id/play_btn_group"
                 android:rotation="180"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:src="@drawable/ic_next_white"

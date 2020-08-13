@@ -11,9 +11,10 @@ import java.util.List;
 public class MusicSample {
 
     private static final String tempMusic1 =
-             "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8";
-            // "https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8";
-            // "http://184.72.239.149/vod/smil:BigBuckBunny.smil/playlist.m3u8";
+//             "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8";
+            "https://content.jwplatform.com/manifests/yp34SRmf.m3u8";
+//             "https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8";
+//             "http://184.72.239.149/vod/smil:BigBuckBunny.smil/playlist.m3u8";
     
     public static Music getSample() {
         return new Music("abc1", "노래제목 테스트", tempMusic1,

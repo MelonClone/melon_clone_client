@@ -13,10 +13,11 @@ import com.devgd.melonclone.domain.player.model.MusicRepository;
 import com.devgd.melonclone.domain.player.model.PlayerModel;
 import com.devgd.melonclone.domain.user.view.activity.LoginActivity;
 import com.devgd.melonclone.domain.user.view.activity.ProfileActivity;
-import com.devgd.melonclone.global.media.PlayManager;
 import com.devgd.melonclone.global.media.MelonMediaPlayer;
-import com.devgd.melonclone.global.model.view.states.NetworkState;
+import com.devgd.melonclone.global.media.PlayManager;
+import com.devgd.melonclone.global.media.Playable;
 import com.devgd.melonclone.global.model.repository.Repository;
+import com.devgd.melonclone.global.model.view.states.NetworkState;
 import com.devgd.melonclone.global.model.view.states.ViewState;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
 
@@ -24,7 +25,7 @@ import java.util.List;
 
 import static com.devgd.melonclone.global.model.view.states.StateCode.ACTIVITY_CHANGE;
 
-public class PlayerViewModel extends BaseViewModel {
+public class PlayerViewModel extends BaseViewModel implements Playable {
 
     private MutableLiveData<Player> playerInfo;
     private MutableLiveData<Music> currentMusic;
@@ -139,5 +140,15 @@ public class PlayerViewModel extends BaseViewModel {
         if (!PlayManager.getInstance().isDestroyed()) {
             PlayManager.getInstance().destroyPlayer();
         }
+    }
+
+    @Override
+    public boolean isPlay() {
+        return PlayManager.getInstance().isPlaying();
+    }
+
+    @Override
+    public int getCurrentPosition() {
+        return PlayManager.getInstance().getCurrentPosition();
     }
 }
