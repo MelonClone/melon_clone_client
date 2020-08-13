@@ -138,7 +138,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/border_box_fill"
+                android:background="@drawable/border_box_fill_dark"
                 android:padding="1dp"
                 android:paddingStart="4dp"
                 android:paddingEnd="4dp"

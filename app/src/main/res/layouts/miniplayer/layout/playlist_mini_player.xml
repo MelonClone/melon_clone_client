@@ -3,108 +3,141 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mini_player"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    app:layout_constraintBottom_toBottomOf="parent">
-
-    <ImageButton
-        android:id="@+id/playlist_btn"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_centerVertical="true"
-        android:layout_margin="10dp"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:src="@drawable/ic_playlist_white"
-        android:padding="10dp"
-        />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_toStartOf="@+id/player_control"
-        android:layout_toEndOf="@+id/playlist_btn"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:orientation="vertical"
-        android:gravity="center">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/songTitle"
-            android:textSize="20sp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Nobody But You(Duet with Gwen Stefani)"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/pointText"
-            android:textSize="15sp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Blake Shelton"
-            />
-    </LinearLayout>
+    android:layout_height="@dimen/mini_player_height"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_alignParentBottom="true"
+    android:layout_gravity="bottom">
 
     <RelativeLayout
-        android:id="@+id/player_control"
-        android:layout_width="114dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true">
-
-        <RelativeLayout
-            android:id="@+id/play_btn"
+        android:id="@+id/playlist_btn_group"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true">
+        <ImageButton
+            android:id="@+id/playlist_btn"
+            android:layout_width="55dp"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:padding="16dp"
+            android:src="@drawable/ic_playlist_white"
+            android:background="@color/colorDarkBackground"
+            />
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true">
-            <com.github.guilhe.views.CircularProgressView
+            android:background="@drawable/border_box_fill_dark"
+            android:layout_centerHorizontal="true"
+            android:padding="1dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:text="m u s i c"
+            android:textColor="@color/colorLightPoint"
+            android:textSize="10sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_toEndOf="@+id/playlist_btn_group"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorDarkBackground">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@+id/player_control"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/songTitle"
+                android:textSize="17sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Nobody But You(Duet with Gwen Stefani)"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pointText"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Blake Shelton"
+                />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/player_control"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
+
+            <RelativeLayout
+                android:id="@+id/play_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                app:progress="30"
-                app:progressBarThickness="3dp"
-                app:progressThumb="true"
-                app:progressBarRounded="true"
-                app:shadow="false"
-                app:backgroundColor="@color/colorLight"
-                app:progressBarColor="@color/colorMain"/>
+                android:layout_centerHorizontal="true">
+                <com.github.guilhe.views.CircularProgressView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    app:progress="30"
+                    app:progressBarThickness="2dp"
+                    app:progressThumb="true"
+                    app:progressBarRounded="true"
+                    app:shadow="false"
+                    app:backgroundColor="@color/colorLight"
+                    app:progressBarColor="@color/colorMain"
+                    app:progressThumbScaleType="point"
+                    app:progressThumbSize="4dp"/>
 
+                <ImageButton
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:src="@drawable/ic_play_button"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="5dp"
+                    android:scaleType="centerCrop"
+                    />
+
+            </RelativeLayout>
             <ImageButton
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
+                android:layout_toEndOf="@+id/play_btn"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:src="@drawable/ic_play_button"
+                android:src="@drawable/ic_next_white"
                 android:padding="5dp"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 />
-
+            <ImageButton
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/play_btn"
+                android:rotation="180"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:src="@drawable/ic_next_white"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                />
         </RelativeLayout>
-        <ImageButton
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/play_btn"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:src="@drawable/ic_next_white"
-            android:padding="0dp"
-            android:scaleType="fitCenter"
-            />
-        <ImageButton
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/play_btn"
-            android:rotation="180"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:src="@drawable/ic_next_white"
-            android:padding="0dp"
-            android:scaleType="fitCenter"
-            />
+
     </RelativeLayout>
 </RelativeLayout>

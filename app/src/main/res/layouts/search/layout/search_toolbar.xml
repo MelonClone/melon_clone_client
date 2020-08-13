@@ -19,6 +19,18 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
+
+            <ImageButton
+                android:id="@+id/user_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:src="@drawable/ic_user_point"
+                android:scaleType="fitCenter"
+                android:padding="13dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"/>
+
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
