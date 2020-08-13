@@ -91,6 +91,7 @@
                     android:layout_height="52dp"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
+                    android:padding="3dp"
                     app:progress="30"
                     app:progressBarThickness="2dp"
                     app:progressThumb="true"

@@ -656,6 +656,13 @@ public class CircularProgressView extends View {
         return Color.argb(alpha, red, green, blue);
     }
 
+    private float getMeasuredPadding() {
+        float verticalPadding = getPaddingTop() - getPaddingBottom() > 0 ? getPaddingTop() : getPaddingBottom();
+        float horizontalPadding = getPaddingStart() - getPaddingEnd() > 0 ? getPaddingStart() : getPaddingEnd();
+
+        return verticalPadding - horizontalPadding > 0 ? verticalPadding : horizontalPadding;
+    }
+
     @Override
     protected synchronized void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width = MeasureSpec.getSize(widthMeasureSpec);
@@ -683,7 +690,7 @@ public class CircularProgressView extends View {
             }
         }
 
-        float arcDim = Math.max(progressWidth, 0) + mDefaultViewPadding;
+        float arcDim = Math.max(progressWidth, 0) + getMeasuredPadding();
         mProgressRectF.set(arcDim, arcDim, rawMeasuredDim - arcDim, rawMeasuredDim - arcDim);
 
         //To avoid creating a messy composition
@@ -700,7 +707,7 @@ public class CircularProgressView extends View {
             mLastValidThumbSizeRate = mProgressThumbSizeRate;
         }
 
-        mShadowRectF.set(mProgressRectF.left, mDefaultShadowPadding + mProgressRectF.top, mProgressRectF.right, mDefaultShadowPadding + mProgressRectF.bottom);
+        mShadowRectF.set(mProgressRectF.left, getMeasuredPadding() + mProgressRectF.top, mProgressRectF.right, getMeasuredPadding() + mProgressRectF.bottom);
         setMeasuredDimension(rawMeasuredDim, rawMeasuredDim);
     }
 
@@ -720,7 +727,7 @@ public class CircularProgressView extends View {
 
         float angle;
         float previousAngle = mStartingAngle;
-        float radius = (float) getWidth() / 2 - mDefaultViewPadding;
+        float radius = (float) getWidth() / 2 - getMeasuredPadding();
 
         float thumbSize = 0;
         if (mProgressThumbScaleType == AUTO) {
