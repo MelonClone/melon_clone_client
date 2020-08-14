@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
 
-public interface LayoutLifecycle {
+public interface LifecycleView {
     void layoutInit(ViewGroup parentViewGroup);
     void viewInit(ViewGroup viewGroup);
     void viewModelInit(BaseActivity activity, BaseViewModel viewModel);

@@ -52,6 +52,6 @@ public class NewestMusicViewModel extends BaseViewModel implements ListViewModel
     @Override
     protected void onCleared() {
         super.onCleared();
-        musicStop();
+//        musicStop();
     }
 }

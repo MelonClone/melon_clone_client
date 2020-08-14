@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Surface;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ public class PlayerController extends Thread implements
     @Getter
     private boolean prepared = false;
     private boolean completion = false;
+    private boolean paused = false;
     private int percent = 0;
     private MediaPlayer.OnPreparedListener preparedListener;
 
@@ -42,7 +44,9 @@ public class PlayerController extends Thread implements
             completion = false;
             playerInit();
             playerPrepare();
-            mediaPlayer.start();
+//            if (!paused) {
+                mediaPlayer.start();
+//            }
         } catch (IllegalStateException e) {
             //e.printStackTrace();
         }
@@ -139,6 +143,7 @@ public class PlayerController extends Thread implements
                 start();
             } else {
                 mediaPlayer.start();
+                paused = false;
             }
         }
     }
@@ -147,6 +152,7 @@ public class PlayerController extends Thread implements
     public void pausePlayer() {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
+            paused = true;
         }
     }
 
@@ -164,10 +170,11 @@ public class PlayerController extends Thread implements
 
     @Override
     public void releasePlayer() {
+        Log.d("Released", "CUR");
         if (mediaPlayer.isPlaying() || mediaPlayer.isLooping()) {
             mediaPlayer.stop();
-            mediaPlayer.release();
         }
+        mediaPlayer.release();
     }
 
 
@@ -178,6 +185,7 @@ public class PlayerController extends Thread implements
 
     @Override
     public void destroyPlayer() {
+        Log.d("Destroyed", "CUR");
         mediaPlayer.stop();
         mediaPlayer.setDisplay(null);
         mediaPlayer.release();

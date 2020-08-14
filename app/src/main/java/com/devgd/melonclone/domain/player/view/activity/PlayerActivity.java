@@ -2,6 +2,7 @@ package com.devgd.melonclone.domain.player.view.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.adapter.LyricAdapter;
+import com.devgd.melonclone.domain.player.view.fragment.MainPlayerView;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.domain.search.view.activity.SearchActivity;
 import com.devgd.melonclone.global.customview.SquareImageView;
@@ -31,12 +33,12 @@ public class PlayerActivity extends BaseActivity {
     LyricAdapter lyricAdapter;
     ImageButton minimizeBtn;
     ImageButton playlistBtn;
-
-    ImageButton playBtn;
-
     SquareImageView albumImg;
     LinearLayout statusGroup;
     RelativeLayout playTimeGroup;
+
+    // LifecycleView
+    MainPlayerView mainPlayerView;
 
     // ViewModels
     PlayerViewModel playerViewModel;
@@ -52,11 +54,12 @@ public class PlayerActivity extends BaseActivity {
         minimizeBtn = findViewById(R.id.minimize_btn);
         playlistBtn = findViewById(R.id.playlist_btn);
 
-        playBtn = findViewById(R.id.play_btn);
-
         albumImg = findViewById(R.id.album_img);
         statusGroup = findViewById(R.id.status_group);
         playTimeGroup = findViewById(R.id.play_time_group);
+
+        mainPlayerView = new MainPlayerView();
+        mainPlayerView.layoutInit(getRootView());
     }
 
     @Override
@@ -66,6 +69,8 @@ public class PlayerActivity extends BaseActivity {
                 getLayoutInflater(),
                 new ArrayList<>());
         lyricView.setAdapter(lyricAdapter);
+
+        mainPlayerView.viewInit(getRootView());
     }
 
     @Override
@@ -82,17 +87,12 @@ public class PlayerActivity extends BaseActivity {
             lyricAdapter.notifyDataSetChanged();
         });
 
-        playerViewModel.getPlayer().observe(this, observe -> {
-            if (observe.isPlay()) {
-                playBtn.setImageDrawable(getDrawable(R.drawable.ic_pause));
-            } else {
-                playBtn.setImageDrawable(getDrawable(R.drawable.ic_play_button));
-            }
-        });
 
         // Check User
         playerViewModel.getViewState().observe(this, getStateObserver(this));
         playerViewModel.checkLogin();
+
+        mainPlayerView.viewModelInit(this, playerViewModel);
     }
 
     @Override
@@ -131,9 +131,11 @@ public class PlayerActivity extends BaseActivity {
             startActivity(intent);
             overridePendingTransition(0, 0);
         });
-
+/*
         playBtn.setOnClickListener(v -> {
             playerViewModel.musicPlay();
-        });
+        });*/
+
+        mainPlayerView.listenerInit();
     }
 }

@@ -1,9 +1,10 @@
-package com.devgd.melonclone.domain.search.view.fragment;
+package com.devgd.melonclone.domain.player.view.fragment;
 
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
@@ -11,21 +12,23 @@ import com.devgd.melonclone.global.media.PlayManager;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
 import com.devgd.melonclone.global.model.view.activity.LifecycleView;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
-import com.github.guilhe.views.CircularProgressView;
 
-public class MiniPlayerView implements LifecycleView {
+public class MainPlayerView implements LifecycleView {
     RelativeLayout playlistBtn;
     ImageButton playBtn;
-    CircularProgressView progressView;
+    SeekBar progressView;
     ImageButton pauseBtn;
     ImageButton prevBtn;
     ImageButton nextBtn;
+
+    // ViewModels
+    PlayerViewModel playerViewModel;
 
     @Override
     public void layoutInit(ViewGroup parentViewGroup) {
         playlistBtn = parentViewGroup.findViewById(R.id.playlist_btn_group);
         playBtn = parentViewGroup.findViewById(R.id.play_btn);
-        progressView = parentViewGroup.findViewById(R.id.player_progress);
+        progressView = parentViewGroup.findViewById(R.id.play_seekbar);
         pauseBtn = parentViewGroup.findViewById(R.id.pause_btn);
         prevBtn = parentViewGroup.findViewById(R.id.prev_btn);
         nextBtn = parentViewGroup.findViewById(R.id.next_btn);
@@ -40,23 +43,17 @@ public class MiniPlayerView implements LifecycleView {
     @Override
     public void viewModelInit(BaseActivity activity, BaseViewModel viewModel) {
         if (viewModel instanceof PlayerViewModel) {
-            PlayerViewModel playerViewModel = (PlayerViewModel) viewModel;
+            playerViewModel = (PlayerViewModel) viewModel;
 
             if (playerViewModel.getPlayer().getValue() != null) {
                 progressView.setProgress(playerViewModel.getPlayer().getValue().getCurrentPlaytime());
             }
 
-            if (PlayManager.getInstance().isPlaying()) {
-                playBtn.setImageDrawable(activity.getDrawable(R.drawable.ic_pause));
-            }
-
             playerViewModel.getPlayer().observe(activity, player -> {
                 if (player.isPlay()) {
-                    playBtn.setVisibility(View.INVISIBLE);
-                    pauseBtn.setVisibility(View.VISIBLE);
+                    playBtn.setImageDrawable(activity.getDrawable(R.drawable.ic_pause));
                 } else {
-                    playBtn.setVisibility(View.VISIBLE);
-                    pauseBtn.setVisibility(View.INVISIBLE);
+                    playBtn.setImageDrawable(activity.getDrawable(R.drawable.ic_play_button));
                 }
             });
         }
@@ -66,6 +63,11 @@ public class MiniPlayerView implements LifecycleView {
     public void listenerInit() {
         PlayManager.getInstance().addPlaytimeListener(progress -> {
             progressView.setProgress(progress);
+        });
+
+
+        playBtn.setOnClickListener(v -> {
+            playerViewModel.musicPlay();
         });
     }
 }

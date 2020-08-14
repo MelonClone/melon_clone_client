@@ -41,7 +41,8 @@ public class SearchActivity extends BaseActivity {
     NewestMusicAdapter newestMusicAdapter;
     RankingPagerAdapter rankingPagerAdapter;
     UltraViewPager rankingViewPager;
-    ViewGroup musicPlayerGroup;
+
+    // LifecycleView
     MiniPlayerView miniPlayerView;
 
     // ViewModels
@@ -65,9 +66,8 @@ public class SearchActivity extends BaseActivity {
         rankingViewPager = findViewById(R.id.ranking_view_pager);
         rankingViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
 
-        musicPlayerGroup = findViewById(R.id.mini_player);
         miniPlayerView = new MiniPlayerView();
-        miniPlayerView.layoutInit(musicPlayerGroup);
+        miniPlayerView.layoutInit(getRootView());
     }
 
     @Override
@@ -106,7 +106,7 @@ public class SearchActivity extends BaseActivity {
 
                     @Override
                     public void onStop() {
-                        newestMusicViewModel.musicStop();
+//                        newestMusicViewModel.musicStop();
                     }
                 },
                 getLayoutInflater(),
@@ -129,7 +129,7 @@ public class SearchActivity extends BaseActivity {
         rankingViewPager.getIndicator().build();
         rankingViewPager.setMultiScreen(0.88f);
 
-        miniPlayerView.viewInit(musicPlayerGroup);
+        miniPlayerView.viewInit(getRootView());
     }
 
     @Override

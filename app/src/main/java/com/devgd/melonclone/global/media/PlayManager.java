@@ -287,6 +287,9 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
     private static class ProgressTimerHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
+            if (PlayManager.getInstance().isDestroyed()) {
+                return;
+            }
 
             switch (msg.what) {
                 case SHOW_PROGRESS:

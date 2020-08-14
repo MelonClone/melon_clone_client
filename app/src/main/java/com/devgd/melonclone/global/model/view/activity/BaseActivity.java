@@ -3,6 +3,7 @@ package com.devgd.melonclone.global.model.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ViewGroup;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -67,5 +68,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             }
         };
+    }
+
+    protected ViewGroup getRootView() {
+        return (ViewGroup) getWindow().getDecorView();
     }
 }

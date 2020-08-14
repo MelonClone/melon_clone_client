@@ -45,6 +45,10 @@ public class PlayerViewModel extends BaseViewModel implements Playable {
         musicRepository = MusicRepository.getInstance();
         lyricRepository = LyricRepository.getInstance();
         playerModel = PlayerModel.getInstance();
+
+        loadPlayer();
+        getCurrentMusic();
+        loadLyric();
     }
 
     public LiveData<Player> getPlayer() {
@@ -115,31 +119,39 @@ public class PlayerViewModel extends BaseViewModel implements Playable {
     }
 
     public void musicPlay() {
-        if (playerInfo.getValue() != null) {
-            if (playerInfo.getValue().isPlay()) {
+        Player playerInfo = getPlayer().getValue();
+
+        if (playerInfo != null) {
+            if (playerInfo.isPlay()) {
                 PlayManager.getInstance().pausePlayer();
-                playerInfo.getValue().setPlay(false);
-            } else if (playerInfo.getValue().isPlayed()) {
+                playerInfo.setPlay(false);
+            } else if (playerInfo.isPlayed()) {
                 PlayManager.getInstance().startPlayer();
-                playerInfo.getValue().setPlay(true);
+                playerInfo.setPlay(true);
             } else {
-                if (currentMusic.getValue() != null) {
+                if (currentMusic.getValue() != null &&
+                        !(PlayManager.getInstance().isPrepared() || PlayManager.getInstance().isPlaying())) {
                     MelonMediaPlayer mediaPlayer = new MelonMediaPlayer(currentMusic.getValue().getMusicUrl());
                     PlayManager.getInstance().setPlayer(mediaPlayer);
                     PlayManager.getInstance().startPlayer();
                 }
-                playerInfo.getValue().setPlay(true);
+                playerInfo.setPlay(true);
             }
-            playerInfo.postValue(getPlayer().getValue());
+            this.playerInfo.postValue(getPlayer().getValue());
+        }
+    }
+
+    public void musicStop() {
+        // Player 종료
+        if (!PlayManager.getInstance().isDestroyed()) {
+            PlayManager.getInstance().destroyPlayer();
         }
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        if (!PlayManager.getInstance().isDestroyed()) {
-            PlayManager.getInstance().destroyPlayer();
-        }
+//        musicStop();
     }
 
     @Override
