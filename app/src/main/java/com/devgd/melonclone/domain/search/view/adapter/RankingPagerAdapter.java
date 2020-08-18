@@ -1,10 +1,9 @@
 package com.devgd.melonclone.domain.search.view.adapter;
 
+import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.domain.Music;
@@ -14,9 +13,9 @@ import com.devgd.melonclone.utils.image.ImageSource;
 
 public class RankingPagerAdapter extends BaseListPagerAdapter<Music> {
 
-    private AppCompatActivity mContext;
+    private Context mContext;
 
-    public RankingPagerAdapter(AppCompatActivity context, int layoutId) {
+    public RankingPagerAdapter(Context context, int layoutId) {
         super(layoutId);
         mContext = context;
     }

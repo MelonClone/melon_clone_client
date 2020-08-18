@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.devgd.melonclone.R;
@@ -33,6 +34,11 @@ public class LocalLoginFragment extends BaseFragment {
     }
 
     @Override
+    public void setParentViewModel(ViewModel... viewModels) {
+
+    }
+
+    @Override
     protected void layoutInit(View view) {
         userEmail = view.findViewById(R.id.user_email);
         userPassword = view.findViewById(R.id.user_password);
@@ -42,14 +48,14 @@ public class LocalLoginFragment extends BaseFragment {
     }
 
     @Override
+    protected void viewInit() {
+    }
+
+    @Override
     protected void viewModelInit() {
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         loginViewModel.getLoginInfo().observe(this, getLoginObserver());
 
-    }
-
-    @Override
-    protected void viewInit() {
     }
 
     @Override

@@ -8,11 +8,16 @@ import android.view.ViewGroup;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 
 import com.devgd.melonclone.domain.user.domain.User;
 import com.devgd.melonclone.global.model.view.states.ViewState;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class BaseActivity extends AppCompatActivity {
+    private Map<String, ViewModel> viewModelContainer = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,5 +77,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected ViewGroup getRootView() {
         return (ViewGroup) getWindow().getDecorView();
+    }
+
+    public void addViewModel(ViewModel viewModel) {
+        viewModelContainer.put(viewModel.getClass().getSimpleName(), viewModel);
+    }
+
+    public ViewModel getViewModel(String viewModelName) {
+        return viewModelContainer.get(viewModelName);
     }
 }

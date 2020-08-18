@@ -1,6 +1,5 @@
 package com.devgd.melonclone.global.model.view.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -11,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
 
 public abstract class BaseFragment extends Fragment {
 
@@ -24,8 +24,8 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = viewContainerInit(inflater, container);
         layoutInit(view);
-        viewModelInit();
         viewInit();
+        viewModelInit();
         listenerInit();
         return view;
     }
@@ -37,8 +37,10 @@ public abstract class BaseFragment extends Fragment {
 
     abstract protected View viewContainerInit(LayoutInflater inflater, ViewGroup container);
 
+    // If need parents viewModel in fragment
+    abstract public void setParentViewModel(ViewModel... viewModels);
     abstract protected void layoutInit(View view);
-    abstract protected void viewModelInit();
     abstract protected void viewInit();
+    abstract protected void viewModelInit();
     abstract protected void listenerInit();
 }

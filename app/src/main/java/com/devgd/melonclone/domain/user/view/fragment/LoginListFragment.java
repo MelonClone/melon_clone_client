@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.devgd.melonclone.R;
@@ -33,6 +34,11 @@ public class LoginListFragment extends BaseFragment {
     }
 
     @Override
+    public void setParentViewModel(ViewModel... viewModels) {
+
+    }
+
+    @Override
     protected void layoutInit(View view) {
 
         loginKBtn = view.findViewById(R.id.kakao_id_login_btn);
@@ -41,13 +47,13 @@ public class LoginListFragment extends BaseFragment {
     }
 
     @Override
-    protected void viewModelInit() {
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-
+    protected void viewInit() {
     }
 
     @Override
-    protected void viewInit() {
+    protected void viewModelInit() {
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+
     }
 
     @Override

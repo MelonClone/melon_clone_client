@@ -1,9 +1,8 @@
 package com.devgd.melonclone.domain.search.view.adapter;
 
+import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.search.domain.Ads;
@@ -13,9 +12,9 @@ import com.devgd.melonclone.utils.image.ImageSource;
 
 public class AdsPagerAdapter extends BaseListPagerAdapter<Ads> {
 
-    private AppCompatActivity mContext;
+    private Context mContext;
 
-    public AdsPagerAdapter(AppCompatActivity context, int layoutId) {
+    public AdsPagerAdapter(Context context, int layoutId) {
         super(layoutId);
         mContext = context;
     }

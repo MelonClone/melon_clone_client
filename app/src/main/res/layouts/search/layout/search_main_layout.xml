@@ -2,7 +2,8 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorLightBackground">
     <include layout="@layout/search_toolbar" />
 <!--
     <androidx.viewpager.widget.ViewPager
@@ -12,7 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <include layout="@layout/home_container_layout" />
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/search_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
     </FrameLayout>
     <include layout="@layout/playlist_mini_player"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
