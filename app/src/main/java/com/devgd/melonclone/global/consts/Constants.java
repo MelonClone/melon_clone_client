@@ -6,4 +6,6 @@ public class Constants {
 
     public static final String DB_NAME = "melon";
     public static final String SP_NAME = "melon";
+
+    public enum Theme { COLOR_LIGHT, COLOR_DARK }
 }

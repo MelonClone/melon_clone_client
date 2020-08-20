@@ -7,11 +7,10 @@ import androidx.viewpager.widget.ViewPager;
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.domain.search.view.adapter.SearchPagerAdapter;
-import com.devgd.melonclone.domain.search.view.fragment.MiniPlayerView;
+import com.devgd.melonclone.domain.search.view.fragment.PlayerControllerMiniView;
 import com.devgd.melonclone.domain.search.viewmodel.SearchTabViewModel;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
 import com.devgd.melonclone.global.model.view.activity.TabToolbarView;
-import com.google.android.material.tabs.TabLayout;
 
 public class SearchActivity extends BaseActivity {
 
@@ -21,7 +20,7 @@ public class SearchActivity extends BaseActivity {
     SearchPagerAdapter searchPagerAdapter;
 
     // LifecycleView
-    MiniPlayerView miniPlayerView;
+    PlayerControllerMiniView playerControllerMiniView;
 
     // ViewModels
     SearchTabViewModel searchViewModel;
@@ -34,8 +33,8 @@ public class SearchActivity extends BaseActivity {
         searchTabToolbarView = new SearchTabToolbarView();
         searchTabToolbarView.tabLayoutInit(findViewById(R.id.search_tab));
 
-        miniPlayerView = new MiniPlayerView();
-        miniPlayerView.layoutInit(getRootView());
+        playerControllerMiniView = new PlayerControllerMiniView(this);
+        playerControllerMiniView.layoutInit(getRootView());
 
         searchViewPager = findViewById(R.id.search_view_pager);
     }
@@ -52,7 +51,7 @@ public class SearchActivity extends BaseActivity {
     protected void viewInit() {
         searchTabToolbarView.optionInit();
 
-        miniPlayerView.viewInit(getRootView());
+        playerControllerMiniView.viewInit(getRootView());
 
         searchPagerAdapter = new SearchPagerAdapter(getSupportFragmentManager());
         searchViewPager.setAdapter(searchPagerAdapter);
@@ -78,11 +77,10 @@ public class SearchActivity extends BaseActivity {
         });
 
         playerViewModel.getPlayer().observe(this, player -> {
-
-            player.getCurrentPlaytime();
+//            player.getCurrentPlaytime();
         });
 
-        miniPlayerView.viewModelInit(this, playerViewModel);
+        playerControllerMiniView.viewModelInit(playerViewModel);
     }
 
     @Override
@@ -97,6 +95,6 @@ public class SearchActivity extends BaseActivity {
 
         searchViewPager.addOnPageChangeListener(searchTabToolbarView.getListener());
 
-        miniPlayerView.listenerInit();
+        playerControllerMiniView.listenerInit();
     }
 }

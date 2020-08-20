@@ -315,4 +315,8 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
     public void removePlaytimeListener(PlaytimeListener listener) {
         playtimeListenerList.remove(listener);
     }
+
+    public void addMusicChangedListener(MusicChangedListener listener) {
+        listener.onMusicChanged();
+    }
 }

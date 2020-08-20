@@ -2,7 +2,6 @@ package com.devgd.melonclone.domain.player.view.activity;
 
 import android.content.Intent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,9 +12,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.adapter.LyricAdapter;
-import com.devgd.melonclone.domain.player.view.fragment.MainPlayerView;
+import com.devgd.melonclone.domain.player.view.fragment.PlayerControllerView;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.domain.search.view.activity.SearchActivity;
+import com.devgd.melonclone.global.consts.Constants;
 import com.devgd.melonclone.global.customview.SquareImageView;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
 import com.devgd.melonclone.utils.image.GlideImgManager;
@@ -32,13 +32,12 @@ public class PlayerActivity extends BaseActivity {
     ListView lyricView;
     LyricAdapter lyricAdapter;
     ImageButton minimizeBtn;
-    ImageButton playlistBtn;
     SquareImageView albumImg;
     LinearLayout statusGroup;
     RelativeLayout playTimeGroup;
 
     // LifecycleView
-    MainPlayerView mainPlayerView;
+    PlayerControllerView playerControllerView;
 
     // ViewModels
     PlayerViewModel playerViewModel;
@@ -52,14 +51,13 @@ public class PlayerActivity extends BaseActivity {
         lyricBox = findViewById(R.id.lyric_box);
         lyricView = findViewById(R.id.lyrics_group);
         minimizeBtn = findViewById(R.id.minimize_btn);
-        playlistBtn = findViewById(R.id.playlist_btn);
 
         albumImg = findViewById(R.id.album_img);
         statusGroup = findViewById(R.id.status_group);
         playTimeGroup = findViewById(R.id.play_time_group);
 
-        mainPlayerView = new MainPlayerView();
-        mainPlayerView.layoutInit(getRootView());
+        playerControllerView = new PlayerControllerView(this);
+        playerControllerView.layoutInit(getRootView());
     }
 
     @Override
@@ -70,7 +68,7 @@ public class PlayerActivity extends BaseActivity {
                 new ArrayList<>());
         lyricView.setAdapter(lyricAdapter);
 
-        mainPlayerView.viewInit(getRootView());
+        playerControllerView.viewInit(getRootView());
     }
 
     @Override
@@ -92,7 +90,7 @@ public class PlayerActivity extends BaseActivity {
         playerViewModel.getViewState().observe(this, getStateObserver(this));
         playerViewModel.checkLogin();
 
-        mainPlayerView.viewModelInit(this, playerViewModel);
+        playerControllerView.viewModelInit(playerViewModel);
     }
 
     @Override
@@ -109,7 +107,7 @@ public class PlayerActivity extends BaseActivity {
                 statusGroup.setVisibility(View.INVISIBLE);
             }
             lyricView.setVisibility(View.VISIBLE);
-
+            playerControllerView.colorChange(Constants.Theme.COLOR_LIGHT);
         });
 
         minimizeBtn.setOnClickListener(v -> {
@@ -118,6 +116,7 @@ public class PlayerActivity extends BaseActivity {
 
                 albumImg.setVisibility(View.VISIBLE);
                 statusGroup.setVisibility(View.VISIBLE);
+                playerControllerView.colorChange(Constants.Theme.COLOR_DARK);
             } else {
                 Intent intent = new Intent(this, SearchActivity.class);
                 startActivity(intent);
@@ -125,17 +124,11 @@ public class PlayerActivity extends BaseActivity {
             }
         });
 
-        playlistBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(this, PlaylistActivity.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            overridePendingTransition(0, 0);
-        });
 /*
         playBtn.setOnClickListener(v -> {
             playerViewModel.musicPlay();
         });*/
 
-        mainPlayerView.listenerInit();
+        playerControllerView.listenerInit();
     }
 }
