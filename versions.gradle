@@ -42,6 +42,9 @@ versions.circular_progress = "1.4.2"
 versions.ultra_viewpager = "1.0.7.7"
 versions.appbar = "1.2.0"
 
+// Media
+versions.exoplayer = "2.11.7"
+
 ext.versions = versions
 
 def deps = [:]

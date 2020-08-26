@@ -1,4 +1,4 @@
-package com.devgd.melonclone.global.media;
+package com.devgd.melonclone.global.media.control;
 
 public interface MixPlayerControl extends MusicPlayerControl {
 

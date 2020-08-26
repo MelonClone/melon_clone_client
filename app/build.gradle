@@ -87,4 +87,7 @@ dependencies {
         transitive = true
     }
     implementation "com.google.android.material:material:$versions.appbar"
+
+    // Media
+    implementation "com.google.android.exoplayer:exoplayer:$versions.exoplayer"
 }

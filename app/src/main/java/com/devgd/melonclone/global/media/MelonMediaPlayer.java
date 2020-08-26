@@ -1,6 +1,9 @@
 package com.devgd.melonclone.global.media;
 
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 
 import java.io.IOException;
 
@@ -23,6 +26,25 @@ public class MelonMediaPlayer extends MediaPlayer {
         super();
         this.mediaSource = mediaSource;
         this.volume = volume;
+    }
+
+    public void initPlayer() {
+        try {
+            setDataSource(getMediaSource());
+            setVolume(getVolume());
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                AudioAttributes aa = new AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .build();
+                setAudioAttributes(aa);
+            } else {
+                setAudioStreamType(AudioManager.STREAM_MUSIC);
+            }
+        } catch (IllegalArgumentException | SecurityException | IllegalStateException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setPrepare() throws IOException {

@@ -7,6 +7,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.Surface;
 
+import com.devgd.melonclone.global.media.control.MixPlayerControl;
+import com.devgd.melonclone.global.media.control.MusicPlayerControl;
+import com.devgd.melonclone.global.media.control.PlayerController;
+import com.devgd.melonclone.global.media.control.VideoPlayerControl;
+import com.devgd.melonclone.global.media.player.AndroidMediaPlayer;
+import com.devgd.melonclone.global.media.player.MusicPlayer;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +25,8 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
 
     private static PlayManager playManager = new PlayManager();
 
-    private VideoPlayerControl mainPlayer; // 메인 플레이쓰레드
-    ArrayList<MusicPlayerControl> mixPlayerList = new ArrayList<>(); // 동시 플레이쓰레드
+    private VideoPlayerControl mainPlayerController; // 메인 플레이쓰레드
+    ArrayList<MusicPlayerControl> mixPlayerControllerList = new ArrayList<>(); // 동시 플레이쓰레드
 //    private MelonMediaController controller; // 전체 컨트롤
 //    private Handler controllerHandler; // 플레이 결과 콜백
 
@@ -31,7 +38,6 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
     private boolean isMixPlay = false;
 
     private PlayManager() {
-        mainPlayer = new PlayerController(new MelonMediaPlayer(), null);
     }
 
     public static PlayManager getInstance() {
@@ -42,15 +48,18 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
         return playManager;
     }
 
-    public void setPlayer(MelonMediaPlayer mediaPlayer) {
-        if (!mainPlayer.isDestroyed()) {
-            mainPlayer.destroyPlayer();
+    public void setPlayer(MusicPlayer musicPlayer) {
+        if (mainPlayerController != null && !mainPlayerController.isDestroyed()) {
+            mainPlayerController.destroyPlayer();
         }
-        mainPlayer = new PlayerController(mediaPlayer, mp -> mProgressHandler.sendEmptyMessage(SHOW_PROGRESS));
+        mainPlayerController = new PlayerController(musicPlayer);
+        mainPlayerController.setReadyListener(() -> {
+            mProgressHandler.sendEmptyMessage(SHOW_PROGRESS);
+        });
     }
 
     public void setDisplay(Surface surface) {
-        mainPlayer.setDisplay(surface);
+        mainPlayerController.setDisplay(surface);
     }
 /*
     public void setSourceUrl(String sourceUrl) {
@@ -93,22 +102,22 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
     // Implement MediaPlayerControl
     @Override
     public boolean isDestroyed() {
-        return mainPlayer.isDestroyed();
+        return mainPlayerController.isDestroyed();
     }
 
     @Override
     public int getBufferPercentage() {
-        return mainPlayer.getBufferPercentage();
+        return mainPlayerController.getBufferPercentage();
     }
 
     @Override
     public int getCurrentPosition() {
-        return mainPlayer.getCurrentPosition();
+        return mainPlayerController.getCurrentPosition();
     }
 
     @Override
     public int getDuration() {
-        return mainPlayer.getDuration();
+        return mainPlayerController.getDuration();
     }
 
     public boolean isFullScreen() {
@@ -133,14 +142,14 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
 
     @Override
     public MelonMediaPlayer getMediaPlayer() {
-        return mainPlayer.getMediaPlayer();
+        return mainPlayerController.getMediaPlayer();
     }
 
     @Override
     public void startPlayer() {
-        mainPlayer.startPlayer();
+        mainPlayerController.startPlayer();
 
-        for (MusicPlayerControl mixPlayer : mixPlayerList) {
+        for (MusicPlayerControl mixPlayer : mixPlayerControllerList) {
             mixPlayer.startPlayer();
         }
 
@@ -151,36 +160,36 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
 
     @Override
     public void pausePlayer() {
-        mainPlayer.pausePlayer();
+        mainPlayerController.pausePlayer();
 
-        for (MusicPlayerControl mixPlayer : mixPlayerList) {
+        for (MusicPlayerControl mixPlayer : mixPlayerControllerList) {
             mixPlayer.pausePlayer();
         }
     }
 
 
     public void resetPlayer() {
-        mainPlayer.resetPlayer();
+        mainPlayerController.resetPlayer();
 
-        for (MusicPlayerControl mixPlayer : mixPlayerList) {
+        for (MusicPlayerControl mixPlayer : mixPlayerControllerList) {
             mixPlayer.resetPlayer();
         }
     }
 
 
     public void stopPlayer() {
-        mainPlayer.stopPlayer();
+        mainPlayerController.stopPlayer();
 
-        for (MusicPlayerControl mixPlayer : mixPlayerList) {
+        for (MusicPlayerControl mixPlayer : mixPlayerControllerList) {
             mixPlayer.stopPlayer();
         }
     }
 
     @Override
     public void destroyPlayer() {
-        mainPlayer.destroyPlayer();
+        mainPlayerController.destroyPlayer();
 
-        for (MusicPlayerControl mixPlayer : mixPlayerList) {
+        for (MusicPlayerControl mixPlayer : mixPlayerControllerList) {
             mixPlayer.destroyPlayer();
         }
     }
@@ -192,26 +201,26 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
 
     @Override
     public void seekTo(int i) {
-        mainPlayer.seekTo(i);
+        mainPlayerController.seekTo(i);
 
-        for (MusicPlayerControl mixPlayer : mixPlayerList) {
+        for (MusicPlayerControl mixPlayer : mixPlayerControllerList) {
             mixPlayer.seekTo(i);
         }
     }
 
     @Override
     public boolean isPlaying() {
-        return mainPlayer.isPlaying();
+        return mainPlayerController.isPlaying();
     }
 
     @Override
     public void setVolume(float volume) {
-        mainPlayer.setVolume(volume);
+        mainPlayerController.setVolume(volume);
     }
 
     @Override
     public boolean isPrepared() {
-        return mainPlayer.isPrepared();
+        return mainPlayerController.isPrepared();
     }
 
     // End MediaBasePlayerControl
@@ -220,7 +229,7 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
     @Override
     public void startMix() {
         if (!isMixPlay) return ;
-        for (MusicPlayerControl mixPlayer : mixPlayerList) {
+        for (MusicPlayerControl mixPlayer : mixPlayerControllerList) {
             mixPlayer.startPlayer();
         }
     }
@@ -228,7 +237,7 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
     @Override
     public void stopMix() {
         if (!isMixPlay) return ;
-        for (MusicPlayerControl mixPlayer : mixPlayerList) {
+        for (MusicPlayerControl mixPlayer : mixPlayerControllerList) {
             mixPlayer.stopPlayer();
         }
     }
@@ -236,7 +245,7 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
     @Override
     public void pauseMix() {
         if (!isMixPlay) return ;
-        for (MusicPlayerControl mixPlayer : mixPlayerList) {
+        for (MusicPlayerControl mixPlayer : mixPlayerControllerList) {
             mixPlayer.pausePlayer();
         }
     }
@@ -244,7 +253,7 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
     @Override
     public void resetMix() {
         if (!isMixPlay) return ;
-        for (MusicPlayerControl mixPlayer : mixPlayerList) {
+        for (MusicPlayerControl mixPlayer : mixPlayerControllerList) {
             mixPlayer.resetPlayer();
         }
     }
@@ -252,7 +261,7 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
     @Override
     public void clearMix() {
         if (!isMixPlay) return ;
-        mixPlayerList.clear();
+        mixPlayerControllerList.clear();
     }
 
     /**
@@ -268,18 +277,18 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
     @Override
     public void addMix(MusicPlayerControl mixPlayer) {
         if (!isMixPlay) return ;
-        mixPlayerList.add(mixPlayer);
+        mixPlayerControllerList.add(mixPlayer);
     }
 
     @Override
     public void setMixVolume(int index, float volume) {
         if (!isMixPlay) return ;
-        mixPlayerList.get(index).setVolume(volume);
+        mixPlayerControllerList.get(index).setVolume(volume);
     }
     // End MediaMixPlayerControl
 
     public MelonMediaPlayer getSong(int index) {
-        return mixPlayerList.get(index).getMediaPlayer();
+        return mixPlayerControllerList.get(index).getMediaPlayer();
     }
 
 

@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.devgd.melonclone.domain.player.domain.Music;
 import com.devgd.melonclone.global.media.MelonMediaPlayer;
 import com.devgd.melonclone.global.media.PlayManager;
+import com.devgd.melonclone.global.media.player.AndroidMediaPlayer;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
 import com.devgd.melonclone.global.model.viewmodel.ListViewModel;
 import com.devgd.melonclone.utils.store.MusicSample;
@@ -37,7 +38,7 @@ public class NewestMusicViewModel extends BaseViewModel implements ListViewModel
     }
 
     public void musicPlay(TextureView view, Music music) {
-        MelonMediaPlayer mediaPlayer = new MelonMediaPlayer(music.getMusicUrl());
+        MelonMediaPlayer mediaPlayer = new AndroidMediaPlayer(music.getMusicUrl(), 1f, this);
         PlayManager.getInstance().setPlayer(mediaPlayer);
         PlayManager.getInstance().setDisplay(new Surface(view.getSurfaceTexture()));
         PlayManager.getInstance().startPlayer();
