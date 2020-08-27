@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.domain.Playlist;
+import com.devgd.melonclone.domain.player.domain.PlaylistItem;
 import com.devgd.melonclone.global.customview.SquareImageView;
 import com.devgd.melonclone.utils.image.GlideImgManager;
 import com.devgd.melonclone.utils.image.ImageSource;
@@ -26,10 +27,10 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
     LayoutInflater inflater;
 
     // override other abstract methods here
-    List<Playlist> playlistList;
+    List<PlaylistItem> playlistList;
     int curPlay = 0;
 
-    public PlaylistAdapter(Context context, LayoutInflater inflater, List<Playlist> playlistList) {
+    public PlaylistAdapter(Context context, LayoutInflater inflater, List<PlaylistItem> playlistList) {
         this.context = context;
         this.inflater = inflater;
         this.playlistList = playlistList;
@@ -62,7 +63,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
     public void onBindViewHolder(@NonNull PlaylistAdapter.ViewHolder holder, int position) {
         final int pos = position;
 
-        Playlist playlist = playlistList.get(position);
+        PlaylistItem playlist = playlistList.get(position);
         // TODO albumImg set using Glide
         holder.musicName.setText(playlist.getMusic().getMusicTitleName());
         holder.artistName.setText(playlist.getMusic().getArtist().getArtistName());
@@ -91,19 +92,19 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
         return playlistList.size();
     }
 
-    public void setList(List<Playlist> playlists) {
+    public void setList(List<PlaylistItem> playlists) {
         this.playlistList = playlists;
     }
 
-    public void addItem(Playlist playlist) {
+    public void addItem(PlaylistItem playlist) {
         this.playlistList.add(playlist);
     }
 
-    public Playlist getItem(int index) {
+    public PlaylistItem getItem(int index) {
         return this.playlistList.get(index);
     }
 
-    public Playlist removeItem(int index) {
+    public PlaylistItem removeItem(int index) {
         return this.playlistList.remove(index);
     }
 

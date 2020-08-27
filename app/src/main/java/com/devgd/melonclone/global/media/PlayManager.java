@@ -1,8 +1,6 @@
 package com.devgd.melonclone.global.media;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Surface;
@@ -11,10 +9,10 @@ import com.devgd.melonclone.global.media.control.MixPlayerControl;
 import com.devgd.melonclone.global.media.control.MusicPlayerControl;
 import com.devgd.melonclone.global.media.control.PlayerController;
 import com.devgd.melonclone.global.media.control.VideoPlayerControl;
-import com.devgd.melonclone.global.media.player.AndroidMediaPlayer;
+import com.devgd.melonclone.global.media.listener.MusicChangedListener;
+import com.devgd.melonclone.global.media.listener.PlaytimeListener;
 import com.devgd.melonclone.global.media.player.MusicPlayer;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,22 +51,29 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
             mainPlayerController.destroyPlayer();
         }
         mainPlayerController = new PlayerController(musicPlayer);
-        mainPlayerController.setReadyListener(() -> {
+        mainPlayerController.getPlayer().setReadyListener(() -> {
             mProgressHandler.sendEmptyMessage(SHOW_PROGRESS);
         });
+    }
+
+    private boolean isSetPlayer() {
+        return mainPlayerController != null;
+    }
+
+    @Override
+    public MusicPlayer getPlayer() {
+        return mainPlayerController.getPlayer();
     }
 
     public void setDisplay(Surface surface) {
         mainPlayerController.setDisplay(surface);
     }
-/*
+
     public void setSourceUrl(String sourceUrl) {
-        mainPlayer.resetPlayer();
-        MelonMediaPlayer mediaPlayer = new MelonMediaPlayer();
-        mediaPlayer.setMediaSource(sourceUrl);
-        mainPlayer = new PlayerController(mediaPlayer);
+        mainPlayerController.resetPlayer();
+        mainPlayerController.getPlayer().setSource(sourceUrl);
     }
-*/
+
 
     public void enableMixPlay() {
         isMixPlay = false;
@@ -77,72 +82,33 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
         isMixPlay = true;
     }
 
-    /*
-    // Implement SurfaceHolder.Callback
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-    }
-
-    @Override
-    public void surfaceCreated(final SurfaceHolder holder) {
-        try {
-            mainPlayer.setDisplay(holder);
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-    }
-    // End SurfaceHolder.Callback
-    */
-
-    // Implement MediaPlayerControl
     @Override
     public boolean isDestroyed() {
         return mainPlayerController.isDestroyed();
     }
 
     @Override
-    public int getBufferPercentage() {
-        return mainPlayerController.getBufferPercentage();
+    public long getBufferPosition() {
+        if (!isSetPlayer()) {
+            return 0;
+        }
+        return mainPlayerController.getBufferPosition();
     }
 
     @Override
-    public int getCurrentPosition() {
+    public long getCurrentPosition() {
+        if (!isSetPlayer()) {
+            return 0;
+        }
         return mainPlayerController.getCurrentPosition();
     }
 
     @Override
-    public int getDuration() {
-        return mainPlayerController.getDuration();
-    }
-
-    public boolean isFullScreen() {
-        if (mContext == null) return false;
-        return mContext.getResources().getConfiguration().orientation==2;
-    }
-
-    public void toggleFullScreen() {
-        if (mContext == null) return ;
-
-        pausePlayer();
-
-        if(mContext.getResources().getConfiguration().orientation==1){
-            ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        } else {
-            ((Activity) mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    public long getDuration() {
+        if (!isSetPlayer()) {
+            return 0;
         }
-    }
-    // End MediaPlayerControl
-
-    // Implement MediaBasePlayerControl
-
-    @Override
-    public MelonMediaPlayer getMediaPlayer() {
-        return mainPlayerController.getMediaPlayer();
+        return mainPlayerController.getDuration();
     }
 
     @Override
@@ -154,8 +120,6 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
         }
 
         mProgressHandler.sendEmptyMessage(SHOW_PROGRESS);
-//        if (controllerHandler != null)
-//            controllerHandler.sendMessage(new Message());
     }
 
     @Override
@@ -196,7 +160,11 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
 
     @Override
     public void releasePlayer() {
+        mainPlayerController.releasePlayer();
 
+        for (MusicPlayerControl mixPlayer : mixPlayerControllerList) {
+            mixPlayer.releasePlayer();
+        }
     }
 
     @Override
@@ -209,23 +177,37 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
     }
 
     @Override
+    public void setRepeatMode(MusicPlayer.Repeat repeatMode) {
+        if (!isSetPlayer()) {
+            return ;
+        }
+        mainPlayerController.setRepeatMode(repeatMode);
+    }
+
+    @Override
     public boolean isPlaying() {
+        if (!isSetPlayer()) {
+            return false;
+        }
         return mainPlayerController.isPlaying();
     }
 
     @Override
     public void setVolume(float volume) {
+        if (!isSetPlayer()) {
+            return ;
+        }
         mainPlayerController.setVolume(volume);
     }
 
     @Override
     public boolean isPrepared() {
+        if (!isSetPlayer()) {
+            return false;
+        }
         return mainPlayerController.isPrepared();
     }
 
-    // End MediaBasePlayerControl
-
-    // Start MediaMixPlayerControl
     @Override
     public void startMix() {
         if (!isMixPlay) return ;
@@ -264,16 +246,6 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
         mixPlayerControllerList.clear();
     }
 
-    /**
-     *
-     * throws IOException
-     if (volume > 1) volume = 1;
-     MelonMediaPlayer songPlayer = new MelonMediaPlayer(sourceUrl, volume);
-     PlayThread playThread = new PlayThread(songPlayer);
-     playThread.playerInit();
-     * @param mixPlayer
-     * @throws IOException
-     */
     @Override
     public void addMix(MusicPlayerControl mixPlayer) {
         if (!isMixPlay) return ;
@@ -285,10 +257,9 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
         if (!isMixPlay) return ;
         mixPlayerControllerList.get(index).setVolume(volume);
     }
-    // End MediaMixPlayerControl
 
-    public MelonMediaPlayer getSong(int index) {
-        return mixPlayerControllerList.get(index).getMediaPlayer();
+    public MusicPlayer getMixPlayer(int index) {
+        return mixPlayerControllerList.get(index).getPlayer();
     }
 
 
@@ -325,7 +296,7 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
         playtimeListenerList.remove(listener);
     }
 
-    public void addMusicChangedListener(MusicChangedListener listener) {
-        listener.onMusicChanged();
+    public void addMusicChangedListener(MusicChangedListener musicChangedListener) {
+        mainPlayerController.addMusicChangedListener(musicChangedListener);
     }
 }

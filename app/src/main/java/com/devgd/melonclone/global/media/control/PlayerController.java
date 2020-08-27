@@ -1,30 +1,21 @@
 package com.devgd.melonclone.global.media.control;
 
-import android.media.MediaPlayer;
-import android.util.Log;
 import android.view.Surface;
 
-import com.devgd.melonclone.global.media.MelonMediaPlayer;
-import com.devgd.melonclone.global.media.control.VideoPlayerControl;
+import com.devgd.melonclone.global.media.listener.MusicChangedListener;
+import com.devgd.melonclone.global.media.player.ExoMediaPlayer;
 import com.devgd.melonclone.global.media.player.MusicPlayer;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import lombok.Getter;
-
-
-// 플레이 관련된 정보 할당
-// 실제 플레이어 동작
 public class PlayerController extends Thread implements VideoPlayerControl {
 
-    @Getter
     private MusicPlayer mediaPlayer;
     private boolean initiate = false;
-    @Getter
-    private boolean prepared = false;
-    private boolean completion = false;
-    private boolean paused = false;
     private int percent = 0;
+
+    private List<MusicChangedListener> musicChangedListenerList = new ArrayList<>();
 
     public PlayerController(MusicPlayer player) {
         this.mediaPlayer = player;
@@ -32,8 +23,6 @@ public class PlayerController extends Thread implements VideoPlayerControl {
 
     @Override
     public void run() {
-        prepared = false;
-        completion = false;
         playerInit();
         startPlayer();
     }
@@ -42,20 +31,33 @@ public class PlayerController extends Thread implements VideoPlayerControl {
         initiate = true;
 
         mediaPlayer.initPlayer();
+        mediaPlayer.setCompletionListener(() -> {
+            if (mediaPlayer.getRepeatMode() == MusicPlayer.Repeat.ALL_LOOP
+            || mediaPlayer.getRepeatMode() == MusicPlayer.Repeat.ONCE_LOOP) {
+                for (MusicChangedListener listener : musicChangedListenerList) {
+                    listener.onMusicChanged();
+                }
+            }
+        });
     }
 
     @Override
-    public int getBufferPercentage() {
+    public MusicPlayer getPlayer() {
+        return mediaPlayer;
+    }
+
+    @Override
+    public long getBufferPosition() {
         return this.percent;
     }
 
     @Override
-    public int getCurrentPosition() {
+    public long getCurrentPosition() {
         return mediaPlayer.getCurrentPosition();
     }
 
     @Override
-    public int getDuration() {
+    public long getDuration() {
         return mediaPlayer.getDuration();
     }
 
@@ -63,10 +65,15 @@ public class PlayerController extends Thread implements VideoPlayerControl {
     public void startPlayer() {
         if (mediaPlayer != null) {
             if (!initiate) {
-                start();
+                if (mediaPlayer instanceof ExoMediaPlayer) {
+                    // ExoPlayer must play in Main Thread
+                    playerInit();
+                    startPlayer();
+                } else {
+                    start();
+                }
             } else {
                 mediaPlayer.startPlayer();
-                paused = false;
             }
         }
     }
@@ -75,7 +82,6 @@ public class PlayerController extends Thread implements VideoPlayerControl {
     public void pausePlayer() {
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pausePlayer();
-            paused = true;
         }
     }
 
@@ -83,8 +89,6 @@ public class PlayerController extends Thread implements VideoPlayerControl {
     public void resetPlayer() {
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.resetPlayer();
-            prepared = false;
-            completion = false;
             playerInit();
         }
     }
@@ -113,6 +117,18 @@ public class PlayerController extends Thread implements VideoPlayerControl {
     }
 
     @Override
+    public void setRepeatMode(MusicPlayer.Repeat repeatMode) {
+        if (initiate && mediaPlayer != null) {
+            mediaPlayer.setRepeatMode(repeatMode);
+        }
+    }
+
+    @Override
+    public void addMusicChangedListener(MusicChangedListener musicChangedListener) {
+        this.musicChangedListenerList.add(musicChangedListener);
+    }
+
+    @Override
     public boolean isPlaying() {
         if (mediaPlayer != null) {
             return mediaPlayer.isPlaying();
@@ -123,6 +139,14 @@ public class PlayerController extends Thread implements VideoPlayerControl {
     @Override
     public boolean isDestroyed() {
         return mediaPlayer.isDestroyed();
+    }
+
+    @Override
+    public boolean isPrepared() {
+        if (mediaPlayer != null) {
+            return mediaPlayer.isPrepared();
+        }
+        return false;
     }
 
     @Override

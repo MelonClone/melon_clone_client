@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.adapter.PlaylistAdapter;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
-import com.devgd.melonclone.domain.player.viewmodel.PlaylistViewModel;
 import com.devgd.melonclone.global.customview.RoundImageView;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
 import com.devgd.melonclone.global.model.view.states.LoginState;
@@ -35,7 +34,6 @@ public class PlaylistActivity extends BaseActivity {
 
     // ViewModels
     PlayerViewModel playerViewModel;
-    PlaylistViewModel playlistViewModel;
 
     // LiveDatas
     LiveData<LoginState> loginState;
@@ -68,7 +66,6 @@ public class PlaylistActivity extends BaseActivity {
     protected void viewModelInit() {
         // ViewModel init
         playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
-        playlistViewModel = new ViewModelProvider(this).get(PlaylistViewModel.class);
 
         playerViewModel.getCurrentMusic().observe(this, music -> {
             // TODO mini player change
@@ -81,8 +78,8 @@ public class PlaylistActivity extends BaseActivity {
         loginState = playerViewModel.getLoginState();
         playerViewModel.checkLogin();
 
-        playlistViewModel.getPlaylistList().observe(this, playlists -> {
-            playlistAdapter.setList(playlists);
+        playerViewModel.getPlaylistCollection().observe(this, playlistCollection -> {
+            playlistAdapter.setList(playerViewModel.getCurrentPlaylist());
             playlistAdapter.notifyDataSetChanged();
         });
     }

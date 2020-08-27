@@ -11,10 +11,10 @@
 
     <ImageButton
         android:id="@+id/repeat_btn"
-        android:layout_width="30dp"
-        android:layout_height="25dp"
+        android:layout_width="40dp"
+        android:layout_height="35dp"
         android:layout_centerVertical="true"
-        android:padding="3dp"
+        android:padding="8dp"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:src="@drawable/ic_repeat_act"
         android:scaleType="fitXY"
@@ -56,11 +56,11 @@
         />
     <ImageButton
         android:id="@+id/shuffle_btn"
-        android:layout_width="30dp"
-        android:layout_height="25dp"
+        android:layout_width="40dp"
+        android:layout_height="35dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:padding="3dp"
+        android:padding="8dp"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:src="@drawable/ic_random"
         android:scaleType="fitXY"

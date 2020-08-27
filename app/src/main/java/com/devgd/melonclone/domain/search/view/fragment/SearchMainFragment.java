@@ -94,12 +94,12 @@ public class SearchMainFragment extends BaseFragment {
                 new NewestMusicAdapter.NewestMusicEventCallback() {
                     @Override
                     public void onClick(TextureView view, Music music) {
-                        newestMusicViewModel.musicPlay(view, music);
+                        newestMusicViewModel.mediaPlay(getContext(), music, view);
                     }
 
                     @Override
                     public void onStop() {
-//                        newestMusicViewModel.musicStop();
+                        newestMusicViewModel.mediaStop();
                     }
                 },
                 getLayoutInflater(),

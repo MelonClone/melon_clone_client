@@ -4,53 +4,64 @@ import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
 import android.view.Surface;
 
+import com.devgd.melonclone.global.media.listener.CompletionListener;
+import com.devgd.melonclone.global.media.listener.ReadyListener;
+import com.google.android.exoplayer2.Player;
+
 import java.io.IOException;
 
-// 실 MediaPlayer 클래스
-// 플레이 관련된 정보 보유
-public class AndroidMediaPlayer implements MusicPlayer, MediaPlayer.OnCompletionListener,
-        MediaPlayer.OnErrorListener, MediaPlayer.OnBufferingUpdateListener {
+public class AndroidMediaPlayer implements MusicPlayer {
     private MediaPlayer player;
 
-    private String mediaSource = "";
-    private float volume = 1.0f;
+    private String mediaSource;
+    private float volume;
+    private Repeat repeatMode;
 
     private boolean prepared = false;
-    private MediaPlayer.OnPreparedListener preparedListener;
+    private boolean completion = false;
+    private int bufferPercent = 0;
 
-    public AndroidMediaPlayer() {
-        super();
-    }
+    private MediaPlayer.OnPreparedListener preparedListener = new MediaPlayer.OnPreparedListener() {
+        @Override
+        public void onPrepared(MediaPlayer mp) {
+            prepared = true;
+            if (readyListener != null) {
+                readyListener.onReady();
+            }
+            if (!isPlaying()) {
+                startPlayer();
+            }
+        }
+    };
+    private ReadyListener readyListener;
+    private CompletionListener completionListener;
 
     public AndroidMediaPlayer(String mediaSource, float volume, Context context) {
-        this(mediaSource, volume, context, null);
-    }
-
-    public AndroidMediaPlayer(String mediaSource, float volume, Context context, MediaPlayer.OnPreparedListener preparedListener) {
-        super();
         this.mediaSource = mediaSource;
         this.volume = volume;
-
-        player = new MediaPlayer();
     }
 
-    private String buildMediaSource(Context context, Uri uri) {
-
-        return mediaSource;
-    }
-
+    @Override
     public void initPlayer() {
+        player = new MediaPlayer();
+        player.setOnBufferingUpdateListener((mediaPlayer, percent) -> {
+            this.bufferPercent = percent;
+        });
+        player.setOnPreparedListener(preparedListener);
+        player.setOnCompletionListener(mediaPlayer -> {
+            this.completion = true;
+            completionListener.onComplete();
+        });
+        player.setOnErrorListener((mediaPlayer, what, extra) -> {
+            if (what == MediaPlayer.MEDIA_ERROR_UNKNOWN && mediaSource.equals("")) {
+                destroyPlayer();
+            }
 
-        player.setOnBufferingUpdateListener(this);
-        if (preparedListener != null) {
-            player.setOnPreparedListener(preparedListener);
-        }
-        player.setOnCompletionListener(this);
-        player.setOnErrorListener(this);
+            return false;
+        });
         try {
             player.setDataSource(mediaSource);
             player.setVolume(volume, volume);
@@ -69,7 +80,7 @@ public class AndroidMediaPlayer implements MusicPlayer, MediaPlayer.OnCompletion
         }
     }
 
-
+    @Override
     public void setSource(String mediaSource) {
         this.mediaSource = mediaSource;
     }
@@ -83,7 +94,6 @@ public class AndroidMediaPlayer implements MusicPlayer, MediaPlayer.OnCompletion
                 player.prepare();
                 player.setLooping(true);
                 player.seekTo(0);
-                prepared = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -132,6 +142,26 @@ public class AndroidMediaPlayer implements MusicPlayer, MediaPlayer.OnCompletion
     }
 
     @Override
+    public Repeat getRepeatMode() {
+        return repeatMode;
+    }
+
+    @Override
+    public void setRepeatMode(Repeat repeatMode) {
+        this.repeatMode = repeatMode;
+        switch (repeatMode) {
+            case LOOP:
+                player.setLooping(true);
+                break;
+            case ONCE_LOOP:
+            case ALL_LOOP:
+            case OFF:
+            default:
+                player.setLooping(false);
+        }
+    }
+
+    @Override
     public boolean isPlaying() {
         if (player != null) {
             return player.isPlaying();
@@ -155,12 +185,17 @@ public class AndroidMediaPlayer implements MusicPlayer, MediaPlayer.OnCompletion
     }
 
     @Override
-    public int getDuration() {
+    public boolean isComplete() {
+        return completion;
+    }
+
+    @Override
+    public long getDuration() {
         return player.getDuration();
     }
 
     @Override
-    public int getCurrentPosition() {
+    public long getCurrentPosition() {
         int position = 0;
         if (player != null && player.getCurrentPosition() > 0) {
             position = player.getCurrentPosition();
@@ -170,37 +205,22 @@ public class AndroidMediaPlayer implements MusicPlayer, MediaPlayer.OnCompletion
     }
 
     @Override
+    public long getBufferPosition() {
+        return bufferPercent / getDuration() * 100;
+    }
+
+    @Override
     public void setDisplay(Surface surface) {
         player.setSurface(surface);
     }
 
+    @Override
     public void setReadyListener(ReadyListener readyListener) {
-        this.preparedListener = preparedListener;
+        this.readyListener = readyListener;
     }
 
-
-    // Implement MediaPlayer.OnCompletionListener
     @Override
-    public void onCompletion(MediaPlayer mp) {
-        completion = true;
+    public void setCompletionListener(CompletionListener completionListener) {
+        this.completionListener = completionListener;
     }
-    // End MediaPlayer.OnCompletionListener
-
-    // Implement MediaPlayer.OnErrorListener
-    @Override
-    public boolean onError(MediaPlayer mediaPlayer, int what, int extra) {
-        if (what == MediaPlayer.MEDIA_ERROR_UNKNOWN && getMediaPlayer().getMediaSource().equals("")) {
-            destroyPlayer();
-        }
-
-        return false;
-    }
-    // End MediaPlayer.OnErrorListener
-
-    // Implement MediaPlayer.OnBufferingUpdateListener
-    @Override
-    public void onBufferingUpdate(MediaPlayer mp, int percent) {
-        this.percent = percent;
-    }
-    // End MediaPlayer.OnBufferingUpdateListener
 }

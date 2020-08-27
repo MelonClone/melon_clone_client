@@ -1,5 +1,6 @@
 package com.devgd.melonclone.domain.player.domain;
 
+import com.devgd.melonclone.global.media.player.MusicPlayer;
 import com.devgd.melonclone.global.model.domain.Domain;
 
 import lombok.Getter;
@@ -22,6 +23,8 @@ public class Player implements Domain {
     @NonNull
     boolean isPlay;
     boolean isPlayed = false;
+    @Setter
+    Mode playMode = new Mode(MusicPlayer.Repeat.ALL_LOOP, false, 0, 0);
 
     public void setPlay(boolean isPlay) {
         this.isPlay = isPlay;
