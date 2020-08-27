@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.adapter.PlaylistAdapter;
+import com.devgd.melonclone.domain.player.viewmodel.MusicViewModel;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.global.customview.RoundImageView;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
@@ -34,6 +35,7 @@ public class PlaylistActivity extends BaseActivity {
 
     // ViewModels
     PlayerViewModel playerViewModel;
+    MusicViewModel musicViewModel;
 
     // LiveDatas
     LiveData<LoginState> loginState;
@@ -66,8 +68,9 @@ public class PlaylistActivity extends BaseActivity {
     protected void viewModelInit() {
         // ViewModel init
         playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
+        musicViewModel = new ViewModelProvider(this).get(MusicViewModel.class);
 
-        playerViewModel.getCurrentMusic().observe(this, music -> {
+        musicViewModel.getCurrentMusic().observe(this, music -> {
             // TODO mini player change
             GlideImgManager.getInstance().setImages(this, albumImg,
                     new ImageSource(music.getAlbum().getAlbumJacketUrl(), ImageView.ScaleType.CENTER_CROP));
@@ -78,8 +81,8 @@ public class PlaylistActivity extends BaseActivity {
         loginState = playerViewModel.getLoginState();
         playerViewModel.checkLogin();
 
-        playerViewModel.getPlaylistCollection().observe(this, playlistCollection -> {
-            playlistAdapter.setList(playerViewModel.getCurrentPlaylist());
+        musicViewModel.getPlaylistCollection().observe(this, playlistCollection -> {
+            playlistAdapter.setList(musicViewModel.getCurrentPlaylist());
             playlistAdapter.notifyDataSetChanged();
         });
     }

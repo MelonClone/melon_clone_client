@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.activity.PlaylistActivity;
+import com.devgd.melonclone.domain.player.viewmodel.MusicViewModel;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.global.consts.Constants;
 import com.devgd.melonclone.global.media.PlayManager;
@@ -25,7 +26,6 @@ public class PlayerControllerView implements LifecycleView {
     // Views
     ImageView playlistBtn;
     ImageButton playBtn;
-    SeekBar progressView;
     ImageButton pauseBtn;
     ImageButton prevBtn;
     ImageButton nextBtn;
@@ -39,6 +39,7 @@ public class PlayerControllerView implements LifecycleView {
 
     // ViewModels
     PlayerViewModel playerViewModel;
+    MusicViewModel musicViewModel;
 
     public PlayerControllerView(BaseActivity context) {
         mContext = context;
@@ -49,7 +50,6 @@ public class PlayerControllerView implements LifecycleView {
         // Controller
         playlistBtn = parentViewGroup.findViewById(R.id.playlist_btn);
         playBtn = parentViewGroup.findViewById(R.id.play_btn);
-        progressView = parentViewGroup.findViewById(R.id.playtime_seekbar);
         pauseBtn = parentViewGroup.findViewById(R.id.pause_btn);
         prevBtn = parentViewGroup.findViewById(R.id.prev_btn);
         nextBtn = parentViewGroup.findViewById(R.id.next_btn);
@@ -65,8 +65,8 @@ public class PlayerControllerView implements LifecycleView {
 
     @Override
     public void viewInit(ViewGroup viewGroup) {
-        progressView.setMax(100);
-        progressView.setProgress(0);
+        playtimeSeekbar.setMax(100);
+        playtimeSeekbar.setProgress(0);
     }
 
     @Override
@@ -75,7 +75,9 @@ public class PlayerControllerView implements LifecycleView {
             playerViewModel = (PlayerViewModel) viewModel;
 
             if (playerViewModel.getPlayer().getValue() != null) {
-                progressView.setProgress(playerViewModel.getPlayer().getValue().getCurrentPlaytime());
+                playtimeSeekbar.setProgress(playerViewModel.getPlayer().getValue().getCurrentPlaytime());
+                restPlaytime.setText(TimeFormatter.millisecondToClock(PlayManager.getInstance().getDuration()));
+
             }
 
             playerViewModel.getPlayer().observe(mContext, player -> {
@@ -92,9 +94,9 @@ public class PlayerControllerView implements LifecycleView {
                 }
             });
 
-            playerViewModel.getCurrentMusic().observe(mContext, music -> {
-                restPlaytime.setText(TimeFormatter.millisecondToClock(PlayManager.getInstance().getDuration()));
-            });
+//            playerViewModel.getCurrentMusic().observe(mContext, music -> {
+//                restPlaytime.setText(TimeFormatter.millisecondToClock(PlayManager.getInstance().getDuration()));
+//            });
         }
     }
 
@@ -105,8 +107,8 @@ public class PlayerControllerView implements LifecycleView {
             long maxTime = PlayManager.getInstance().getDuration();
             currentPlaytime.setText(TimeFormatter.millisecondToClock(curTime));
             restPlaytime.setText(TimeFormatter.millisecondToClock(maxTime));
-            progressView.setMax((int) (maxTime / 1000));
-            progressView.setProgress((int) (curTime / 1000));
+            playtimeSeekbar.setMax((int) (maxTime / 1000));
+            playtimeSeekbar.setProgress((int) (curTime / 1000));
         });
 
         playtimeSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -127,7 +129,7 @@ public class PlayerControllerView implements LifecycleView {
         });
 
         playBtn.setOnClickListener(v -> {
-            playerViewModel.mediaPlay(mContext, playerViewModel.getCurrentMusic().getValue(), null);
+            playerViewModel.mediaPlay(mContext, musicViewModel.getCurrentMusic().getValue(), null);
         });
 
         playlistBtn.setOnClickListener(v -> {

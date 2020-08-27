@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.adapter.LyricAdapter;
 import com.devgd.melonclone.domain.player.view.fragment.PlayerControllerView;
+import com.devgd.melonclone.domain.player.viewmodel.MusicViewModel;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.domain.search.view.activity.SearchActivity;
 import com.devgd.melonclone.global.consts.Constants;
@@ -41,6 +42,7 @@ public class PlayerActivity extends BaseActivity {
 
     // ViewModels
     PlayerViewModel playerViewModel;
+    MusicViewModel musicViewModel;
 
     @Override
     protected void layoutInit() {
@@ -75,8 +77,9 @@ public class PlayerActivity extends BaseActivity {
     protected void viewModelInit() {
         // ViewModel init
         playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
+        musicViewModel = new ViewModelProvider(this).get(MusicViewModel.class);
 
-        playerViewModel.getCurrentMusic().observe(this, music -> {
+        musicViewModel.getCurrentMusic().observe(this, music -> {
             // TODO get image source
 //            Glide.with(this).asFile().load(getResources().getDrawable(R.drawable.sample_img2, getTheme())).apply(new RequestOptions().centerCrop()).into(albumImg);
             GlideImgManager.getInstance().setImages(this, albumImg,
