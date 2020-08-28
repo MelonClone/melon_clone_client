@@ -6,6 +6,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.devgd.melonclone.R;
+import com.devgd.melonclone.domain.player.viewmodel.MusicViewModel;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.global.consts.Constants;
 import com.devgd.melonclone.global.media.PlayManager;
@@ -50,28 +51,30 @@ public class PlayerControllerMiniView implements LifecycleView {
     }
 
     @Override
-    public void viewModelInit(BaseViewModel viewModel) {
-        if (viewModel instanceof PlayerViewModel) {
-            playerViewModel = (PlayerViewModel) viewModel;
-
-            if (playerViewModel.getPlayer().getValue() != null) {
-                progressView.setProgress(playerViewModel.getPlayer().getValue().getCurrentPlaytime());
+    public void viewModelInit(BaseViewModel... viewModels) {
+        for (BaseViewModel viewModel : viewModels) {
+            if (viewModel instanceof PlayerViewModel) {
+                playerViewModel = (PlayerViewModel) viewModel;
             }
-
-            if (PlayManager.getInstance().isPlaying()) {
-                playBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_pause));
-            }
-
-            playerViewModel.getPlayer().observe(mContext, player -> {
-                if (player.isPlay()) {
-                    playBtn.setVisibility(View.INVISIBLE);
-                    pauseBtn.setVisibility(View.VISIBLE);
-                } else {
-                    playBtn.setVisibility(View.VISIBLE);
-                    pauseBtn.setVisibility(View.INVISIBLE);
-                }
-            });
         }
+
+        if (playerViewModel.getPlayer().getValue() != null) {
+            progressView.setProgress(playerViewModel.getPlayer().getValue().getCurrentPlaytime());
+        }
+
+        if (PlayManager.getInstance().isPlaying()) {
+            playBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_pause));
+        }
+
+        playerViewModel.getPlayer().observe(mContext, player -> {
+            if (player.isPlay()) {
+                playBtn.setVisibility(View.INVISIBLE);
+                pauseBtn.setVisibility(View.VISIBLE);
+            } else {
+                playBtn.setVisibility(View.VISIBLE);
+                pauseBtn.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     @Override

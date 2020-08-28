@@ -8,11 +8,13 @@ import androidx.lifecycle.MutableLiveData;
 import com.devgd.melonclone.domain.player.domain.Lyric;
 import com.devgd.melonclone.domain.player.domain.Music;
 import com.devgd.melonclone.domain.player.domain.Playlist;
+import com.devgd.melonclone.domain.player.domain.PlaylistCollection;
 import com.devgd.melonclone.domain.player.domain.PlaylistItem;
 import com.devgd.melonclone.domain.player.model.LyricModel;
 import com.devgd.melonclone.domain.player.model.LyricRepository;
 import com.devgd.melonclone.domain.player.model.MusicModel;
 import com.devgd.melonclone.domain.player.model.MusicRepository;
+import com.devgd.melonclone.domain.player.model.PlaylistModel;
 import com.devgd.melonclone.global.media.PlayManager;
 import com.devgd.melonclone.global.media.player.ExoMediaPlayer;
 import com.devgd.melonclone.global.media.player.MusicPlayer;
@@ -21,26 +23,22 @@ import com.devgd.melonclone.global.model.view.states.NetworkState;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
 import com.devgd.melonclone.utils.store.PlaylistSample;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class MusicViewModel extends BaseViewModel {
 
     private String currentPlaylistName;
-    private PlaylistItem currentPlaylistItem;
     private MutableLiveData<Music> currentMusic;
-    private MutableLiveData<Map<String, Playlist>> playlistCollection;
+    private MutableLiveData<PlaylistCollection> playlistCollection;
 
     // TODO DI or repository to singleton
     private MusicRepository musicRepository;
     private LyricRepository lyricRepository;
     //    private PlaylistRepository playlistRepository;
     private MusicModel musicModel;
+    private PlaylistModel playlistModel;
     private LyricModel lyricModel = new LyricModel();
-
-    // private MutableLiveData<List<Playlist>> playlistList;
 
     @Override
     protected void init() {
@@ -48,6 +46,7 @@ public class MusicViewModel extends BaseViewModel {
         lyricRepository = LyricRepository.getInstance();
 //        playlistRepository = PlaylistRepository.getInstance();
         musicModel = MusicModel.getInstance();
+        playlistModel = PlaylistModel.getInstance();
         loadMusic();
         loadLyric();
         loadPlaylistCollection();
@@ -65,7 +64,7 @@ public class MusicViewModel extends BaseViewModel {
 
     public List<PlaylistItem> getCurrentPlaylist() {
         if (playlistCollection.getValue() != null) {
-            Playlist playlist = playlistCollection.getValue().get(currentPlaylistName);
+            Playlist playlist = playlistCollection.getValue().getPlaylist(playlistModel.getLastPlaylist().getPlaylistName());
             if (playlist != null) {
                 return playlist.getPlaylistItems();
             }
@@ -73,7 +72,7 @@ public class MusicViewModel extends BaseViewModel {
         return new LinkedList<>();
     }
 
-    public LiveData<Map<String, Playlist>> getPlaylistCollection() {
+    public LiveData<PlaylistCollection> getPlaylistCollection() {
         if (playlistCollection == null) {
             playlistCollection = new MutableLiveData<>();
             loadPlaylistCollection();
@@ -84,8 +83,10 @@ public class MusicViewModel extends BaseViewModel {
 
     private void loadMusic() {
         currentMusic = new MutableLiveData<>();
-        if (musicModel.getLastPlayedMusic() != null)
-            currentMusic.postValue(musicModel.getLastPlayedMusic());
+        if (musicModel.getLastPlayedMusic() != null) {
+
+            currentMusic.postValue(playlistModel.getLastPlaylist().getCurrentPlaylistItem().getMusic());
+        }
     }
 
     private void loadMusic(Music music) {
@@ -122,15 +123,10 @@ public class MusicViewModel extends BaseViewModel {
 
     private void loadPlaylistCollection() {
         playlistCollection = new MutableLiveData<>();
-        Map<String, Playlist> customPlaylist = new HashMap<>();
-        for (int i=0; i<10; i++) {
-            Playlist list = PlaylistSample.getSample();
-            if (i == 0) list.setPlaylistName("default");
-            customPlaylist.put(list.getPlaylistName(), list);
-        }
-        playlistCollection.setValue(customPlaylist);
-        currentPlaylistName = "default";
-        getLastPlayMusic(customPlaylist);
+        playlistCollection.setValue(playlistModel.getPlaylistCollection());
+
+        // TODO get Last played playlist name
+        currentPlaylistName = playlistModel.getPlaylistCollection().getDefaultPlaylist().getPlaylistName();
 
 
         /*playlistRepository.getAllPlaylist(new Repository.RepoListCallback<List<Playlist>>() {
@@ -152,45 +148,30 @@ public class MusicViewModel extends BaseViewModel {
                 !(PlayManager.getInstance().isPrepared() || PlayManager.getInstance().isPlaying())) {
             MusicPlayer mediaPlayer = new ExoMediaPlayer(currentMusic.getValue().getMusicUrl(), 1f, context);
             PlayManager.getInstance().setPlayer(mediaPlayer);
-            PlayManager.getInstance().addMusicChangedListener(() -> {
-                if (playlistCollection.getValue() != null) {
-//                    currentMusic.postValue(getNextMusic(playlistCollection.getValue()));
-                }
-            });
+            PlayManager.getInstance().addMusicChangedListener(this::getNextMusic);
             PlayManager.getInstance().startPlayer();
         }
     }
 
-    private Music getLastPlayMusic(Map<String, Playlist> playlistCollection) {
-        Playlist playlist = playlistCollection.get(currentPlaylistName);
-        if (playlist != null) {
-            LinkedList<PlaylistItem> playlistItems = playlist.getPlaylistItems();
-            if (currentPlaylistItem == null || currentPlaylistItem == playlistItems.getLast()) {
-                currentPlaylistItem = playlistItems.getFirst();
-            }
-
-            return currentPlaylistItem.getMusic();
-        } else {
-            return null;
+    public void getNextMusic() {
+        if (playlistCollection.getValue() != null) {
+            Playlist currentPlaylist = playlistCollection.getValue().getPlaylist(currentPlaylistName);
+            playlistModel.setLastPlayed(currentPlaylist);
+            currentMusic.postValue(currentPlaylist.next().getMusic());
         }
     }
 
-    // TODO Executed by View to change music
-    private Music getNextMusic(Map<String, Playlist> playlistCollection) {
-        Playlist playlist = playlistCollection.get(currentPlaylistName);
-        if (playlist != null) {
-            LinkedList<PlaylistItem> playlistItems = playlist.getPlaylistItems();
-            PlaylistItem playlistItem;
-            if (currentPlaylistItem == null || currentPlaylistItem == playlistItems.getLast()) {
-                playlistItem = playlistItems.getFirst();
-            } else {
-                playlistItem = playlistItems.listIterator(playlistItems.indexOf(currentPlaylistItem)).next();
+    public void getPrevMusic() {
+        if (PlayManager.getInstance().getCurrentPosition() < 3000) {
+            if (playlistCollection.getValue() != null) {
+                Playlist currentPlaylist = playlistCollection.getValue()
+                        .getPlaylist(currentPlaylistName);
+                playlistModel.setLastPlayed(currentPlaylist);
+                currentMusic.postValue(currentPlaylist.prev().getMusic());
             }
-            currentPlaylistItem = playlistItem;
-            currentMusic.postValue(playlistItem.getMusic());
-            return currentPlaylistItem.getMusic();
         } else {
-            return null;
+            PlayManager.getInstance().resetPlayer();
+            PlayManager.getInstance().startPlayer();
         }
     }
 }

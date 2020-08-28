@@ -70,34 +70,47 @@ public class PlayerControllerView implements LifecycleView {
     }
 
     @Override
-    public void viewModelInit(BaseViewModel viewModel) {
-        if (viewModel instanceof PlayerViewModel) {
-            playerViewModel = (PlayerViewModel) viewModel;
+    public void viewModelInit(BaseViewModel... viewModels) {
+        for (BaseViewModel viewModel : viewModels) {
+            if (viewModel instanceof PlayerViewModel) {
+                playerViewModel = (PlayerViewModel) viewModel;
+            } else if (viewModel instanceof MusicViewModel) {
+                musicViewModel = (MusicViewModel) viewModel;
+            }
+        }
 
-            if (playerViewModel.getPlayer().getValue() != null) {
-                playtimeSeekbar.setProgress(playerViewModel.getPlayer().getValue().getCurrentPlaytime());
-                restPlaytime.setText(TimeFormatter.millisecondToClock(PlayManager.getInstance().getDuration()));
+        if (playerViewModel.getPlayer().getValue() != null) {
+            playtimeSeekbar.setProgress(playerViewModel.getPlayer().getValue().getCurrentPlaytime());
+            restPlaytime.setText(TimeFormatter.millisecondToClock(PlayManager.getInstance().getDuration()));
 
+        }
+
+        playerViewModel.getPlayer().observe(mContext, player -> {
+            if (player == null || !player.isPlay()) {
+                playBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_play_button));
+            } else {
+                playBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_pause));
             }
 
-            playerViewModel.getPlayer().observe(mContext, player -> {
-                if (player.isPlay()) {
-                    playBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_pause));
-                } else {
-                    playBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_play_button));
-                }
+            if (player == null || player.getPlayMode().getRepeatMode() == MusicPlayer.Repeat.ALL_LOOP) {
+                repeatBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_repeat_act));
+            } else {
+                repeatBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_repeat));
+            }
+        });
 
-                if (player.getPlayMode().getRepeatMode() == MusicPlayer.Repeat.ALL_LOOP) {
-                    repeatBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_repeat_act));
-                } else {
-                    repeatBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_repeat));
-                }
-            });
+        musicViewModel.getCurrentMusic().observe(mContext, music -> {
+            long maxTime = music.getPlaytime();
+            currentPlaytime.setText(TimeFormatter.millisecondToClock(0));
+            restPlaytime.setText(TimeFormatter.millisecondToClock(maxTime));
+            playtimeSeekbar.setMax((int) (maxTime / 1000));
+            playtimeSeekbar.setProgress(0);
 
-//            playerViewModel.getCurrentMusic().observe(mContext, music -> {
-//                restPlaytime.setText(TimeFormatter.millisecondToClock(PlayManager.getInstance().getDuration()));
-//            });
-        }
+            if (playerViewModel.isPlay()) {
+                playerViewModel.mediaStop();
+                playerViewModel.mediaPlay(mContext, music, null);
+            }
+        });
     }
 
     @Override
@@ -141,6 +154,14 @@ public class PlayerControllerView implements LifecycleView {
         repeatBtn.setOnClickListener(v -> {
             playerViewModel.changeRepeatMode();
         });
+
+        nextBtn.setOnClickListener(v -> {
+            musicViewModel.getNextMusic();
+        });
+
+        prevBtn.setOnClickListener(v -> {
+            musicViewModel.getPrevMusic();
+        });
     }
 
     public void colorChange(Constants.Theme colorTheme) {
@@ -150,12 +171,14 @@ public class PlayerControllerView implements LifecycleView {
                 nextBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_next_black));
                 prevBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_next_black));
                 eqBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_mixer_black));
+                shuffleBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_random_black));
                 break;
             case COLOR_LIGHT:
                 playlistBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_playlist_white));
                 nextBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_next_white));
                 prevBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_next_white));
                 eqBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_mixer_white));
+                shuffleBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_random_white));
                 break;
         }
     }

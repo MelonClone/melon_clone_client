@@ -87,9 +87,10 @@ public class ExoMediaPlayer implements MusicPlayer {
     @Override
     public void destroyPlayer() {
         completion = false;
+        prepared = false;
         stopPlayer();
         releasePlayer();
-        player = null;
+        initPlayer();
     }
 
     @Override

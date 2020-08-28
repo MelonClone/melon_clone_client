@@ -84,7 +84,10 @@ public class PlayManager implements MixPlayerControl, VideoPlayerControl {
 
     @Override
     public boolean isDestroyed() {
-        return mainPlayerController.isDestroyed();
+        if (isSetPlayer()) {
+            return mainPlayerController.isDestroyed();
+        }
+        return true;
     }
 
     @Override

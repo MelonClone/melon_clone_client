@@ -5,6 +5,7 @@ import com.devgd.melonclone.global.model.domain.Domain;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
@@ -18,6 +19,9 @@ public class Music implements Domain {
     final Artist artist;
     final boolean isLike;
     final boolean isMV;
+    @Setter
+    @NonNull
+    int playtime;
     @Setter
     List<Lyric> musicLyricList;
 

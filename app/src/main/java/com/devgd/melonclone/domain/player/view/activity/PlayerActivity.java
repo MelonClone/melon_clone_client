@@ -93,7 +93,7 @@ public class PlayerActivity extends BaseActivity {
         playerViewModel.getViewState().observe(this, getStateObserver(this));
         playerViewModel.checkLogin();
 
-        playerControllerView.viewModelInit(playerViewModel);
+        playerControllerView.viewModelInit(playerViewModel, musicViewModel);
     }
 
     @Override

@@ -125,7 +125,7 @@ public class AndroidMediaPlayer implements MusicPlayer {
         player.stop();
         player.setDisplay(null);
         player.release();
-        player = null;
+        initPlayer();
     }
 
     @Override

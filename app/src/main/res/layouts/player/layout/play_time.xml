@@ -62,7 +62,7 @@
         android:layout_centerVertical="true"
         android:padding="8dp"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:src="@drawable/ic_random"
+        android:src="@drawable/ic_random_black"
         android:scaleType="fitXY"
         />
 

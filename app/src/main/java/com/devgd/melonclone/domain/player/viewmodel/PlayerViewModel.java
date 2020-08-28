@@ -1,6 +1,7 @@
 package com.devgd.melonclone.domain.player.viewmodel;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.TextureView;
 
 import androidx.lifecycle.LiveData;
@@ -77,34 +78,39 @@ public class PlayerViewModel extends BaseViewModel implements Playable {
     public void mediaPlay(Context context, Music music, TextureView view) {
         Player playerInfo = getPlayer().getValue();
 
-        if (playerInfo != null) {
-            if (playerInfo.isPlay()) {
-                PlayManager.getInstance().pausePlayer();
-                playerInfo.setPlay(false);
-            } else if (playerInfo.isPlayed()) {
-                PlayManager.getInstance().startPlayer();
-                playerInfo.setPlay(true);
-            } else {
-                if (!(PlayManager.getInstance().isPrepared() || PlayManager.getInstance().isPlaying())) {
-                    MusicPlayer mediaPlayer = new ExoMediaPlayer(musicModel.getMusic().getMusicUrl(), 1f, context);
-                    PlayManager.getInstance().setPlayer(mediaPlayer);
-                    PlayManager.getInstance().addMusicChangedListener(() -> {
-                        // TODO MusicChange
-                        // TODO callback event to View and execute next
-                    });
-                    PlayManager.getInstance().startPlayer();
-                }
-                playerInfo.setPlay(true);
-            }
-            this.playerInfo.postValue(getPlayer().getValue());
+        if (playerInfo == null) {
+            loadPlayer();
+            playerInfo = playerModel.getPlayer();
         }
+
+        if (playerInfo.isPlay()) {
+            PlayManager.getInstance().pausePlayer();
+            playerInfo.setPlay(false);
+        } else if (playerInfo.isPlayed()) {
+            PlayManager.getInstance().startPlayer();
+            playerInfo.setPlay(true);
+        } else {
+            if (!(PlayManager.getInstance().isPrepared() || PlayManager.getInstance().isPlaying())) {
+                MusicPlayer mediaPlayer = new ExoMediaPlayer(music.getMusicUrl(), 1f, context);
+                PlayManager.getInstance().setPlayer(mediaPlayer);
+                PlayManager.getInstance().addMusicChangedListener(() -> {
+                    // TODO MusicChange
+                    // TODO callback event to View and execute next
+                });
+                PlayManager.getInstance().startPlayer();
+            }
+            playerInfo.setPlay(true);
+        }
+        this.playerInfo.postValue(playerInfo);
     }
 
     @Override
     public void mediaStop() {
         // Player 종료
         if (!PlayManager.getInstance().isDestroyed()) {
+            PlayManager.getInstance().stopPlayer();
             PlayManager.getInstance().destroyPlayer();
+            this.playerInfo.getValue().resetPlayer();
         }
     }
 

@@ -16,9 +16,6 @@ public class Player implements Domain {
     int playerTheme;
     @Setter
     @NonNull
-    int playtime;
-    @Setter
-    @NonNull
     int currentPlaytime;
     @NonNull
     boolean isPlay;
@@ -29,5 +26,10 @@ public class Player implements Domain {
     public void setPlay(boolean isPlay) {
         this.isPlay = isPlay;
         this.isPlayed = true;
+    }
+
+    public void resetPlayer() {
+        this.isPlay = false;
+        this.isPlayed = false;
     }
 }
