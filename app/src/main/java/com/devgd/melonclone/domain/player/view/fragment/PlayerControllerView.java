@@ -8,6 +8,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.devgd.melonclone.R;
+import com.devgd.melonclone.domain.player.view.PlayerState;
 import com.devgd.melonclone.domain.player.view.activity.PlaylistActivity;
 import com.devgd.melonclone.domain.player.viewmodel.MusicViewModel;
 import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
@@ -16,10 +17,11 @@ import com.devgd.melonclone.global.media.PlayManager;
 import com.devgd.melonclone.global.media.player.MusicPlayer;
 import com.devgd.melonclone.global.model.view.activity.BaseActivity;
 import com.devgd.melonclone.global.model.view.activity.LifecycleView;
+import com.devgd.melonclone.global.model.view.activity.ThemeApplicableState;
 import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
 import com.devgd.melonclone.utils.view.TimeFormatter;
 
-public class PlayerControllerView implements LifecycleView {
+public class PlayerControllerView implements LifecycleView, ThemeApplicableState<PlayerState> {
 
     BaseActivity mContext;
 
@@ -40,6 +42,9 @@ public class PlayerControllerView implements LifecycleView {
     // ViewModels
     PlayerViewModel playerViewModel;
     MusicViewModel musicViewModel;
+
+    PlayerState playerState = new PlayerState();
+    Constants.Theme colorTheme = Constants.Theme.COLOR_DARK;
 
     public PlayerControllerView(BaseActivity context) {
         mContext = context;
@@ -93,10 +98,11 @@ public class PlayerControllerView implements LifecycleView {
             }
 
             if (player == null || player.getPlayMode().getRepeatMode() == MusicPlayer.Repeat.ALL_LOOP) {
-                repeatBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_repeat_act));
+                getApplicableState().setRepeat(true);
             } else {
-                repeatBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_repeat));
+                getApplicableState().setRepeat(false);
             }
+            colorChange(getTheme());
         });
 
         musicViewModel.getCurrentMusic().observe(mContext, music -> {
@@ -164,6 +170,7 @@ public class PlayerControllerView implements LifecycleView {
         });
     }
 
+    @Override
     public void colorChange(Constants.Theme colorTheme) {
         switch (colorTheme) {
             case COLOR_DARK:
@@ -171,6 +178,7 @@ public class PlayerControllerView implements LifecycleView {
                 nextBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_next_black));
                 prevBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_next_black));
                 eqBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_mixer_black));
+                repeatBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_repeat_black));
                 shuffleBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_random_black));
                 break;
             case COLOR_LIGHT:
@@ -178,8 +186,39 @@ public class PlayerControllerView implements LifecycleView {
                 nextBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_next_white));
                 prevBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_next_white));
                 eqBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_mixer_white));
+                repeatBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_repeat_white));
                 shuffleBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_random_white));
                 break;
         }
+
+        if (playerState.isRepeat()) {
+            repeatBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_repeat_act));
+        }
+
+        if (playerState.isShuffle()) {
+            shuffleBtn.setImageDrawable(mContext.getDrawable(R.drawable.ic_random_act));
+        }
+
+        setTheme(colorTheme);
+    }
+
+    @Override
+    public void setTheme(Constants.Theme colorTheme) {
+        this.colorTheme = colorTheme;
+    }
+
+    @Override
+    public Constants.Theme getTheme() {
+        return colorTheme;
+    }
+
+    @Override
+    public void setApplicableState(PlayerState playerState) {
+        this.playerState = playerState;
+    }
+
+    @Override
+    public PlayerState getApplicableState() {
+        return playerState;
     }
 }

@@ -10,5 +10,4 @@ public interface LifecycleView {
     void viewInit(ViewGroup viewGroup);
     void viewModelInit(BaseViewModel... viewModels);
     void listenerInit();
-    void colorChange(Constants.Theme colorTheme);
 }

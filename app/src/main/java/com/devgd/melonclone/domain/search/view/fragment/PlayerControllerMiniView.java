@@ -83,9 +83,4 @@ public class PlayerControllerMiniView implements LifecycleView {
             progressView.setProgress(progress);
         });
     }
-
-    @Override
-    public void colorChange(Constants.Theme colorTheme) {
-
-    }
 }
