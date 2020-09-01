@@ -7,9 +7,10 @@ import android.widget.TextView;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.domain.Music;
-import com.devgd.melonclone.global.model.view.adapter.BaseListPagerAdapter;
-import com.devgd.melonclone.utils.image.GlideImgManager;
-import com.devgd.melonclone.utils.image.ImageSource;
+
+import org.watermelon.framework.global.model.view.adapter.BaseListPagerAdapter;
+import org.watermelon.framework.utils.image.GlideImgManager;
+import org.watermelon.framework.utils.image.ImageSource;
 
 public class RankingPagerAdapter extends BaseListPagerAdapter<Music> {
 

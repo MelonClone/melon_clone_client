@@ -4,6 +4,10 @@
  * maven repositories.
  **/
 
+def lib_version = [:]
+lib_version.publish = '0.0.4'
+ext.lib_version = lib_version
+
 def build_versions = [:]
 build_versions.min_sdk = 23
 build_versions.target_sdk = 29
@@ -13,7 +17,7 @@ build_versions.supportLibraryVersion = '28.0.0'
 ext.build_versions = build_versions
 
 def versions = [:]
-versions.android_gradle_plugin = '4.0.0'
+versions.android_gradle_plugin = '4.0.1'
 
 // Android Support
 versions.appcompat = "1.1.0"
@@ -54,5 +58,6 @@ def addRepos(RepositoryHandler handler) {
     handler.google()
     handler.jcenter()
     handler.maven { url "https://jitpack.io" }
+    handler.maven { url "http://localhost:5000/repository/thirdparty" }
 }
 ext.addRepos = this.&addRepos

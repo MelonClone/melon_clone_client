@@ -10,20 +10,21 @@ import android.widget.TextView;
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.PlayerState;
 import com.devgd.melonclone.domain.player.view.activity.PlaylistActivity;
-import com.devgd.melonclone.domain.player.viewmodel.MusicViewModel;
-import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
-import com.devgd.melonclone.global.consts.Constants;
-import com.devgd.melonclone.global.media.PlayManager;
-import com.devgd.melonclone.global.media.player.MusicPlayer;
-import com.devgd.melonclone.global.model.view.activity.BaseActivity;
-import com.devgd.melonclone.global.model.view.activity.LifecycleView;
-import com.devgd.melonclone.global.model.view.activity.ThemeApplicableState;
-import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
-import com.devgd.melonclone.utils.view.TimeFormatter;
+import com.devgd.melonclone.domain.player.viewmodel.MusicViewModelMelonClone;
+import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModelMelonClone;
+import com.devgd.melonclone.global.model.view.activity.MelonCloneBaseActivity;
+
+import org.watermelon.framework.global.consts.Constants;
+import org.watermelon.framework.global.media.PlayManager;
+import org.watermelon.framework.global.media.player.MusicPlayer;
+import org.watermelon.framework.global.model.view.activity.LifecycleView;
+import org.watermelon.framework.global.model.view.activity.ThemeApplicableState;
+import org.watermelon.framework.global.model.viewmodel.BaseViewModel;
+import org.watermelon.framework.utils.view.TimeFormatter;
 
 public class PlayerControllerView implements LifecycleView, ThemeApplicableState<PlayerState> {
 
-    BaseActivity mContext;
+    MelonCloneBaseActivity mContext;
 
     // Views
     ImageView playlistBtn;
@@ -40,13 +41,13 @@ public class PlayerControllerView implements LifecycleView, ThemeApplicableState
     SeekBar playtimeSeekbar;
 
     // ViewModels
-    PlayerViewModel playerViewModel;
-    MusicViewModel musicViewModel;
+    PlayerViewModelMelonClone playerViewModel;
+    MusicViewModelMelonClone musicViewModel;
 
     PlayerState playerState = new PlayerState();
     Constants.Theme colorTheme = Constants.Theme.COLOR_DARK;
 
-    public PlayerControllerView(BaseActivity context) {
+    public PlayerControllerView(MelonCloneBaseActivity context) {
         mContext = context;
     }
 
@@ -77,10 +78,10 @@ public class PlayerControllerView implements LifecycleView, ThemeApplicableState
     @Override
     public void viewModelInit(BaseViewModel... viewModels) {
         for (BaseViewModel viewModel : viewModels) {
-            if (viewModel instanceof PlayerViewModel) {
-                playerViewModel = (PlayerViewModel) viewModel;
-            } else if (viewModel instanceof MusicViewModel) {
-                musicViewModel = (MusicViewModel) viewModel;
+            if (viewModel instanceof PlayerViewModelMelonClone) {
+                playerViewModel = (PlayerViewModelMelonClone) viewModel;
+            } else if (viewModel instanceof MusicViewModelMelonClone) {
+                musicViewModel = (MusicViewModelMelonClone) viewModel;
             }
         }
 

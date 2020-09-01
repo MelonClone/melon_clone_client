@@ -6,18 +6,17 @@ import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.user.view.fragment.LocalLoginFragment;
 import com.devgd.melonclone.domain.user.view.fragment.LoginListFragment;
-import com.devgd.melonclone.domain.user.viewmodel.LoginViewModel;
-import com.devgd.melonclone.global.model.view.activity.BaseActivity;
-import com.devgd.melonclone.global.model.view.activity.ChangeableFragmentActivity;
-import com.devgd.melonclone.global.model.view.states.LoginState;
+import com.devgd.melonclone.domain.user.viewmodel.LoginViewModelMelonClone;
+import com.devgd.melonclone.global.model.view.activity.MelonCloneBaseActivity;
 
-public class LoginActivity extends BaseActivity implements ChangeableFragmentActivity {
+import org.watermelon.framework.global.model.view.activity.ChangeableFragmentActivity;
+
+public class LoginActivity extends MelonCloneBaseActivity implements ChangeableFragmentActivity {
 
     // Views
     LinearLayout registerBtn;
@@ -25,7 +24,7 @@ public class LoginActivity extends BaseActivity implements ChangeableFragmentAct
     LocalLoginFragment localLoginFragment;
 
     // ViewModels
-    LoginViewModel loginViewModel;
+    LoginViewModelMelonClone loginViewModel;
 
     @Override
     protected void layoutInit() {
@@ -50,7 +49,7 @@ public class LoginActivity extends BaseActivity implements ChangeableFragmentAct
     @Override
     protected void viewModelInit() {
         // ViewModel init
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModelMelonClone.class);
 
         // Check User
         loginViewModel.getViewState().observe(this, getStateObserver(this));

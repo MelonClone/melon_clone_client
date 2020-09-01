@@ -2,10 +2,11 @@ package com.devgd.melonclone.domain.player.model;
 
 import com.devgd.melonclone.domain.player.domain.Lyric;
 import com.devgd.melonclone.domain.player.domain.Music;
-import com.devgd.melonclone.global.model.view.states.NetworkState;
-import com.devgd.melonclone.global.model.repository.Repository;
-import com.devgd.melonclone.utils.network.HttpManager;
 import com.devgd.melonclone.utils.network.services.MusicService;
+
+import org.watermelon.framework.global.model.repository.Repository;
+import org.watermelon.framework.global.model.view.states.NetworkState;
+import org.watermelon.framework.utils.network.HttpManager;
 
 import java.util.List;
 

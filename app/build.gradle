@@ -47,12 +47,16 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    // Core Framework
+    implementation "watermelon:framework:$lib_version.publish"
+    implementation project(path: ':circular-progress-view')
+/*
     // Android Support
     implementation "androidx.appcompat:appcompat:$versions.appcompat"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraintlayout"
     implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
     implementation "com.android.support:recyclerview-v7:${build_versions.supportLibraryVersion}"
-
+*/
     // Utils
     compileOnly "org.projectlombok:lombok:$versions.lombok"
     annotationProcessor "org.projectlombok:lombok:$versions.lombok"
@@ -61,7 +65,7 @@ dependencies {
     testImplementation "junit:junit:$versions.junit"
     androidTestImplementation "androidx.test.ext:junit:$versions.atsl_junit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$versions.atsl_espresso"
-
+/*
     // Network
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
     implementation "com.squareup.retrofit2:converter-scalars:$versions.retrofit"
@@ -90,4 +94,5 @@ dependencies {
 
     // Media
     implementation "com.google.android.exoplayer:exoplayer:$versions.exoplayer"
+    */
 }

@@ -7,12 +7,14 @@ import android.widget.Toast;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.devgd.melonclone.R;
-import com.devgd.melonclone.domain.user.viewmodel.LoginViewModel;
-import com.devgd.melonclone.global.customview.RoundImageView;
-import com.devgd.melonclone.global.model.view.activity.BaseActivity;
-import com.devgd.melonclone.global.model.view.states.LoginState;
+import com.devgd.melonclone.domain.user.domain.User;
+import com.devgd.melonclone.domain.user.viewmodel.LoginViewModelMelonClone;
+import com.devgd.melonclone.global.model.view.activity.MelonCloneBaseActivity;
 
-public class ProfileActivity extends BaseActivity {
+import org.watermelon.framework.global.customview.RoundImageView;
+import org.watermelon.framework.global.model.view.states.LoginState;
+
+public class ProfileActivity extends MelonCloneBaseActivity {
 
     // Views
     TextView userNameTxtView;
@@ -21,7 +23,7 @@ public class ProfileActivity extends BaseActivity {
     ImageButton closeBtn;
 
     // ViewModels
-    LoginViewModel loginViewModel;
+    LoginViewModelMelonClone loginViewModel;
 
     @Override
     protected void layoutInit() {
@@ -41,7 +43,7 @@ public class ProfileActivity extends BaseActivity {
     @Override
     protected void viewModelInit() {
         // ViewModel init
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModelMelonClone.class);
 
         // Check User
         loginViewModel.getLoginState().observe(this, this::getUserState);
@@ -59,7 +61,7 @@ public class ProfileActivity extends BaseActivity {
         });
     }
 
-    private void getUserState(LoginState loginState) {
+    private void getUserState(LoginState<User> loginState) {
         if (loginState.isLogin()) {
             userNameTxtView.setText(loginState.getUser().getNickname());
         }

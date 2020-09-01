@@ -7,9 +7,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.devgd.melonclone.R;
-import com.devgd.melonclone.global.model.handler.TabMenu;
-import com.devgd.melonclone.global.model.view.activity.TabToolbarView;
 import com.google.android.material.tabs.TabLayout;
+
+import org.watermelon.framework.global.model.handler.TabMenu;
+import org.watermelon.framework.global.model.view.activity.TabToolbarView;
 
 public class SearchTabToolbarView implements TabToolbarView {
 

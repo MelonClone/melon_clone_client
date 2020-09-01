@@ -4,9 +4,10 @@ import android.os.Message;
 
 import com.devgd.melonclone.domain.user.dao.UserDao;
 import com.devgd.melonclone.domain.user.domain.User;
-import com.devgd.melonclone.global.db.DatabaseCallback;
-import com.devgd.melonclone.global.model.dao.DaoCallback;
-import com.devgd.melonclone.global.model.domain.Domain;
+
+import org.watermelon.framework.global.db.DatabaseCallback;
+import org.watermelon.framework.global.model.dao.DaoCallback;
+import org.watermelon.framework.global.model.domain.Domain;
 
 public class LocalUserDataSource implements UserDataSource {
 

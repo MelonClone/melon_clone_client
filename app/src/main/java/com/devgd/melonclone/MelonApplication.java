@@ -1,23 +1,24 @@
 package com.devgd.melonclone;
 
-import android.app.Application;
-import android.graphics.Typeface;
 
-import androidx.core.graphics.TypefaceCompatUtil;
+import androidx.room.RoomDatabase;
 
-import com.devgd.melonclone.utils.TypefaceUtil;
-import com.devgd.melonclone.utils.db.DBHelper;
-import com.devgd.melonclone.utils.db.SPHelper;
+import org.watermelon.framework.global.model.BaseApplication;
 
-public class MelonApplication extends Application {
+public class MelonApplication extends BaseApplication {
 
     @Override
-    public void onCreate() {
+    public String getDatabaseName() {
+        return null;
+    }
 
-        DBHelper.getInstance().init(this);
-        SPHelper.getInstance().init(this);
-        super.onCreate();
+    @Override
+    public String getSharedPreferenceName() {
+        return null;
+    }
 
-        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/NotoSans-Regular.ttf");
+    @Override
+    public Class<RoomDatabase> getRoom() {
+        return null;
     }
 }

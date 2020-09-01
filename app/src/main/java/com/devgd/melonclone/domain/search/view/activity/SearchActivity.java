@@ -5,14 +5,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.devgd.melonclone.R;
-import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
+import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModelMelonClone;
 import com.devgd.melonclone.domain.search.view.adapter.SearchPagerAdapter;
 import com.devgd.melonclone.domain.search.view.fragment.PlayerControllerMiniView;
-import com.devgd.melonclone.domain.search.viewmodel.SearchTabViewModel;
-import com.devgd.melonclone.global.model.view.activity.BaseActivity;
-import com.devgd.melonclone.global.model.view.activity.TabToolbarView;
+import com.devgd.melonclone.domain.search.viewmodel.SearchTabViewModelMelonClone;
+import com.devgd.melonclone.global.model.view.activity.MelonCloneBaseActivity;
 
-public class SearchActivity extends BaseActivity {
+import org.watermelon.framework.global.model.view.activity.TabToolbarView;
+
+public class SearchActivity extends MelonCloneBaseActivity {
 
     // Views
     TabToolbarView searchTabToolbarView;
@@ -23,8 +24,8 @@ public class SearchActivity extends BaseActivity {
     PlayerControllerMiniView playerControllerMiniView;
 
     // ViewModels
-    SearchTabViewModel searchViewModel;
-    PlayerViewModel playerViewModel;
+    SearchTabViewModelMelonClone searchViewModel;
+    PlayerViewModelMelonClone playerViewModel;
 
 
     @Override
@@ -60,8 +61,8 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void viewModelInit() {
         // ViewModel init
-        searchViewModel = new ViewModelProvider(this).get(SearchTabViewModel.class);
-        playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
+        searchViewModel = new ViewModelProvider(this).get(SearchTabViewModelMelonClone.class);
+        playerViewModel = new ViewModelProvider(this).get(PlayerViewModelMelonClone.class);
 
         // Add Fragment ViewModel
         searchPagerAdapter.addFragmentViewModel(playerViewModel);

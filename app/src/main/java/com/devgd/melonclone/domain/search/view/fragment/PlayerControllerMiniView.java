@@ -6,18 +6,17 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.devgd.melonclone.R;
-import com.devgd.melonclone.domain.player.viewmodel.MusicViewModel;
-import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
-import com.devgd.melonclone.global.consts.Constants;
-import com.devgd.melonclone.global.media.PlayManager;
-import com.devgd.melonclone.global.model.view.activity.BaseActivity;
-import com.devgd.melonclone.global.model.view.activity.LifecycleView;
-import com.devgd.melonclone.global.model.viewmodel.BaseViewModel;
+import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModelMelonClone;
+import com.devgd.melonclone.global.model.view.activity.MelonCloneBaseActivity;
 import com.github.guilhe.views.CircularProgressView;
+
+import org.watermelon.framework.global.media.PlayManager;
+import org.watermelon.framework.global.model.view.activity.LifecycleView;
+import org.watermelon.framework.global.model.viewmodel.BaseViewModel;
 
 public class PlayerControllerMiniView implements LifecycleView {
 
-    BaseActivity mContext;
+    MelonCloneBaseActivity mContext;
 
     // Views
     RelativeLayout playlistBtn;
@@ -28,9 +27,9 @@ public class PlayerControllerMiniView implements LifecycleView {
     ImageButton nextBtn;
 
     // ViewModels
-    PlayerViewModel playerViewModel;
+    PlayerViewModelMelonClone playerViewModel;
 
-    public PlayerControllerMiniView(BaseActivity context) {
+    public PlayerControllerMiniView(MelonCloneBaseActivity context) {
         mContext = context;
     }
 
@@ -53,8 +52,8 @@ public class PlayerControllerMiniView implements LifecycleView {
     @Override
     public void viewModelInit(BaseViewModel... viewModels) {
         for (BaseViewModel viewModel : viewModels) {
-            if (viewModel instanceof PlayerViewModel) {
-                playerViewModel = (PlayerViewModel) viewModel;
+            if (viewModel instanceof PlayerViewModelMelonClone) {
+                playerViewModel = (PlayerViewModelMelonClone) viewModel;
             }
         }
 

@@ -1,6 +1,6 @@
 package com.devgd.melonclone.domain.search.domain;
 
-import com.devgd.melonclone.global.model.domain.Domain;
+import org.watermelon.framework.global.model.domain.Domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

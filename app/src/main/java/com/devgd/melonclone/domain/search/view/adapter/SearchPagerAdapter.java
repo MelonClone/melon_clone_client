@@ -5,8 +5,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.devgd.melonclone.domain.search.view.fragment.SearchMainFragment;
 import com.devgd.melonclone.domain.search.view.fragment.SearchVideoFragment;
-import com.devgd.melonclone.global.model.view.adapter.BaseFragmentPagerAdapter;
-import com.devgd.melonclone.global.model.view.fragment.BaseFragment;
+
+import org.watermelon.framework.global.model.view.adapter.BaseFragmentPagerAdapter;
+import org.watermelon.framework.global.model.view.fragment.BaseFragment;
 
 public class SearchPagerAdapter extends BaseFragmentPagerAdapter {
 

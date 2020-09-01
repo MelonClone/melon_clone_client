@@ -2,10 +2,7 @@ package com.devgd.melonclone.domain.search.view.adapter;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
-import android.media.MediaPlayer;
-import android.os.Message;
 import android.view.LayoutInflater;
-import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.domain.Music;
-import com.devgd.melonclone.domain.search.viewmodel.NewestMusicViewModel;
-import com.devgd.melonclone.utils.image.GlideImgManager;
-import com.devgd.melonclone.utils.image.ImageSource;
 
-import java.io.IOException;
+import org.watermelon.framework.utils.image.GlideImgManager;
+import org.watermelon.framework.utils.image.ImageSource;
+
 import java.util.List;
 
 public class NewestMusicAdapter extends RecyclerView.Adapter<NewestMusicAdapter.ViewHolder>  {

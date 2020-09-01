@@ -137,14 +137,13 @@
         </LinearLayout>
     </LinearLayout>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lyrics_group"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="40dp"
-        android:visibility="gone"
-        app:layout_constraintHeight_max="wrap"
+        android:visibility="visible"
         app:layout_constraintTop_toBottomOf="@+id/title_bar"
         app:layout_constraintBottom_toTopOf="@+id/play_time_group"
         tools:listitem="@layout/lyrics_line"

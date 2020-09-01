@@ -12,17 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.adapter.PlaylistAdapter;
-import com.devgd.melonclone.domain.player.viewmodel.MusicViewModel;
-import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
-import com.devgd.melonclone.global.customview.RoundImageView;
-import com.devgd.melonclone.global.model.view.activity.BaseActivity;
-import com.devgd.melonclone.global.model.view.states.LoginState;
-import com.devgd.melonclone.utils.image.GlideImgManager;
-import com.devgd.melonclone.utils.image.ImageSource;
+import com.devgd.melonclone.domain.player.viewmodel.MusicViewModelMelonClone;
+import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModelMelonClone;
+import com.devgd.melonclone.domain.user.domain.User;
+import com.devgd.melonclone.global.model.view.activity.MelonCloneBaseActivity;
+
+import org.watermelon.framework.global.customview.RoundImageView;
+import org.watermelon.framework.global.model.view.states.LoginState;
+import org.watermelon.framework.utils.image.GlideImgManager;
+import org.watermelon.framework.utils.image.ImageSource;
 
 import java.util.ArrayList;
 
-public class PlaylistActivity extends BaseActivity {
+public class PlaylistActivity extends MelonCloneBaseActivity {
 
     // Views
     ImageButton userBtn;
@@ -34,11 +36,11 @@ public class PlaylistActivity extends BaseActivity {
     PlaylistAdapter playlistAdapter;
 
     // ViewModels
-    PlayerViewModel playerViewModel;
-    MusicViewModel musicViewModel;
+    PlayerViewModelMelonClone playerViewModel;
+    MusicViewModelMelonClone musicViewModel;
 
     // LiveDatas
-    LiveData<LoginState> loginState;
+    LiveData<LoginState<User>> loginState;
 
     @Override
     protected void layoutInit() {
@@ -67,8 +69,8 @@ public class PlaylistActivity extends BaseActivity {
     @Override
     protected void viewModelInit() {
         // ViewModel init
-        playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
-        musicViewModel = new ViewModelProvider(this).get(MusicViewModel.class);
+        playerViewModel = new ViewModelProvider(this).get(PlayerViewModelMelonClone.class);
+        musicViewModel = new ViewModelProvider(this).get(MusicViewModelMelonClone.class);
 
         musicViewModel.getCurrentMusic().observe(this, music -> {
             // TODO mini player change

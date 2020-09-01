@@ -6,7 +6,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.devgd.melonclone.domain.user.domain.User;
-import com.devgd.melonclone.global.model.dao.BaseDao;
+
+import org.watermelon.framework.global.model.dao.BaseDao;
 
 @Dao
 public interface UserDao extends BaseDao {

@@ -1,6 +1,6 @@
 package com.devgd.melonclone.domain.player.domain;
 
-import com.devgd.melonclone.global.media.player.MusicPlayer;
+import org.watermelon.framework.global.media.player.MusicPlayer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

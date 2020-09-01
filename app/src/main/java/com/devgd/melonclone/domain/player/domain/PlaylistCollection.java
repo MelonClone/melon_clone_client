@@ -1,16 +1,13 @@
 package com.devgd.melonclone.domain.player.domain;
 
-import com.devgd.melonclone.global.model.domain.Domain;
+import org.watermelon.framework.global.model.domain.Domain;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @RequiredArgsConstructor

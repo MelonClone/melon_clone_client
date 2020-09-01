@@ -1,7 +1,6 @@
 package com.devgd.melonclone.domain.user.model;
 
 import com.devgd.melonclone.domain.user.domain.User;
-import com.devgd.melonclone.global.db.DatabaseCallback;
 
 public interface UserDataSource {
     int INSERT_USER = 0;

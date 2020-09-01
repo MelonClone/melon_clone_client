@@ -14,11 +14,11 @@ import androidx.lifecycle.ViewModelProvider;
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.user.domain.AuthState;
 import com.devgd.melonclone.domain.user.domain.User;
-import com.devgd.melonclone.domain.user.viewmodel.LoginViewModel;
-import com.devgd.melonclone.domain.user.viewmodel.RegisterViewModel;
-import com.devgd.melonclone.global.model.view.activity.BaseActivity;
+import com.devgd.melonclone.domain.user.viewmodel.LoginViewModelMelonClone;
+import com.devgd.melonclone.domain.user.viewmodel.RegisterViewModelMelonClone;
+import com.devgd.melonclone.global.model.view.activity.MelonCloneBaseActivity;
 
-public class RegisterActivity extends BaseActivity {
+public class RegisterActivity extends MelonCloneBaseActivity {
 
     // Views
     EditText userEmail;
@@ -29,8 +29,8 @@ public class RegisterActivity extends BaseActivity {
     LinearLayout registerBtn;
 
     // ViewModels
-    RegisterViewModel registerViewModel;
-    LoginViewModel loginViewModel;
+    RegisterViewModelMelonClone registerViewModel;
+    LoginViewModelMelonClone loginViewModel;
 
     @Override
     protected void layoutInit() {
@@ -52,8 +52,8 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void viewModelInit() {
         // ViewModel init
-        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        registerViewModel = new ViewModelProvider(this).get(RegisterViewModelMelonClone.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModelMelonClone.class);
 
         registerViewModel.getViewState().observe(this, getStateObserver(this));
         registerViewModel.getRegisterInfo().observe(this, getErrorObserver());

@@ -6,17 +6,17 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.devgd.melonclone.global.model.domain.Domain;
+import org.watermelon.framework.global.model.domain.Domain;
+import org.watermelon.framework.global.model.view.states.LoginState;
 
 import java.io.Serializable;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity(tableName = "user_table")
 @Getter
-public class User implements Domain, Serializable {
+public class User implements Domain, LoginState.Login, Serializable {
 
     @PrimaryKey
     @ColumnInfo(name = "user_id")

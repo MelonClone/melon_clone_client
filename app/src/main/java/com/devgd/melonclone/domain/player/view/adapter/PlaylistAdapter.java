@@ -13,11 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.devgd.melonclone.R;
-import com.devgd.melonclone.domain.player.domain.Playlist;
 import com.devgd.melonclone.domain.player.domain.PlaylistItem;
-import com.devgd.melonclone.global.customview.SquareImageView;
-import com.devgd.melonclone.utils.image.GlideImgManager;
-import com.devgd.melonclone.utils.image.ImageSource;
+
+import org.watermelon.framework.global.customview.SquareImageView;
+import org.watermelon.framework.utils.image.GlideImgManager;
+import org.watermelon.framework.utils.image.ImageSource;
 
 import java.util.List;
 

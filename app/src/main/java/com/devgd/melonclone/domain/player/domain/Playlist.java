@@ -1,6 +1,6 @@
 package com.devgd.melonclone.domain.player.domain;
 
-import com.devgd.melonclone.global.model.domain.Domain;
+import org.watermelon.framework.global.model.domain.Domain;
 
 import java.util.LinkedList;
 import java.util.ListIterator;

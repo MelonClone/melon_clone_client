@@ -1,36 +1,38 @@
 package com.devgd.melonclone.domain.player.view.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.adapter.LyricAdapter;
 import com.devgd.melonclone.domain.player.view.fragment.PlayerControllerView;
-import com.devgd.melonclone.domain.player.viewmodel.MusicViewModel;
-import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
+import com.devgd.melonclone.domain.player.viewmodel.MusicViewModelMelonClone;
+import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModelMelonClone;
 import com.devgd.melonclone.domain.search.view.activity.SearchActivity;
-import com.devgd.melonclone.global.consts.Constants;
-import com.devgd.melonclone.global.customview.SquareImageView;
-import com.devgd.melonclone.global.model.view.activity.BaseActivity;
-import com.devgd.melonclone.utils.image.GlideImgManager;
-import com.devgd.melonclone.utils.image.ImageSource;
+import com.devgd.melonclone.global.model.view.activity.MelonCloneBaseActivity;
+
+import org.watermelon.framework.global.consts.Constants;
+import org.watermelon.framework.global.customview.SquareImageView;
+import org.watermelon.framework.utils.image.GlideImgManager;
+import org.watermelon.framework.utils.image.ImageSource;
 
 import java.util.ArrayList;
 
-public class PlayerActivity extends BaseActivity {
+public class PlayerActivity extends MelonCloneBaseActivity {
 
     // Views
     ImageButton userBtn;
     LinearLayout halfView;
     LinearLayout lyricBox;
-    ListView lyricView;
+    RecyclerView lyricView;
     LyricAdapter lyricAdapter;
     ImageButton minimizeBtn;
     SquareImageView albumImg;
@@ -41,8 +43,8 @@ public class PlayerActivity extends BaseActivity {
     PlayerControllerView playerControllerView;
 
     // ViewModels
-    PlayerViewModel playerViewModel;
-    MusicViewModel musicViewModel;
+    PlayerViewModelMelonClone playerViewModel;
+    MusicViewModelMelonClone musicViewModel;
 
     @Override
     protected void layoutInit() {
@@ -76,16 +78,19 @@ public class PlayerActivity extends BaseActivity {
     @Override
     protected void viewModelInit() {
         // ViewModel init
-        playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
-        musicViewModel = new ViewModelProvider(this).get(MusicViewModel.class);
+        playerViewModel = new ViewModelProvider(this).get(PlayerViewModelMelonClone.class);
+        musicViewModel = new ViewModelProvider(this).get(MusicViewModelMelonClone.class);
 
         musicViewModel.getCurrentMusic().observe(this, music -> {
             // TODO get image source
 //            Glide.with(this).asFile().load(getResources().getDrawable(R.drawable.sample_img2, getTheme())).apply(new RequestOptions().centerCrop()).into(albumImg);
             GlideImgManager.getInstance().setImages(this, albumImg,
                     new ImageSource(music.getAlbum().getAlbumJacketUrl(), ImageView.ScaleType.CENTER_CROP, ImageSource.SourceType.DRAWABLE));
-            lyricAdapter.setLyrics(music.getMusicLyricList());
-            lyricAdapter.notifyDataSetChanged();
+            if (music.getMusicLyricList() != null) {
+                Log.d("TEST", music.getMusicLyricList().size() + "");
+                lyricAdapter.setLyrics(music.getMusicLyricList());
+                lyricAdapter.notifyDataSetChanged();
+            }
         });
 
 

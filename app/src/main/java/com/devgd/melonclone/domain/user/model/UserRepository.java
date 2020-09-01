@@ -3,11 +3,12 @@ package com.devgd.melonclone.domain.user.model;
 import androidx.annotation.NonNull;
 
 import com.devgd.melonclone.domain.user.domain.User;
-import com.devgd.melonclone.global.model.domain.Message;
-import com.devgd.melonclone.global.model.view.states.NetworkState;
-import com.devgd.melonclone.global.model.repository.Repository;
-import com.devgd.melonclone.utils.network.HttpManager;
 import com.devgd.melonclone.utils.network.services.UserService;
+
+import org.watermelon.framework.global.model.domain.Message;
+import org.watermelon.framework.global.model.repository.Repository;
+import org.watermelon.framework.global.model.view.states.NetworkState;
+import org.watermelon.framework.utils.network.HttpManager;
 
 import java.io.IOException;
 

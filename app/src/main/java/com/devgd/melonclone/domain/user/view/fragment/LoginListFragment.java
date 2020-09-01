@@ -1,6 +1,5 @@
 package com.devgd.melonclone.domain.user.view.fragment;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +10,10 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.devgd.melonclone.R;
-import com.devgd.melonclone.global.model.view.activity.ChangeableFragmentActivity;
-import com.devgd.melonclone.domain.user.viewmodel.LoginViewModel;
-import com.devgd.melonclone.global.model.view.fragment.BaseFragment;
+import com.devgd.melonclone.domain.user.viewmodel.LoginViewModelMelonClone;
+
+import org.watermelon.framework.global.model.view.activity.ChangeableFragmentActivity;
+import org.watermelon.framework.global.model.view.fragment.BaseFragment;
 
 public class LoginListFragment extends BaseFragment {
 
@@ -25,7 +25,7 @@ public class LoginListFragment extends BaseFragment {
     LinearLayout loginMBtn;
 
     // ViewModels
-    LoginViewModel loginViewModel;
+    LoginViewModelMelonClone loginViewModel;
 
     @Override
     protected View viewContainerInit(LayoutInflater inflater, ViewGroup container) {
@@ -52,7 +52,7 @@ public class LoginListFragment extends BaseFragment {
 
     @Override
     protected void viewModelInit() {
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModelMelonClone.class);
 
     }
 

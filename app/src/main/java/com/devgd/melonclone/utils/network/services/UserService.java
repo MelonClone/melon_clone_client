@@ -1,7 +1,8 @@
 package com.devgd.melonclone.utils.network.services;
 
 import com.devgd.melonclone.domain.user.domain.User;
-import com.devgd.melonclone.global.model.domain.Message;
+
+import org.watermelon.framework.global.model.domain.Message;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
