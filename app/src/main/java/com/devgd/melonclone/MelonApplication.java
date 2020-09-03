@@ -3,22 +3,26 @@ package com.devgd.melonclone;
 
 import androidx.room.RoomDatabase;
 
-import org.watermelon.framework.global.model.BaseApplication;
+import com.devgd.melonclone.global.consts.Constants;
+import com.devgd.melonclone.global.db.version.AppDatabase;
+
+import org.watermelon.framework.global.model.application.BaseApplication;
+
 
 public class MelonApplication extends BaseApplication {
 
     @Override
     public String getDatabaseName() {
-        return null;
+        return Constants.DB_NAME;
     }
 
     @Override
     public String getSharedPreferenceName() {
-        return null;
+        return Constants.SP_NAME;
     }
 
     @Override
-    public Class<RoomDatabase> getRoom() {
-        return null;
+    public <D extends RoomDatabase> Class<D> getDatabaseClass() {
+        return (Class<D>) AppDatabase.class;
     }
 }

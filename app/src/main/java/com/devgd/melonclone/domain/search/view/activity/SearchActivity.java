@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.devgd.melonclone.R;
-import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModelMelonClone;
+import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.domain.search.view.adapter.SearchPagerAdapter;
 import com.devgd.melonclone.domain.search.view.fragment.PlayerControllerMiniView;
-import com.devgd.melonclone.domain.search.viewmodel.SearchTabViewModelMelonClone;
+import com.devgd.melonclone.domain.search.viewmodel.SearchTabViewModel;
 import com.devgd.melonclone.global.model.view.activity.MelonCloneBaseActivity;
 
 import org.watermelon.framework.global.model.view.activity.TabToolbarView;
@@ -24,8 +24,8 @@ public class SearchActivity extends MelonCloneBaseActivity {
     PlayerControllerMiniView playerControllerMiniView;
 
     // ViewModels
-    SearchTabViewModelMelonClone searchViewModel;
-    PlayerViewModelMelonClone playerViewModel;
+    SearchTabViewModel searchViewModel;
+    PlayerViewModel playerViewModel;
 
 
     @Override
@@ -61,8 +61,8 @@ public class SearchActivity extends MelonCloneBaseActivity {
     @Override
     protected void viewModelInit() {
         // ViewModel init
-        searchViewModel = new ViewModelProvider(this).get(SearchTabViewModelMelonClone.class);
-        playerViewModel = new ViewModelProvider(this).get(PlayerViewModelMelonClone.class);
+        searchViewModel = new ViewModelProvider(this).get(SearchTabViewModel.class);
+        playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
 
         // Add Fragment ViewModel
         searchPagerAdapter.addFragmentViewModel(playerViewModel);

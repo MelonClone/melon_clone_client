@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.adapter.PlaylistAdapter;
-import com.devgd.melonclone.domain.player.viewmodel.MusicViewModelMelonClone;
-import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModelMelonClone;
+import com.devgd.melonclone.domain.player.viewmodel.MusicViewModel;
+import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.domain.user.domain.User;
 import com.devgd.melonclone.global.model.view.activity.MelonCloneBaseActivity;
 
@@ -36,8 +36,8 @@ public class PlaylistActivity extends MelonCloneBaseActivity {
     PlaylistAdapter playlistAdapter;
 
     // ViewModels
-    PlayerViewModelMelonClone playerViewModel;
-    MusicViewModelMelonClone musicViewModel;
+    PlayerViewModel playerViewModel;
+    MusicViewModel musicViewModel;
 
     // LiveDatas
     LiveData<LoginState<User>> loginState;
@@ -69,8 +69,8 @@ public class PlaylistActivity extends MelonCloneBaseActivity {
     @Override
     protected void viewModelInit() {
         // ViewModel init
-        playerViewModel = new ViewModelProvider(this).get(PlayerViewModelMelonClone.class);
-        musicViewModel = new ViewModelProvider(this).get(MusicViewModelMelonClone.class);
+        playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
+        musicViewModel = new ViewModelProvider(this).get(MusicViewModel.class);
 
         musicViewModel.getCurrentMusic().observe(this, music -> {
             // TODO mini player change
@@ -80,7 +80,7 @@ public class PlaylistActivity extends MelonCloneBaseActivity {
 
         // Check User
         playerViewModel.getViewState().observe(this, getStateObserver(this));
-        loginState = playerViewModel.getLoginState();
+        loginState = (LiveData<LoginState<User>>) playerViewModel.getLoginState();
         playerViewModel.checkLogin();
 
         musicViewModel.getPlaylistCollection().observe(this, playlistCollection -> {

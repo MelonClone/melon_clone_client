@@ -11,7 +11,7 @@ import org.watermelon.framework.global.model.viewmodel.ListViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchTabViewModelMelonClone extends MelonCloneBaseViewModel implements ListViewModel<TabMenu> {
+public class SearchTabViewModel extends MelonCloneBaseViewModel implements ListViewModel<TabMenu> {
     private MutableLiveData<List<TabMenu>> mTabMenuList;
 
     @Override

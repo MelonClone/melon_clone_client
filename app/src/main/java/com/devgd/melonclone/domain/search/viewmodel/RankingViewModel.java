@@ -11,7 +11,7 @@ import org.watermelon.framework.global.model.viewmodel.ListViewModel;
 
 import java.util.List;
 
-public class RankingViewModelMelonClone extends MelonCloneBaseViewModel implements ListViewModel<Music> {
+public class RankingViewModel extends MelonCloneBaseViewModel implements ListViewModel<Music> {
 
     private MutableLiveData<List<Music>> mRankingList;
 

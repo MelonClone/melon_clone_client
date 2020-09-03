@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.user.view.fragment.LocalLoginFragment;
 import com.devgd.melonclone.domain.user.view.fragment.LoginListFragment;
-import com.devgd.melonclone.domain.user.viewmodel.LoginViewModelMelonClone;
+import com.devgd.melonclone.domain.user.viewmodel.LoginViewModel;
 import com.devgd.melonclone.global.model.view.activity.MelonCloneBaseActivity;
 
 import org.watermelon.framework.global.model.view.activity.ChangeableFragmentActivity;
@@ -24,7 +24,7 @@ public class LoginActivity extends MelonCloneBaseActivity implements ChangeableF
     LocalLoginFragment localLoginFragment;
 
     // ViewModels
-    LoginViewModelMelonClone loginViewModel;
+    LoginViewModel loginViewModel;
 
     @Override
     protected void layoutInit() {
@@ -49,7 +49,7 @@ public class LoginActivity extends MelonCloneBaseActivity implements ChangeableF
     @Override
     protected void viewModelInit() {
         // ViewModel init
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModelMelonClone.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         // Check User
         loginViewModel.getViewState().observe(this, getStateObserver(this));

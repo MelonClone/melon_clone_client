@@ -14,7 +14,6 @@ import com.devgd.melonclone.domain.user.view.activity.LoginActivity;
 import com.devgd.melonclone.domain.user.view.activity.ProfileActivity;
 import com.devgd.melonclone.global.model.viewmodel.MelonCloneBaseViewModel;
 
-import org.watermelon.framework.global.media.Media;
 import org.watermelon.framework.global.media.PlayManager;
 import org.watermelon.framework.global.media.Playable;
 import org.watermelon.framework.global.media.player.ExoMediaPlayer;
@@ -24,7 +23,7 @@ import org.watermelon.framework.global.model.view.states.ViewState;
 import static org.watermelon.framework.global.model.view.states.StateCode.ACTIVITY_CHANGE;
 
 
-public class PlayerViewModelMelonClone extends MelonCloneBaseViewModel implements Playable {
+public class PlayerViewModel extends MelonCloneBaseViewModel implements Playable<Music> {
 
     private MutableLiveData<Player> playerInfo;
 
@@ -58,10 +57,10 @@ public class PlayerViewModelMelonClone extends MelonCloneBaseViewModel implement
         }
     }
     public void changeUserPage() {
-        if (loginState.getValue() != null && loginState.getValue().isLogin()) {
-            state.postValue(new ViewState(ACTIVITY_CHANGE, ProfileActivity.class, null));
+        if (getLoginState().getValue() != null && getLoginState().getValue().isLogin()) {
+            getViewState().postValue(new ViewState(ACTIVITY_CHANGE, ProfileActivity.class, null));
         } else {
-            state.postValue(new ViewState(ACTIVITY_CHANGE, LoginActivity.class, null));
+            getViewState().postValue(new ViewState(ACTIVITY_CHANGE, LoginActivity.class, null));
         }
     }
 
@@ -72,7 +71,7 @@ public class PlayerViewModelMelonClone extends MelonCloneBaseViewModel implement
     }
 
     @Override
-    public void mediaPlay(Context context, Media music, TextureView view) {
+    public void mediaPlay(Context context, Music music, TextureView view) {
         Player playerInfo = getPlayer().getValue();
 
         if (playerInfo == null) {
@@ -88,7 +87,7 @@ public class PlayerViewModelMelonClone extends MelonCloneBaseViewModel implement
             playerInfo.setPlay(true);
         } else {
             if (!(PlayManager.getInstance().isPrepared() || PlayManager.getInstance().isPlaying())) {
-                MusicPlayer mediaPlayer = new ExoMediaPlayer(((Music) music).getMusicUrl(), 1f, context);
+                MusicPlayer mediaPlayer = new ExoMediaPlayer(music.getMusicUrl(), 1f, context);
                 PlayManager.getInstance().setPlayer(mediaPlayer);
                 PlayManager.getInstance().addMusicChangedListener(() -> {
                     // TODO MusicChange

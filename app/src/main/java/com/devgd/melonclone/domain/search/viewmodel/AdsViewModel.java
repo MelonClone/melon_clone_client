@@ -11,7 +11,7 @@ import org.watermelon.framework.global.model.viewmodel.ListViewModel;
 
 import java.util.List;
 
-public class AdsViewModelMelonClone extends MelonCloneBaseViewModel implements ListViewModel<Ads> {
+public class AdsViewModel extends MelonCloneBaseViewModel implements ListViewModel<Ads> {
 
     private MutableLiveData<List<Ads>> mAdsList;
 

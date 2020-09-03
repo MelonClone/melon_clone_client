@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.user.domain.User;
-import com.devgd.melonclone.domain.user.viewmodel.LoginViewModelMelonClone;
+import com.devgd.melonclone.domain.user.viewmodel.LoginViewModel;
 import com.devgd.melonclone.global.model.view.activity.MelonCloneBaseActivity;
 
 import org.watermelon.framework.global.customview.RoundImageView;
@@ -23,7 +23,7 @@ public class ProfileActivity extends MelonCloneBaseActivity {
     ImageButton closeBtn;
 
     // ViewModels
-    LoginViewModelMelonClone loginViewModel;
+    LoginViewModel loginViewModel;
 
     @Override
     protected void layoutInit() {
@@ -43,7 +43,7 @@ public class ProfileActivity extends MelonCloneBaseActivity {
     @Override
     protected void viewModelInit() {
         // ViewModel init
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModelMelonClone.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         // Check User
         loginViewModel.getLoginState().observe(this, this::getUserState);

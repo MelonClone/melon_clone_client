@@ -14,13 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.domain.Music;
-import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModelMelonClone;
+import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.domain.search.view.adapter.AdsPagerAdapter;
 import com.devgd.melonclone.domain.search.view.adapter.NewestMusicAdapter;
 import com.devgd.melonclone.domain.search.view.adapter.RankingPagerAdapter;
-import com.devgd.melonclone.domain.search.viewmodel.AdsViewModelMelonClone;
-import com.devgd.melonclone.domain.search.viewmodel.NewestMusicViewModelMelonClone;
-import com.devgd.melonclone.domain.search.viewmodel.RankingViewModelMelonClone;
+import com.devgd.melonclone.domain.search.viewmodel.AdsViewModel;
+import com.devgd.melonclone.domain.search.viewmodel.NewestMusicViewModel;
+import com.devgd.melonclone.domain.search.viewmodel.RankingViewModel;
 import com.tmall.ultraviewpager.UltraViewPager;
 
 import org.watermelon.framework.global.model.view.fragment.BaseFragment;
@@ -40,10 +40,10 @@ public class SearchMainFragment extends BaseFragment {
     UltraViewPager rankingViewPager;
 
     // ViewModels
-    PlayerViewModelMelonClone playerViewModel;
-    AdsViewModelMelonClone adsViewModel;
-    NewestMusicViewModelMelonClone newestMusicViewModel;
-    RankingViewModelMelonClone rankingViewModel;
+    PlayerViewModel playerViewModel;
+    AdsViewModel adsViewModel;
+    NewestMusicViewModel newestMusicViewModel;
+    RankingViewModel rankingViewModel;
 
     @Override
     protected View viewContainerInit(LayoutInflater inflater, ViewGroup container) {
@@ -53,8 +53,8 @@ public class SearchMainFragment extends BaseFragment {
     @Override
     public void setParentViewModel(ViewModel... viewModels) {
         for (ViewModel viewModel : viewModels) {
-            if (viewModel instanceof PlayerViewModelMelonClone) {
-                playerViewModel = (PlayerViewModelMelonClone) viewModel;
+            if (viewModel instanceof PlayerViewModel) {
+                playerViewModel = (PlayerViewModel) viewModel;
             }
         }
     }
@@ -127,9 +127,9 @@ public class SearchMainFragment extends BaseFragment {
     @Override
     protected void viewModelInit() {
         // ViewModel init
-        adsViewModel = new ViewModelProvider(this).get(AdsViewModelMelonClone.class);
-        newestMusicViewModel = new ViewModelProvider(this).get(NewestMusicViewModelMelonClone.class);
-        rankingViewModel = new ViewModelProvider(this).get(RankingViewModelMelonClone.class);
+        adsViewModel = new ViewModelProvider(this).get(AdsViewModel.class);
+        newestMusicViewModel = new ViewModelProvider(this).get(NewestMusicViewModel.class);
+        rankingViewModel = new ViewModelProvider(this).get(RankingViewModel.class);
 
         adsViewModel.getList().observe(this, list -> {
             adsPagerAdapter.setList(list);

@@ -2,13 +2,12 @@ package com.devgd.melonclone;
 
 import android.util.Log;
 
-import com.devgd.melonclone.utils.db.SPHelper;
-
 import org.junit.Test;
+import org.watermelon.framework.utils.db.SPHelper;
 
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -24,7 +23,7 @@ public class ExampleUnitTest {
 
     public void ASP_HELPER_TEST() {
         SPHelper.getInstance().set("my_key", "my_value");
-        Log.d("TEST", "[GET_VALUE] "+SPHelper.getInstance().getValue("my_key"));
+        Log.d("TEST", "[GET_VALUE] "+ SPHelper.getInstance().getValue("my_key"));
 
         Map<String, String> all = SPHelper.getInstance().getAll();
         for (String key : all.keySet()) {

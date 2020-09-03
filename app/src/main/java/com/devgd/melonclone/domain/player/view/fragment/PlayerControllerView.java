@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.PlayerState;
 import com.devgd.melonclone.domain.player.view.activity.PlaylistActivity;
-import com.devgd.melonclone.domain.player.viewmodel.MusicViewModelMelonClone;
-import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModelMelonClone;
+import com.devgd.melonclone.domain.player.viewmodel.MusicViewModel;
+import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.global.model.view.activity.MelonCloneBaseActivity;
 
 import org.watermelon.framework.global.consts.Constants;
@@ -41,8 +41,8 @@ public class PlayerControllerView implements LifecycleView, ThemeApplicableState
     SeekBar playtimeSeekbar;
 
     // ViewModels
-    PlayerViewModelMelonClone playerViewModel;
-    MusicViewModelMelonClone musicViewModel;
+    PlayerViewModel playerViewModel;
+    MusicViewModel musicViewModel;
 
     PlayerState playerState = new PlayerState();
     Constants.Theme colorTheme = Constants.Theme.COLOR_DARK;
@@ -78,10 +78,10 @@ public class PlayerControllerView implements LifecycleView, ThemeApplicableState
     @Override
     public void viewModelInit(BaseViewModel... viewModels) {
         for (BaseViewModel viewModel : viewModels) {
-            if (viewModel instanceof PlayerViewModelMelonClone) {
-                playerViewModel = (PlayerViewModelMelonClone) viewModel;
-            } else if (viewModel instanceof MusicViewModelMelonClone) {
-                musicViewModel = (MusicViewModelMelonClone) viewModel;
+            if (viewModel instanceof PlayerViewModel) {
+                playerViewModel = (PlayerViewModel) viewModel;
+            } else if (viewModel instanceof MusicViewModel) {
+                musicViewModel = (MusicViewModel) viewModel;
             }
         }
 

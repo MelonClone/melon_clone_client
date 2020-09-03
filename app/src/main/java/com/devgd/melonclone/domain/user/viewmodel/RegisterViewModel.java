@@ -19,7 +19,7 @@ import static com.devgd.melonclone.domain.user.domain.AuthErrorCode.PASSWORD_NOT
 import static com.devgd.melonclone.domain.user.domain.AuthErrorCode.USER_INPUT_WRONG;
 import static org.watermelon.framework.global.model.view.states.StateCode.AUTO_LOGIN;
 
-public class RegisterViewModelMelonClone extends MelonCloneBaseViewModel {
+public class RegisterViewModel extends MelonCloneBaseViewModel {
 
     private MutableLiveData<AuthState> registerInfoText;
 
@@ -41,7 +41,7 @@ public class RegisterViewModelMelonClone extends MelonCloneBaseViewModel {
 
                 @Override
                 public void success(Message message) {
-                    state.postValue(new ViewState(AUTO_LOGIN, null, user));
+                    getViewState().postValue(new ViewState(AUTO_LOGIN, null, user));
                 }
 
                 @Override

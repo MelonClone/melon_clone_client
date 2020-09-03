@@ -75,12 +75,12 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-orgjson:$versions.jjwt") {
         exclude group: 'org.json', module: 'json' //provided by Android natively
     }
-
+*/
     // Database
     implementation "androidx.room:room-runtime:$versions.room"
     annotationProcessor "androidx.room:room-compiler:$versions.room"
     testImplementation "androidx.room:room-testing:$versions.room"
-
+/*
     // UI Libs
 //    implementation 'com.github.fornewid:neumorphism:0.1.10'
     implementation project(':circular-progress-view')

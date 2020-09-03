@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorLightBackground">
 
-    <com.devgd.melonclone.global.customview.SquareRoundImageView
+    <org.watermelon.framework.global.customview.SquareRoundImageView
         android:id="@+id/ads_img"
         android:layout_width="match_parent"
         android:layout_height="130dp"

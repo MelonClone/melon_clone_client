@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.user.domain.AuthState;
-import com.devgd.melonclone.domain.user.viewmodel.LoginViewModelMelonClone;
+import com.devgd.melonclone.domain.user.viewmodel.LoginViewModel;
 
 import org.watermelon.framework.global.model.view.fragment.BaseFragment;
 
@@ -27,7 +27,7 @@ public class LocalLoginFragment extends BaseFragment {
     LinearLayout loginMBtn;
 
     // ViewModels
-    LoginViewModelMelonClone loginViewModel;
+    LoginViewModel loginViewModel;
 
     @Override
     protected View viewContainerInit(LayoutInflater inflater, ViewGroup container) {
@@ -54,7 +54,7 @@ public class LocalLoginFragment extends BaseFragment {
 
     @Override
     protected void viewModelInit() {
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModelMelonClone.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         loginViewModel.getLoginInfo().observe(this, getLoginObserver());
 
     }

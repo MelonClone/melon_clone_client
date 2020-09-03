@@ -31,7 +31,7 @@ import static com.devgd.melonclone.domain.user.domain.AuthErrorCode.UNEXPECTED_E
 import static com.devgd.melonclone.domain.user.domain.AuthErrorCode.USER_INPUT_WRONG;
 import static org.watermelon.framework.global.model.view.states.StateCode.ACTIVITY_CHANGE;
 
-public class LoginViewModelMelonClone extends MelonCloneBaseViewModel {
+public class LoginViewModel extends MelonCloneBaseViewModel {
 
     private MutableLiveData<AuthState> loginInfoText;
 
@@ -39,20 +39,21 @@ public class LoginViewModelMelonClone extends MelonCloneBaseViewModel {
     private UserRepository userRepository;
     private UserDataSource userDataSource;
 
-    private DatabaseCallback userDataSourceCallback = msg -> {
-        if (msg.arg1 == UserDataSource.INSERT_USER)
-            state.postValue(new ViewState(ACTIVITY_CHANGE, PlayerActivity.class, null));
-    };
-
     @Override
     protected void init() {
         loginInfoText = new MutableLiveData<>();
         userRepository = UserRepository.getInstance();
-        userDataSource = new LocalUserDataSource(((AppDatabase) DBHelper.getInstance().getDB()).userDao(), userDataSourceCallback);
+        userDataSource = new LocalUserDataSource(((AppDatabase) DBHelper.getInstance().getDB()).userDao(), new DatabaseCallback() {
+            @Override
+            public void callback(android.os.Message msg) {
+                if (msg.arg1 == UserDataSource.INSERT_USER)
+                    getViewState().postValue(new ViewState(ACTIVITY_CHANGE, PlayerActivity.class, null));
+            }
+        });
     }
 
     public void loggedIn() {
-        state.postValue(new ViewState(ACTIVITY_CHANGE, ProfileActivity.class, null));
+        getViewState().postValue(new ViewState(ACTIVITY_CHANGE, ProfileActivity.class, null));
     }
 
     // 로그인 = raw String email & password

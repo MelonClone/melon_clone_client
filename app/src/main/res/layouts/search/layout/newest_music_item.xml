@@ -15,7 +15,7 @@
         app:layout_constraintBottom_toTopOf="@+id/newest_music_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" >
-        <com.devgd.melonclone.global.customview.SquareImageView
+        <org.watermelon.framework.global.customview.SquareImageView
             android:id="@+id/newest_album_img"
             android:layout_width="90dp"
             android:layout_height="90dp"

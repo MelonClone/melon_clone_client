@@ -26,7 +26,7 @@ import org.watermelon.framework.global.model.view.states.NetworkState;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MusicViewModelMelonClone extends MelonCloneBaseViewModel {
+public class MusicViewModel extends MelonCloneBaseViewModel {
 
     private String currentPlaylistName;
     private MutableLiveData<Music> currentMusic;

@@ -13,7 +13,7 @@
         android:background="@color/colorLightBackgroundTrans"
         android:elevation="4dp"
         android:layout_centerInParent="true">
-        <com.devgd.melonclone.global.customview.SquareImageView
+        <org.watermelon.framework.global.customview.SquareImageView
             android:id="@+id/ranking_album_img"
             android:layout_width="100dp"
             android:layout_height="100dp"

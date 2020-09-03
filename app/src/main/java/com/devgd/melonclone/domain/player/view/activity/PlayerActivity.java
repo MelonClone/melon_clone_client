@@ -1,7 +1,6 @@
 package com.devgd.melonclone.domain.player.view.activity;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -14,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.devgd.melonclone.R;
 import com.devgd.melonclone.domain.player.view.adapter.LyricAdapter;
 import com.devgd.melonclone.domain.player.view.fragment.PlayerControllerView;
-import com.devgd.melonclone.domain.player.viewmodel.MusicViewModelMelonClone;
-import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModelMelonClone;
+import com.devgd.melonclone.domain.player.viewmodel.MusicViewModel;
+import com.devgd.melonclone.domain.player.viewmodel.PlayerViewModel;
 import com.devgd.melonclone.domain.search.view.activity.SearchActivity;
 import com.devgd.melonclone.global.model.view.activity.MelonCloneBaseActivity;
 
@@ -43,8 +42,8 @@ public class PlayerActivity extends MelonCloneBaseActivity {
     PlayerControllerView playerControllerView;
 
     // ViewModels
-    PlayerViewModelMelonClone playerViewModel;
-    MusicViewModelMelonClone musicViewModel;
+    PlayerViewModel playerViewModel;
+    MusicViewModel musicViewModel;
 
     @Override
     protected void layoutInit() {
@@ -78,8 +77,8 @@ public class PlayerActivity extends MelonCloneBaseActivity {
     @Override
     protected void viewModelInit() {
         // ViewModel init
-        playerViewModel = new ViewModelProvider(this).get(PlayerViewModelMelonClone.class);
-        musicViewModel = new ViewModelProvider(this).get(MusicViewModelMelonClone.class);
+        playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
+        musicViewModel = new ViewModelProvider(this).get(MusicViewModel.class);
 
         musicViewModel.getCurrentMusic().observe(this, music -> {
             // TODO get image source
@@ -87,7 +86,6 @@ public class PlayerActivity extends MelonCloneBaseActivity {
             GlideImgManager.getInstance().setImages(this, albumImg,
                     new ImageSource(music.getAlbum().getAlbumJacketUrl(), ImageView.ScaleType.CENTER_CROP, ImageSource.SourceType.DRAWABLE));
             if (music.getMusicLyricList() != null) {
-                Log.d("TEST", music.getMusicLyricList().size() + "");
                 lyricAdapter.setLyrics(music.getMusicLyricList());
                 lyricAdapter.notifyDataSetChanged();
             }
