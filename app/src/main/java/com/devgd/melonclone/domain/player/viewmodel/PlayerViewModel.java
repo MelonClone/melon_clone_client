@@ -1,6 +1,7 @@
 package com.devgd.melonclone.domain.player.viewmodel;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.view.TextureView;
 
 import androidx.lifecycle.LiveData;
@@ -16,6 +17,8 @@ import com.devgd.melonclone.global.model.viewmodel.MelonCloneBaseViewModel;
 
 import org.watermelon.framework.global.media.PlayManager;
 import org.watermelon.framework.global.media.Playable;
+import org.watermelon.framework.global.media.control.AudioFocusCallback;
+import org.watermelon.framework.global.media.control.AudioFocusHelper;
 import org.watermelon.framework.global.media.player.ExoMediaPlayer;
 import org.watermelon.framework.global.media.player.MusicPlayer;
 import org.watermelon.framework.global.model.view.states.ViewState;
@@ -24,6 +27,8 @@ import static org.watermelon.framework.global.model.view.states.StateCode.ACTIVI
 
 
 public class PlayerViewModel extends MelonCloneBaseViewModel implements Playable<Music> {
+
+    private AudioFocusHelper mAudioFocusHelper;
 
     private MutableLiveData<Player> playerInfo;
 
@@ -72,22 +77,23 @@ public class PlayerViewModel extends MelonCloneBaseViewModel implements Playable
 
     @Override
     public void mediaPlay(Context context, Music music, TextureView view) {
-        Player playerInfo = getPlayer().getValue();
+        Player player = getPlayer().getValue();
 
-        if (playerInfo == null) {
+        if (player == null) {
             loadPlayer();
-            playerInfo = playerModel.getPlayer();
+            player = playerModel.getPlayer();
         }
 
-        if (playerInfo.isPlay()) {
+        if (player.isPlay()) {
             PlayManager.getInstance().pausePlayer();
-            playerInfo.setPlay(false);
-        } else if (playerInfo.isPlayed()) {
+            player.setPlay(false);
+        } else if (player.isPlayed()) {
             PlayManager.getInstance().startPlayer();
-            playerInfo.setPlay(true);
+            player.setPlay(true);
+            setAudioFocus(context);
         } else {
             if (!(PlayManager.getInstance().isPrepared() || PlayManager.getInstance().isPlaying())) {
-                MusicPlayer mediaPlayer = new ExoMediaPlayer(music.getMusicUrl(), 1f, context);
+                MusicPlayer mediaPlayer = new ExoMediaPlayer(music.getMusicUrl(), 10f, context);
                 PlayManager.getInstance().setPlayer(mediaPlayer);
                 PlayManager.getInstance().addMusicChangedListener(() -> {
                     // TODO MusicChange
@@ -95,9 +101,30 @@ public class PlayerViewModel extends MelonCloneBaseViewModel implements Playable
                 });
                 PlayManager.getInstance().startPlayer();
             }
-            playerInfo.setPlay(true);
+            player.setPlay(true);
+            setAudioFocus(context);
         }
-        this.playerInfo.postValue(playerInfo);
+        this.playerInfo.postValue(player);
+    }
+
+    private void setAudioFocus(Context context) {
+        mAudioFocusHelper = new AudioFocusHelper(context, AudioManager.AUDIOFOCUS_GAIN, PlayManager.getInstance(),
+                new AudioFocusCallback() {
+                    @Override
+                    public void play() {
+                        Player player = playerModel.getPlayer();
+                        player.setPlay(true);
+                        playerInfo.postValue(player);
+                    }
+
+                    @Override
+                    public void stop() {
+                        Player player = playerModel.getPlayer();
+                        player.setPlay(false);
+                        playerInfo.postValue(player);
+                    }
+                });
+        mAudioFocusHelper.onFocus();
     }
 
     @Override
