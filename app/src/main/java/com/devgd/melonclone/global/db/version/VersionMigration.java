@@ -3,31 +3,33 @@ package com.devgd.melonclone.global.db.version;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import org.watermelon.framework.global.db.version.MigrationContainer;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // DB 마이그레이션 용
-public class VersionMigration {
+public class VersionMigration implements MigrationContainer {
+    private static List<Migration> migrationList = new ArrayList<>();;
 
-    private static VersionMigration INSTANCE;
-
-    public static VersionMigration getInstance() {
-        if (INSTANCE == null)
-            INSTANCE = new VersionMigration();
-
-        return INSTANCE;
+    private static void init() {
+        migrationList.add(MIGRATION_1_2);
+        migrationList.add(MIGRATION_2_3);
+        migrationList.add(MIGRATION_3_4);
     }
 
-    private VersionMigration() {
-        this.migrationList.add(MIGRATION_1_2);
-        this.migrationList.add(MIGRATION_2_3);
-        this.migrationList.add(MIGRATION_3_4);
+    public VersionMigration() {
+        init();
     }
 
-    private List<Migration> migrationList = new ArrayList<>();
+    @Override
+    public Migration[] getMigrationListAsArray() {
+        return getMigrationList().toArray(new Migration[]{});
+    }
 
+    @Override
     public List<Migration> getMigrationList() {
-        return this.migrationList;
+        return migrationList;
     }
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {

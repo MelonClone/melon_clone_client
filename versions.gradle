@@ -5,7 +5,7 @@
  **/
 
 def lib_version = [:]
-lib_version.publish = '0.0.14'
+lib_version.publish = '0.0.16'
 ext.lib_version = lib_version
 
 def build_versions = [:]
