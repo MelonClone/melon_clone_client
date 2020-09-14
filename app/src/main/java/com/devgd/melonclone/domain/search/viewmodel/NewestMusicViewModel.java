@@ -13,7 +13,7 @@ import com.devgd.melonclone.utils.store.MusicSample;
 
 import org.watermelon.framework.global.media.PlayManager;
 import org.watermelon.framework.global.media.Playable;
-import org.watermelon.framework.global.media.player.AndroidMediaPlayer;
+import org.watermelon.framework.global.media.player.MediaPlayerWrapper;
 import org.watermelon.framework.global.media.player.MusicPlayer;
 import org.watermelon.framework.global.model.viewmodel.ListViewModel;
 
@@ -49,7 +49,7 @@ public class NewestMusicViewModel extends MelonCloneBaseViewModel implements Lis
 
     @Override
     public void mediaPlay(Context context, Music music, TextureView view) {
-        MusicPlayer mediaPlayer = new AndroidMediaPlayer(music.getMusicUrl(), 1f, context);
+        MusicPlayer mediaPlayer = new MediaPlayerWrapper(music.getMusicUrl(), 1f, context);
         PlayManager.getInstance().setPlayer(mediaPlayer);
         PlayManager.getInstance().setDisplay(new Surface(view.getSurfaceTexture()));
         PlayManager.getInstance().startPlayer();

@@ -19,7 +19,8 @@ import org.watermelon.framework.global.media.PlayManager;
 import org.watermelon.framework.global.media.Playable;
 import org.watermelon.framework.global.media.control.AudioFocusCallback;
 import org.watermelon.framework.global.media.control.AudioFocusHelper;
-import org.watermelon.framework.global.media.player.ExoMediaPlayer;
+
+import org.watermelon.framework.global.media.player.ExoPlayerWrapper;
 import org.watermelon.framework.global.media.player.MusicPlayer;
 import org.watermelon.framework.global.model.view.states.ViewState;
 
@@ -93,7 +94,7 @@ public class PlayerViewModel extends MelonCloneBaseViewModel implements Playable
             setAudioFocus(context);
         } else {
             if (!(PlayManager.getInstance().isPrepared() || PlayManager.getInstance().isPlaying())) {
-                MusicPlayer mediaPlayer = new ExoMediaPlayer(music.getMusicUrl(), 10f, context);
+                MusicPlayer mediaPlayer = new ExoPlayerWrapper(music.getMusicUrl(), 10f, context);
                 PlayManager.getInstance().setPlayer(mediaPlayer);
                 PlayManager.getInstance().addMusicChangedListener(() -> {
                     // TODO MusicChange

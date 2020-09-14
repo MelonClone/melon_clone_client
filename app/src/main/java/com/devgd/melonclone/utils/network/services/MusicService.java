@@ -3,6 +3,8 @@ package com.devgd.melonclone.utils.network.services;
 import com.devgd.melonclone.domain.player.domain.Lyric;
 import com.devgd.melonclone.domain.player.domain.Music;
 
+import org.watermelon.framework.utils.network.services.NetworkService;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -12,7 +14,7 @@ import retrofit2.http.Path;
 
 import static com.devgd.melonclone.global.consts.ApiPreset.MUSIC_PRESET;
 
-public interface MusicService {
+public interface MusicService extends NetworkService {
     @Headers({
             "Accept: application/json",
             "User-Agent: MelonClone-App"

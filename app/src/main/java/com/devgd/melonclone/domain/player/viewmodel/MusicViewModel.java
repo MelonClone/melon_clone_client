@@ -18,7 +18,7 @@ import com.devgd.melonclone.global.model.viewmodel.MelonCloneBaseViewModel;
 import com.devgd.melonclone.utils.store.LyricSample;
 
 import org.watermelon.framework.global.media.PlayManager;
-import org.watermelon.framework.global.media.player.ExoMediaPlayer;
+import org.watermelon.framework.global.media.player.ExoPlayerWrapper;
 import org.watermelon.framework.global.media.player.MusicPlayer;
 import org.watermelon.framework.global.model.repository.Repository;
 import org.watermelon.framework.global.model.view.states.NetworkState;
@@ -177,7 +177,7 @@ public class MusicViewModel extends MelonCloneBaseViewModel {
     public void play(Context context) {
         if (currentMusic.getValue() != null &&
                 !(PlayManager.getInstance().isPrepared() || PlayManager.getInstance().isPlaying())) {
-            MusicPlayer mediaPlayer = new ExoMediaPlayer(currentMusic.getValue().getMusicUrl(), 1f, context);
+            MusicPlayer mediaPlayer = new ExoPlayerWrapper(currentMusic.getValue().getMusicUrl(), 1f, context);
             PlayManager.getInstance().setPlayer(mediaPlayer);
             PlayManager.getInstance().addMusicChangedListener(this::getNextMusic);
             PlayManager.getInstance().startPlayer();

@@ -1,6 +1,7 @@
 package com.devgd.melonclone.global.model.viewmodel;
 
 import android.os.Message;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -24,6 +25,8 @@ public abstract class MelonCloneBaseViewModel extends BaseViewModel<User> {
     @Override
     protected void beforeInit() {
         super.beforeInit();
+
+        Log.d("TEST", (DBHelper.getInstance().getDB()==null) + "");
         userDataSource = new LocalUserDataSource(((AppDatabase) DBHelper.getInstance().getDB()).userDao(), new DatabaseCallback() {
             @Override
             public void callback(Message msg) {
