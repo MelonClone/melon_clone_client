@@ -2,10 +2,9 @@ package com.devgd.melonclone.domain.user.model;
 
 import com.devgd.melonclone.domain.user.domain.User;
 
-public interface UserDataSource {
-    int INSERT_USER = 0;
-    int GET_USER = 1;
+import org.watermelon.framework.global.db.DatabaseCallback;
 
-    void insertOrUpdateUser(User user);
-    void getUserInfo();
+public interface UserDataSource {
+    void insertOrUpdateUser(User user, DatabaseCallback daoResultCallback);
+    void getUserInfo(DatabaseCallback daoResultCallback);
 }

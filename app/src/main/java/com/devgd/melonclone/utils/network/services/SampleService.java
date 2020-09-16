@@ -25,10 +25,13 @@ public class SampleService extends HttpConnectionServiceImpl {
         return callback ->
                 getHttpSender()
                     .call(connection -> {
+                        // 응답
+                        InputStream is = null;
+                        BufferedReader br = null;
+                        StringBuilder sb = new StringBuilder();
+
                         try {
                             connection.setDoOutput(false);
-                            // 응답
-                            InputStream is;
 
                             // 전송 응답 받음
                             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
@@ -37,24 +40,24 @@ public class SampleService extends HttpConnectionServiceImpl {
                                 is = connection.getInputStream();
                             }
 
-                            BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                            br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 
                             String line = null;
-                            StringBuilder sb = new StringBuilder();
 
                             while ((line = br.readLine()) != null) {
                                 sb.append(line);
                             }
-
-                            // 닫기
-                            br.close();
-                            is.close();
-
-
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         } catch (IOException e) {
                             e.printStackTrace();
+                        } finally {
+                            try {
+                                if (br != null) br.close();
+                                if (is != null) is.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         // TODO Callback

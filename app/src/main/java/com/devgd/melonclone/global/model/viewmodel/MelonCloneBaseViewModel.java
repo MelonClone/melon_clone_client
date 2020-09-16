@@ -1,8 +1,5 @@
 package com.devgd.melonclone.global.model.viewmodel;
 
-import android.os.Message;
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 
 import com.devgd.melonclone.domain.user.domain.User;
@@ -21,32 +18,28 @@ public abstract class MelonCloneBaseViewModel extends BaseViewModel<User> {
 
     // TODO DI
     private UserDataSource userDataSource;
+    private DatabaseCallback userCallback = message -> {
+        User user = (User) message.obj;
+        if (user == null) getLoginState().setValue(new LoginState<>(false, null));
+        else if (!JwtParser.verify(user.getJwtToken()))
+            getLoginState().setValue(new LoginState<>(false, null));
+
+        getLoginState().setValue(new LoginState<>(true, user));
+    };
 
     @Override
     protected void beforeInit() {
         super.beforeInit();
 
-        Log.d("TEST", (DBHelper.getInstance().getDB()==null) + "");
-        userDataSource = new LocalUserDataSource(((AppDatabase) DBHelper.getInstance().getDB()).userDao(), new DatabaseCallback() {
-            @Override
-            public void callback(Message msg) {
-                if (msg.arg1 == UserDataSource.GET_USER) {
-                    User user = (User) msg.obj;
-                    if (user == null) getLoginState().setValue(new LoginState<>(false, null));
-                    else if (!JwtParser.verify(user.getJwtToken()))
-                        getLoginState().setValue(new LoginState<>(false, null));
-
-                    getLoginState().setValue(new LoginState<>(true, user));
-                }
-            }
-        });
+        userDataSource = new LocalUserDataSource(((AppDatabase) DBHelper.getInstance().getDB()).userDao());
     }
+
     @Override
     abstract protected void init();
 
     // 로그인 확인
     public void checkLogin() {
-        userDataSource.getUserInfo();
+        userDataSource.getUserInfo(userCallback);
     }
 
     public LiveData<LoginState<User>> getObserveLoginState() {

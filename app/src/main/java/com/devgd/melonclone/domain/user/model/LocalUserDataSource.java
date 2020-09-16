@@ -12,15 +12,13 @@ import org.watermelon.framework.global.model.domain.Domain;
 public class LocalUserDataSource implements UserDataSource {
 
     private final UserDao userDao;
-    private final DatabaseCallback daoResultCallback;
 
-    public LocalUserDataSource(UserDao userDao, DatabaseCallback daoResultCallback) {
+    public LocalUserDataSource(UserDao userDao) {
         this.userDao = userDao;
-        this.daoResultCallback = daoResultCallback;
     }
 
     @Override
-    public void insertOrUpdateUser(User user) {
+    public void insertOrUpdateUser(User user, DatabaseCallback daoResultCallback) {
         DaoCallback.execute(new DaoCallback() {
             public Domain execute() {
                 userDao.insertUser(user);
@@ -29,14 +27,14 @@ public class LocalUserDataSource implements UserDataSource {
 
             public void postExecute(Domain d) {
                 Message msg = new Message();
-                msg.arg1 = INSERT_USER;
+                msg.arg1 = 1;
                 daoResultCallback.callback(msg);
             }
         });
     }
 
     @Override
-    public void getUserInfo() {
+    public void getUserInfo(DatabaseCallback daoResultCallback) {
         DaoCallback.execute(new DaoCallback() {
             public Domain execute() {
                 return userDao.getUser();
@@ -44,7 +42,7 @@ public class LocalUserDataSource implements UserDataSource {
 
             public void postExecute(Domain d) {
                 Message msg = new Message();
-                msg.arg1 = GET_USER;
+                msg.arg1 = 1;
                 msg.obj = d;
                 daoResultCallback.callback(msg);
             }

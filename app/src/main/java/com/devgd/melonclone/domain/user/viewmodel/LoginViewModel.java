@@ -15,7 +15,6 @@ import com.devgd.melonclone.global.model.viewmodel.MelonCloneBaseViewModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.watermelon.framework.global.db.DatabaseCallback;
 import org.watermelon.framework.global.model.domain.Message;
 import org.watermelon.framework.global.model.repository.Repository;
 import org.watermelon.framework.global.model.view.states.NetworkState;
@@ -43,13 +42,7 @@ public class LoginViewModel extends MelonCloneBaseViewModel {
     protected void init() {
         loginInfoText = new MutableLiveData<>();
         userRepository = UserRepository.getInstance();
-        userDataSource = new LocalUserDataSource(((AppDatabase) DBHelper.getInstance().getDB()).userDao(), new DatabaseCallback() {
-            @Override
-            public void callback(android.os.Message msg) {
-                if (msg.arg1 == UserDataSource.INSERT_USER)
-                    getViewState().postValue(new ViewState(ACTIVITY_CHANGE, PlayerActivity.class, null));
-            }
-        });
+        userDataSource = new LocalUserDataSource(((AppDatabase) DBHelper.getInstance().getDB()).userDao());
     }
 
     public void loggedIn() {
@@ -85,7 +78,9 @@ public class LoginViewModel extends MelonCloneBaseViewModel {
                     }
                 }
 
-                userDataSource.insertOrUpdateUser(user);
+                userDataSource.insertOrUpdateUser(user, message -> {
+                    getViewState().postValue(new ViewState(ACTIVITY_CHANGE, PlayerActivity.class, null));
+                });
 
             }
 
